@@ -196,10 +196,10 @@ class MessageDataType(PrimitiveDataType):
         f.write('%sthis.%s = %s();\n' % (header, self.name, self.type))
 
     def serialize(self, f, header):
-        f.write('%soffset += this.%s.serialize(buff, offset);\n' % (header, self.name))
+        f.write('%soffset = this.%s.serialize(buff, offset);\n' % (header, self.name))
 
     def deserialize(self, f, header):
-        f.write('%soffset += this.%s.deserialize(buff, offset);\n' % (header, self.name))
+        f.write('%soffset = this.%s.deserialize(buff, offset);\n' % (header, self.name))
 
     def serializedLength(self, f, header):
         f.write('%slength += this.%s.serializedLength();\n' % (header, self.name))
