@@ -577,8 +577,8 @@ private:
     tinyros_msgs::TopicInfo topic_info;
     tinyros::serialization::Serializer<tinyros_msgs::TopicInfo>::read(stream, topic_info);
     if (!publishers_.count(topic_info.topic_id)) {
-      spdlog_info("[{0}] setup_publisher(topic_id: {1}, topic_name: {2}, node_name: {3})",
-        session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str());
+      spdlog_info("[{0}] setup_publisher(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
+        session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
       PublisherPtr pub(new PublisherCore(topic_info));
       pub->alive_time_ = std::chrono::system_clock::now().time_since_epoch().count() * 1e-9;
       callbacks_[topic_info.topic_id] = std::bind(&PublisherCore::handle, pub, std::placeholders::_1);
@@ -607,8 +607,8 @@ private:
     tinyros_msgs::TopicInfo topic_info;
     tinyros::serialization::Serializer<tinyros_msgs::TopicInfo>::read(stream, topic_info);
     if (!subscribers_.count(topic_info.topic_id)) {
-      spdlog_info("[{0}] setup_subscriber(topic_id: {1}, topic_name: {2}, node_name: {3})", 
-        session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str());
+      spdlog_info("[{0}] setup_subscriber(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
+        session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
       SubscriberPtr sub(new SubscriberCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, topic_info.topic_id)));
       sub->alive_time_ = std::chrono::system_clock::now().time_since_epoch().count() * 1e-9;
       subscribers_[topic_info.topic_id] = sub;
@@ -638,8 +638,8 @@ private:
 
     std::unique_lock<std::mutex> lock(ServiceServerCore::services_mutex_);
     if (!ServiceServerCore::services_.count(topic_info.topic_name)) {
-      spdlog_info("[{0}] setup_service_server(topic_id: {1}, topic_name: {2}, node_name: {3})",
-        session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str());
+      spdlog_info("[{0}] setup_service_server(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
+        session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
       ServiceServerPtr srv(new ServiceServerCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, std::placeholders::_2)));
       callbacks_[topic_info.topic_id] = std::bind(&ServiceServerCore::handle, srv, std::placeholders::_1);
       ServiceServerCore::services_[topic_info.topic_name] = srv;
@@ -659,8 +659,8 @@ private:
     std::unique_lock<std::mutex> lock(ServiceServerCore::services_mutex_);
     if (ServiceServerCore::services_.count(topic_info.topic_name)) {
       if (!services_client_.count(topic_info.topic_id)) {
-        spdlog_info("[{0}] setup_service_client(topic_id: {1}, topic_name: {2}, node_name: {3})", 
-          session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str());
+        spdlog_info("[{0}] setup_service_client(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
+          session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
         ServiceServerPtr service = ServiceServerCore::services_[topic_info.topic_name];
         ServiceClientPtr client(new ServiceClientCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, std::placeholders::_2)));
         client->setTopicId(topic_info.topic_id);
@@ -731,13 +731,20 @@ private:
 
   void handle_rostopic_request(tinyros::serialization::IStream& stream) {
     std::string topic_list = "\n";
-    std::map<std::string, RostopicPtr>::iterator it;
-    for(it = Rostopic::topics_.begin(); it != Rostopic::topics_.end(); ) {
-      topic_list += it->first + " [type:" + it->second->message_type_ + ", md5:" + it->second->md5sum_ + "]\n";
-      it++;
+    {
+      std::unique_lock<std::mutex> lock(Rostopic::topics_mutex_);
+      if (!Rostopic::topics_.count(TINYROS_LOG_TOPIC)) {
+        tinyros_msgs::Log log;
+        topic_list += TINYROS_LOG_TOPIC " [type:" + log.getType() + ", md5:" + log.getMD5() + "]\n";
+      }
+      std::map<std::string, RostopicPtr>::iterator it;
+      for(it = Rostopic::topics_.begin(); it != Rostopic::topics_.end(); ) {
+        topic_list += it->first + " [type:" + it->second->message_type_ + ", md5:" + it->second->md5sum_ + "]\n";
+        it++;
+      }
     }
     std_msgs::String msg;
-    msg.data = topic_list.c_str();
+    msg.data = topic_list;
     size_t length = tinyros::serialization::serializationLength(msg);
     std::vector<uint8_t> message(length);
     tinyros::serialization::OStream ostream(&message[0], length);
@@ -746,14 +753,17 @@ private:
   }
 
   void handle_rosservice_request(tinyros::serialization::IStream& stream) {
-    std::string service_list = "\n\nservice_list:\n";
-    std::map<std::string, ServiceServerPtr>::iterator it;
-    for(it = ServiceServerCore::services_.begin(); it != ServiceServerCore::services_.end(); ) {
-      service_list += "          " + it->first + " [" + it->second->message_type_ + "]\n";
-      it++;
+    std::string service_list = "\n";
+    {
+      std::unique_lock<std::mutex> lock(ServiceServerCore::services_mutex_);
+      std::map<std::string, ServiceServerPtr>::iterator it;
+      for(it = ServiceServerCore::services_.begin(); it != ServiceServerCore::services_.end(); ) {
+        service_list += it->first + " [type:" + it->second->message_type_ + ", md5:" + it->second->md5sum_ + "]\n";
+        it++;
+      }
     }
     std_msgs::String msg;
-    msg.data = service_list.c_str();
+    msg.data = service_list;
     size_t length = tinyros::serialization::serializationLength(msg);
     std::vector<uint8_t> message(length);
     tinyros::serialization::OStream ostream(&message[0], length);
