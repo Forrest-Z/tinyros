@@ -16,7 +16,7 @@ function WorldState() {
 
 WorldState.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var length_name = this.name.length;
     buff[offset + 0] = (length_name >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_name >> (8 * 1)) & 0xFF;
@@ -43,7 +43,7 @@ WorldState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_pose >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_pose; i++) {
-        offset += this.pose[i].serialize(buff, offset);
+        offset = this.pose[i].serialize(buff, offset);
     }
     var length_twist = this.twist.length;
     buff[offset + 0] = (length_twist >> (8 * 0)) & 0xFF;
@@ -52,7 +52,7 @@ WorldState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_twist >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_twist; i++) {
-        offset += this.twist[i].serialize(buff, offset);
+        offset = this.twist[i].serialize(buff, offset);
     }
     var length_wrench = this.wrench.length;
     buff[offset + 0] = (length_wrench >> (8 * 0)) & 0xFF;
@@ -61,14 +61,14 @@ WorldState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_wrench >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_wrench; i++) {
-        offset += this.wrench[i].serialize(buff, offset);
+        offset = this.wrench[i].serialize(buff, offset);
     }
     return offset;
 };
 
 WorldState.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_name = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_name |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_name |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -93,7 +93,7 @@ WorldState.prototype.deserialize = function(buff, idx) {
     this.pose = new Array(length_pose);
     for (var i = 0; i < length_pose; i++) {
         this.pose[i] = geometry_msgs.Pose();
-        offset += this.pose[i].deserialize(buff, offset);
+        offset = this.pose[i].deserialize(buff, offset);
     }
     var length_twist = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_twist |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -103,7 +103,7 @@ WorldState.prototype.deserialize = function(buff, idx) {
     this.twist = new Array(length_twist);
     for (var i = 0; i < length_twist; i++) {
         this.twist[i] = geometry_msgs.Twist();
-        offset += this.twist[i].deserialize(buff, offset);
+        offset = this.twist[i].deserialize(buff, offset);
     }
     var length_wrench = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_wrench |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -113,7 +113,7 @@ WorldState.prototype.deserialize = function(buff, idx) {
     this.wrench = new Array(length_wrench);
     for (var i = 0; i < length_wrench; i++) {
         this.wrench[i] = geometry_msgs.Wrench();
-        offset += this.wrench[i].deserialize(buff, offset);
+        offset = this.wrench[i].deserialize(buff, offset);
     }
     return offset;
 };

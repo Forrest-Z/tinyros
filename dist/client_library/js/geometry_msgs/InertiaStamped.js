@@ -11,15 +11,15 @@ function InertiaStamped() {
 
 InertiaStamped.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.inertia.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.inertia.serialize(buff, offset);
     return offset;
 };
 
 InertiaStamped.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.inertia.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.inertia.deserialize(buff, offset);
     return offset;
 };
 

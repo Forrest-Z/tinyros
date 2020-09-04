@@ -12,7 +12,7 @@ function TransformStamped() {
 
 TransformStamped.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var encoder_child_frame_id = new TextEncoder('utf8');
     var utf8array_child_frame_id = encoder_child_frame_id.encode(this.child_frame_id);
     buff[offset + 0] = (utf8array_child_frame_id.length >> (8 * 0)) & 0xFF;
@@ -24,13 +24,13 @@ TransformStamped.prototype.serialize = function(buff, idx) {
         buff[offset + i] = utf8array_child_frame_id[i];
     }
     offset += utf8array_child_frame_id.length;
-    offset += this.transform.serialize(buff, offset);
+    offset = this.transform.serialize(buff, offset);
     return offset;
 };
 
 TransformStamped.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_child_frame_id = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_child_frame_id |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_child_frame_id |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -39,7 +39,7 @@ TransformStamped.prototype.deserialize = function(buff, idx) {
     var decoder_child_frame_id = new TextDecoder('utf8');
     this.child_frame_id = decoder_child_frame_id.decode(buff.slice(offset, offset + length_child_frame_id));
     offset += length_child_frame_id;
-    offset += this.transform.deserialize(buff, offset);
+    offset = this.transform.deserialize(buff, offset);
     return offset;
 };
 

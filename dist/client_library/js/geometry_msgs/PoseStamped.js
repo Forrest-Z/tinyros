@@ -11,15 +11,15 @@ function PoseStamped() {
 
 PoseStamped.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.pose.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.pose.serialize(buff, offset);
     return offset;
 };
 
 PoseStamped.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.pose.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.pose.deserialize(buff, offset);
     return offset;
 };
 

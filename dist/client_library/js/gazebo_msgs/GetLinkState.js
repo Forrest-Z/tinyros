@@ -115,7 +115,7 @@ GetLinkStateResponse.prototype.serialize = function(buff, idx) {
     buff[offset + 2] = ((+this.__id__) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.__id__) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.link_state.serialize(buff, offset);
+    offset = this.link_state.serialize(buff, offset);
     buff[offset] = this.success === false ? 0 : 1;
     offset += 1;
     var encoder_status_message = new TextEncoder('utf8');
@@ -139,7 +139,7 @@ GetLinkStateResponse.prototype.deserialize = function(buff, idx) {
     this.__id__ |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.__id__ |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.link_state.deserialize(buff, offset);
+    offset = this.link_state.deserialize(buff, offset);
     this.success = buff[offset] !== 0 ? true : false;
     offset += 1;
     var length_status_message = +((buff[offset + 0] & 0xFF) << (8 * 0));

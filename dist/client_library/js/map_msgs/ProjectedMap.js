@@ -11,7 +11,7 @@ function ProjectedMap() {
 
 ProjectedMap.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.map.serialize(buff, offset);
+    offset = this.map.serialize(buff, offset);
     var float64Array_min_z = new Float64Array(1);
     var uInt8Float64Array_min_z = new Uint8Array(float64Array_min_z.buffer);
     float64Array_min_z[0] = +this.min_z;
@@ -41,7 +41,7 @@ ProjectedMap.prototype.serialize = function(buff, idx) {
 
 ProjectedMap.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.map.deserialize(buff, offset);
+    offset = this.map.deserialize(buff, offset);
     var float64Array_min_z = new Float64Array(1);
     var uInt8Float64Array_min_z = new Uint8Array(float64Array_min_z.buffer);
     uInt8Float64Array_min_z[0] = buff[offset + 0];

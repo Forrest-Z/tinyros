@@ -12,8 +12,8 @@ function OccupancyGrid() {
 
 OccupancyGrid.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.info.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.info.serialize(buff, offset);
     var length_data = this.data.length;
     buff[offset + 0] = (length_data >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_data >> (8 * 1)) & 0xFF;
@@ -29,8 +29,8 @@ OccupancyGrid.prototype.serialize = function(buff, idx) {
 
 OccupancyGrid.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.info.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.info.deserialize(buff, offset);
     var length_data = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_data |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_data |= +((buff[offset + 2] & 0xFF) << (8 * 2));

@@ -43,8 +43,8 @@ SetPhysicsPropertiesRequest.prototype.serialize = function(buff, idx) {
     buff[offset + 6] = uInt8Float64Array_max_update_rate[6];
     buff[offset + 7] = uInt8Float64Array_max_update_rate[7];
     offset += 8;
-    offset += this.gravity.serialize(buff, offset);
-    offset += this.ode_config.serialize(buff, offset);
+    offset = this.gravity.serialize(buff, offset);
+    offset = this.ode_config.serialize(buff, offset);
     return offset;
 };
 
@@ -79,8 +79,8 @@ SetPhysicsPropertiesRequest.prototype.deserialize = function(buff, idx) {
     uInt8Float64Array_max_update_rate[7] = buff[offset + 7];
     this.max_update_rate = float64Array_max_update_rate[0];
     offset += 8;
-    offset += this.gravity.deserialize(buff, offset);
-    offset += this.ode_config.deserialize(buff, offset);
+    offset = this.gravity.deserialize(buff, offset);
+    offset = this.ode_config.deserialize(buff, offset);
     return offset;
 };
 

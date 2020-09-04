@@ -11,15 +11,15 @@ function Vector3Stamped() {
 
 Vector3Stamped.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.vector.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.vector.serialize(buff, offset);
     return offset;
 };
 
 Vector3Stamped.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.vector.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.vector.deserialize(buff, offset);
     return offset;
 };
 

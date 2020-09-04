@@ -18,7 +18,7 @@ Mesh.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_triangles >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_triangles; i++) {
-        offset += this.triangles[i].serialize(buff, offset);
+        offset = this.triangles[i].serialize(buff, offset);
     }
     var length_vertices = this.vertices.length;
     buff[offset + 0] = (length_vertices >> (8 * 0)) & 0xFF;
@@ -27,7 +27,7 @@ Mesh.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_vertices >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_vertices; i++) {
-        offset += this.vertices[i].serialize(buff, offset);
+        offset = this.vertices[i].serialize(buff, offset);
     }
     return offset;
 };
@@ -42,7 +42,7 @@ Mesh.prototype.deserialize = function(buff, idx) {
     this.triangles = new Array(length_triangles);
     for (var i = 0; i < length_triangles; i++) {
         this.triangles[i] = shape_msgs.MeshTriangle();
-        offset += this.triangles[i].deserialize(buff, offset);
+        offset = this.triangles[i].deserialize(buff, offset);
     }
     var length_vertices = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_vertices |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -52,7 +52,7 @@ Mesh.prototype.deserialize = function(buff, idx) {
     this.vertices = new Array(length_vertices);
     for (var i = 0; i < length_vertices; i++) {
         this.vertices[i] = geometry_msgs.Point();
-        offset += this.vertices[i].deserialize(buff, offset);
+        offset = this.vertices[i].deserialize(buff, offset);
     }
     return offset;
 };

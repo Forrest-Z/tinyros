@@ -18,7 +18,7 @@ function PointCloud2() {
 
 PointCloud2.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.height) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.height) >> (8 * 1)) & 0xFF;
     buff[offset + 2] = ((+this.height) >> (8 * 2)) & 0xFF;
@@ -36,7 +36,7 @@ PointCloud2.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_fields >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_fields; i++) {
-        offset += this.fields[i].serialize(buff, offset);
+        offset = this.fields[i].serialize(buff, offset);
     }
     buff[offset] = this.is_bigendian === false ? 0 : 1;
     offset += 1;
@@ -67,7 +67,7 @@ PointCloud2.prototype.serialize = function(buff, idx) {
 
 PointCloud2.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.height = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.height |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     this.height |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -86,7 +86,7 @@ PointCloud2.prototype.deserialize = function(buff, idx) {
     this.fields = new Array(length_fields);
     for (var i = 0; i < length_fields; i++) {
         this.fields[i] = sensor_msgs.PointField();
-        offset += this.fields[i].deserialize(buff, offset);
+        offset = this.fields[i].deserialize(buff, offset);
     }
     this.is_bigendian = buff[offset] !== 0 ? true : false;
     offset += 1;

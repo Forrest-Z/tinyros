@@ -11,7 +11,7 @@ function Path() {
 
 Path.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var length_poses = this.poses.length;
     buff[offset + 0] = (length_poses >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_poses >> (8 * 1)) & 0xFF;
@@ -19,14 +19,14 @@ Path.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_poses >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_poses; i++) {
-        offset += this.poses[i].serialize(buff, offset);
+        offset = this.poses[i].serialize(buff, offset);
     }
     return offset;
 };
 
 Path.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_poses = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_poses |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_poses |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -35,7 +35,7 @@ Path.prototype.deserialize = function(buff, idx) {
     this.poses = new Array(length_poses);
     for (var i = 0; i < length_poses; i++) {
         this.poses[i] = geometry_msgs.PoseStamped();
-        offset += this.poses[i].deserialize(buff, offset);
+        offset = this.poses[i].deserialize(buff, offset);
     }
     return offset;
 };

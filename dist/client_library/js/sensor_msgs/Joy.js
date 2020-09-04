@@ -11,7 +11,7 @@ function Joy() {
 
 Joy.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var length_axes = this.axes.length;
     buff[offset + 0] = (length_axes >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_axes >> (8 * 1)) & 0xFF;
@@ -46,7 +46,7 @@ Joy.prototype.serialize = function(buff, idx) {
 
 Joy.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_axes = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_axes |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_axes |= +((buff[offset + 2] & 0xFF) << (8 * 2));

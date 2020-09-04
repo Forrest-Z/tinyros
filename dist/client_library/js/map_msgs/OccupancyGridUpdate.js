@@ -14,7 +14,7 @@ function OccupancyGridUpdate() {
 
 OccupancyGridUpdate.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.x) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.x) >> (8 * 1)) & 0xFF;
     buff[offset + 2] = ((+this.x) >> (8 * 2)) & 0xFF;
@@ -50,7 +50,7 @@ OccupancyGridUpdate.prototype.serialize = function(buff, idx) {
 
 OccupancyGridUpdate.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.x = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.x |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     this.x |= +((buff[offset + 2] & 0xFF) << (8 * 2));

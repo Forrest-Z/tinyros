@@ -23,8 +23,8 @@ function NavSatFix() {
 
 NavSatFix.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.status.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.status.serialize(buff, offset);
     var float64Array_latitude = new Float64Array(1);
     var uInt8Float64Array_latitude = new Uint8Array(float64Array_latitude.buffer);
     float64Array_latitude[0] = +this.latitude;
@@ -82,8 +82,8 @@ NavSatFix.prototype.serialize = function(buff, idx) {
 
 NavSatFix.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.status.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.status.deserialize(buff, offset);
     var float64Array_latitude = new Float64Array(1);
     var uInt8Float64Array_latitude = new Uint8Array(float64Array_latitude.buffer);
     uInt8Float64Array_latitude[0] = buff[offset + 0];

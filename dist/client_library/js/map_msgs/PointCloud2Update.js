@@ -17,25 +17,25 @@ function PointCloud2Update() {
 
 PointCloud2Update.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.type) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.type) >> (8 * 1)) & 0xFF;
     buff[offset + 2] = ((+this.type) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.type) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.points.serialize(buff, offset);
+    offset = this.points.serialize(buff, offset);
     return offset;
 };
 
 PointCloud2Update.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.type = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.type |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     this.type |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.type |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.points.deserialize(buff, offset);
+    offset = this.points.deserialize(buff, offset);
     return offset;
 };
 

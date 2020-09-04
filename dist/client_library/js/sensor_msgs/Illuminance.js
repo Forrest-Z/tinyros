@@ -11,7 +11,7 @@ function Illuminance() {
 
 Illuminance.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var float64Array_illuminance = new Float64Array(1);
     var uInt8Float64Array_illuminance = new Uint8Array(float64Array_illuminance.buffer);
     float64Array_illuminance[0] = +this.illuminance;
@@ -41,7 +41,7 @@ Illuminance.prototype.serialize = function(buff, idx) {
 
 Illuminance.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var float64Array_illuminance = new Float64Array(1);
     var uInt8Float64Array_illuminance = new Uint8Array(float64Array_illuminance.buffer);
     uInt8Float64Array_illuminance[0] = buff[offset + 0];

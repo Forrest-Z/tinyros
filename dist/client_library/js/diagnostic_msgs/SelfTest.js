@@ -87,7 +87,7 @@ SelfTestResponse.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_status >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_status; i++) {
-        offset += this.status[i].serialize(buff, offset);
+        offset = this.status[i].serialize(buff, offset);
     }
     return offset;
 };
@@ -117,7 +117,7 @@ SelfTestResponse.prototype.deserialize = function(buff, idx) {
     this.status = new Array(length_status);
     for (var i = 0; i < length_status; i++) {
         this.status[i] = diagnostic_msgs.DiagnosticStatus();
-        offset += this.status[i].deserialize(buff, offset);
+        offset = this.status[i].deserialize(buff, offset);
     }
     return offset;
 };

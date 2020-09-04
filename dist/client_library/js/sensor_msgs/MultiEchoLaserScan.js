@@ -19,7 +19,7 @@ function MultiEchoLaserScan() {
 
 MultiEchoLaserScan.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var float32Array_angle_min = new Float32Array(1);
     var uInt8Float32Array_angle_min = new Uint8Array(float32Array_angle_min.buffer);
     float32Array_angle_min[0] = +this.angle_min;
@@ -83,7 +83,7 @@ MultiEchoLaserScan.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_ranges >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_ranges; i++) {
-        offset += this.ranges[i].serialize(buff, offset);
+        offset = this.ranges[i].serialize(buff, offset);
     }
     var length_intensities = this.intensities.length;
     buff[offset + 0] = (length_intensities >> (8 * 0)) & 0xFF;
@@ -92,14 +92,14 @@ MultiEchoLaserScan.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_intensities >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_intensities; i++) {
-        offset += this.intensities[i].serialize(buff, offset);
+        offset = this.intensities[i].serialize(buff, offset);
     }
     return offset;
 };
 
 MultiEchoLaserScan.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var float32Array_angle_min = new Float32Array(1);
     var uInt8Float32Array_angle_min = new Uint8Array(float32Array_angle_min.buffer);
     uInt8Float32Array_angle_min[0] = buff[offset + 0];
@@ -164,7 +164,7 @@ MultiEchoLaserScan.prototype.deserialize = function(buff, idx) {
     this.ranges = new Array(length_ranges);
     for (var i = 0; i < length_ranges; i++) {
         this.ranges[i] = sensor_msgs.LaserEcho();
-        offset += this.ranges[i].deserialize(buff, offset);
+        offset = this.ranges[i].deserialize(buff, offset);
     }
     var length_intensities = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_intensities |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -174,7 +174,7 @@ MultiEchoLaserScan.prototype.deserialize = function(buff, idx) {
     this.intensities = new Array(length_intensities);
     for (var i = 0; i < length_intensities; i++) {
         this.intensities[i] = sensor_msgs.LaserEcho();
-        offset += this.intensities[i].deserialize(buff, offset);
+        offset = this.intensities[i].deserialize(buff, offset);
     }
     return offset;
 };

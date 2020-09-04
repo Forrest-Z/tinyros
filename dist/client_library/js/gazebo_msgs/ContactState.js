@@ -57,9 +57,9 @@ ContactState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_wrenches >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_wrenches; i++) {
-        offset += this.wrenches[i].serialize(buff, offset);
+        offset = this.wrenches[i].serialize(buff, offset);
     }
-    offset += this.total_wrench.serialize(buff, offset);
+    offset = this.total_wrench.serialize(buff, offset);
     var length_contact_positions = this.contact_positions.length;
     buff[offset + 0] = (length_contact_positions >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_contact_positions >> (8 * 1)) & 0xFF;
@@ -67,7 +67,7 @@ ContactState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_contact_positions >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_contact_positions; i++) {
-        offset += this.contact_positions[i].serialize(buff, offset);
+        offset = this.contact_positions[i].serialize(buff, offset);
     }
     var length_contact_normals = this.contact_normals.length;
     buff[offset + 0] = (length_contact_normals >> (8 * 0)) & 0xFF;
@@ -76,7 +76,7 @@ ContactState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_contact_normals >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_contact_normals; i++) {
-        offset += this.contact_normals[i].serialize(buff, offset);
+        offset = this.contact_normals[i].serialize(buff, offset);
     }
     var length_depths = this.depths.length;
     buff[offset + 0] = (length_depths >> (8 * 0)) & 0xFF;
@@ -135,9 +135,9 @@ ContactState.prototype.deserialize = function(buff, idx) {
     this.wrenches = new Array(length_wrenches);
     for (var i = 0; i < length_wrenches; i++) {
         this.wrenches[i] = geometry_msgs.Wrench();
-        offset += this.wrenches[i].deserialize(buff, offset);
+        offset = this.wrenches[i].deserialize(buff, offset);
     }
-    offset += this.total_wrench.deserialize(buff, offset);
+    offset = this.total_wrench.deserialize(buff, offset);
     var length_contact_positions = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_contact_positions |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_contact_positions |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -146,7 +146,7 @@ ContactState.prototype.deserialize = function(buff, idx) {
     this.contact_positions = new Array(length_contact_positions);
     for (var i = 0; i < length_contact_positions; i++) {
         this.contact_positions[i] = geometry_msgs.Vector3();
-        offset += this.contact_positions[i].deserialize(buff, offset);
+        offset = this.contact_positions[i].deserialize(buff, offset);
     }
     var length_contact_normals = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_contact_normals |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -156,7 +156,7 @@ ContactState.prototype.deserialize = function(buff, idx) {
     this.contact_normals = new Array(length_contact_normals);
     for (var i = 0; i < length_contact_normals; i++) {
         this.contact_normals[i] = geometry_msgs.Vector3();
-        offset += this.contact_normals[i].deserialize(buff, offset);
+        offset = this.contact_normals[i].deserialize(buff, offset);
     }
     var length_depths = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_depths |= +((buff[offset + 1] & 0xFF) << (8 * 1));

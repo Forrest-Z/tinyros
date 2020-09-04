@@ -13,17 +13,17 @@ function GetMapActionResult() {
 
 GetMapActionResult.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.status.serialize(buff, offset);
-    offset += this.result.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.status.serialize(buff, offset);
+    offset = this.result.serialize(buff, offset);
     return offset;
 };
 
 GetMapActionResult.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.status.deserialize(buff, offset);
-    offset += this.result.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.status.deserialize(buff, offset);
+    offset = this.result.deserialize(buff, offset);
     return offset;
 };
 

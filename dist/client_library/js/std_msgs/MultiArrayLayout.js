@@ -17,7 +17,7 @@ MultiArrayLayout.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_dim >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_dim; i++) {
-        offset += this.dim[i].serialize(buff, offset);
+        offset = this.dim[i].serialize(buff, offset);
     }
     buff[offset + 0] = ((+this.data_offset) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.data_offset) >> (8 * 1)) & 0xFF;
@@ -37,7 +37,7 @@ MultiArrayLayout.prototype.deserialize = function(buff, idx) {
     this.dim = new Array(length_dim);
     for (var i = 0; i < length_dim; i++) {
         this.dim[i] = std_msgs.MultiArrayDimension();
-        offset += this.dim[i].deserialize(buff, offset);
+        offset = this.dim[i].deserialize(buff, offset);
     }
     this.data_offset = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.data_offset |= +((buff[offset + 1] & 0xFF) << (8 * 1));

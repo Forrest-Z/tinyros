@@ -19,7 +19,7 @@ function Range() {
 
 Range.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.radiation_type) >> (8 * 0)) & 0xFF;
     offset += 1;
     var float32Array_field_of_view = new Float32Array(1);
@@ -59,7 +59,7 @@ Range.prototype.serialize = function(buff, idx) {
 
 Range.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.radiation_type = +((buff[offset + 0] & 0xFF) << (8 * 0));
     offset += 1;
     var float32Array_field_of_view = new Float32Array(1);

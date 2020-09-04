@@ -11,15 +11,15 @@ function TwistWithCovarianceStamped() {
 
 TwistWithCovarianceStamped.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.twist.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.twist.serialize(buff, offset);
     return offset;
 };
 
 TwistWithCovarianceStamped.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.twist.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.twist.deserialize(buff, offset);
     return offset;
 };
 

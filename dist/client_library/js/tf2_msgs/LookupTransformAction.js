@@ -13,17 +13,17 @@ function LookupTransformAction() {
 
 LookupTransformAction.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.action_goal.serialize(buff, offset);
-    offset += this.action_result.serialize(buff, offset);
-    offset += this.action_feedback.serialize(buff, offset);
+    offset = this.action_goal.serialize(buff, offset);
+    offset = this.action_result.serialize(buff, offset);
+    offset = this.action_feedback.serialize(buff, offset);
     return offset;
 };
 
 LookupTransformAction.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.action_goal.deserialize(buff, offset);
-    offset += this.action_result.deserialize(buff, offset);
-    offset += this.action_feedback.deserialize(buff, offset);
+    offset = this.action_goal.deserialize(buff, offset);
+    offset = this.action_result.deserialize(buff, offset);
+    offset = this.action_feedback.deserialize(buff, offset);
     return offset;
 };
 

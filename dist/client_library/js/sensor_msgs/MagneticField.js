@@ -12,8 +12,8 @@ function MagneticField() {
 
 MagneticField.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.magnetic_field.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.magnetic_field.serialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_magnetic_field_covariancei = new Float64Array(1);
         var uInt8Float64Array_magnetic_field_covariancei = new Uint8Array(float64Array_magnetic_field_covariancei.buffer);
@@ -33,8 +33,8 @@ MagneticField.prototype.serialize = function(buff, idx) {
 
 MagneticField.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.magnetic_field.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.magnetic_field.deserialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_magnetic_field_covariancei = new Float64Array(1);
         var uInt8Float64Array_magnetic_field_covariancei = new Uint8Array(float64Array_magnetic_field_covariancei.buffer);

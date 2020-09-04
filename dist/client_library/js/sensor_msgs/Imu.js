@@ -17,8 +17,8 @@ function Imu() {
 
 Imu.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.orientation.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.orientation.serialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_orientation_covariancei = new Float64Array(1);
         var uInt8Float64Array_orientation_covariancei = new Uint8Array(float64Array_orientation_covariancei.buffer);
@@ -33,7 +33,7 @@ Imu.prototype.serialize = function(buff, idx) {
         buff[offset + 7] = uInt8Float64Array_orientation_covariancei[7];
         offset += 8;
     }
-    offset += this.angular_velocity.serialize(buff, offset);
+    offset = this.angular_velocity.serialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_angular_velocity_covariancei = new Float64Array(1);
         var uInt8Float64Array_angular_velocity_covariancei = new Uint8Array(float64Array_angular_velocity_covariancei.buffer);
@@ -48,7 +48,7 @@ Imu.prototype.serialize = function(buff, idx) {
         buff[offset + 7] = uInt8Float64Array_angular_velocity_covariancei[7];
         offset += 8;
     }
-    offset += this.linear_acceleration.serialize(buff, offset);
+    offset = this.linear_acceleration.serialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_linear_acceleration_covariancei = new Float64Array(1);
         var uInt8Float64Array_linear_acceleration_covariancei = new Uint8Array(float64Array_linear_acceleration_covariancei.buffer);
@@ -68,8 +68,8 @@ Imu.prototype.serialize = function(buff, idx) {
 
 Imu.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.orientation.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.orientation.deserialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_orientation_covariancei = new Float64Array(1);
         var uInt8Float64Array_orientation_covariancei = new Uint8Array(float64Array_orientation_covariancei.buffer);
@@ -84,7 +84,7 @@ Imu.prototype.deserialize = function(buff, idx) {
         this.orientation_covariance[i] = float64Array_orientation_covariancei[0];
         offset += 8;
     }
-    offset += this.angular_velocity.deserialize(buff, offset);
+    offset = this.angular_velocity.deserialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_angular_velocity_covariancei = new Float64Array(1);
         var uInt8Float64Array_angular_velocity_covariancei = new Uint8Array(float64Array_angular_velocity_covariancei.buffer);
@@ -99,7 +99,7 @@ Imu.prototype.deserialize = function(buff, idx) {
         this.angular_velocity_covariance[i] = float64Array_angular_velocity_covariancei[0];
         offset += 8;
     }
-    offset += this.linear_acceleration.deserialize(buff, offset);
+    offset = this.linear_acceleration.deserialize(buff, offset);
     for (var i = 0; i < 9; i++) {
         var float64Array_linear_acceleration_covariancei = new Float64Array(1);
         var uInt8Float64Array_linear_acceleration_covariancei = new Uint8Array(float64Array_linear_acceleration_covariancei.buffer);

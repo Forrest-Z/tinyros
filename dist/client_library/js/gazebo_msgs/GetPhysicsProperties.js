@@ -98,8 +98,8 @@ GetPhysicsPropertiesResponse.prototype.serialize = function(buff, idx) {
     buff[offset + 6] = uInt8Float64Array_max_update_rate[6];
     buff[offset + 7] = uInt8Float64Array_max_update_rate[7];
     offset += 8;
-    offset += this.gravity.serialize(buff, offset);
-    offset += this.ode_config.serialize(buff, offset);
+    offset = this.gravity.serialize(buff, offset);
+    offset = this.ode_config.serialize(buff, offset);
     buff[offset] = this.success === false ? 0 : 1;
     offset += 1;
     var encoder_status_message = new TextEncoder('utf8');
@@ -149,8 +149,8 @@ GetPhysicsPropertiesResponse.prototype.deserialize = function(buff, idx) {
     uInt8Float64Array_max_update_rate[7] = buff[offset + 7];
     this.max_update_rate = float64Array_max_update_rate[0];
     offset += 8;
-    offset += this.gravity.deserialize(buff, offset);
-    offset += this.ode_config.deserialize(buff, offset);
+    offset = this.gravity.deserialize(buff, offset);
+    offset = this.ode_config.deserialize(buff, offset);
     this.success = buff[offset] !== 0 ? true : false;
     offset += 1;
     var length_status_message = +((buff[offset + 0] & 0xFF) << (8 * 0));

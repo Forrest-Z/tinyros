@@ -72,7 +72,7 @@ SetMapProjectionsResponse.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_projected_maps_info >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_projected_maps_info; i++) {
-        offset += this.projected_maps_info[i].serialize(buff, offset);
+        offset = this.projected_maps_info[i].serialize(buff, offset);
     }
     return offset;
 };
@@ -92,7 +92,7 @@ SetMapProjectionsResponse.prototype.deserialize = function(buff, idx) {
     this.projected_maps_info = new Array(length_projected_maps_info);
     for (var i = 0; i < length_projected_maps_info; i++) {
         this.projected_maps_info[i] = map_msgs.ProjectedMapInfo();
-        offset += this.projected_maps_info[i].deserialize(buff, offset);
+        offset = this.projected_maps_info[i].deserialize(buff, offset);
     }
     return offset;
 };

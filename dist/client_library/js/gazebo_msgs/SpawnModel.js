@@ -52,7 +52,7 @@ SpawnModelRequest.prototype.serialize = function(buff, idx) {
         buff[offset + i] = utf8array_robot_namespace[i];
     }
     offset += utf8array_robot_namespace.length;
-    offset += this.initial_pose.serialize(buff, offset);
+    offset = this.initial_pose.serialize(buff, offset);
     var encoder_reference_frame = new TextEncoder('utf8');
     var utf8array_reference_frame = encoder_reference_frame.encode(this.reference_frame);
     buff[offset + 0] = (utf8array_reference_frame.length >> (8 * 0)) & 0xFF;
@@ -98,7 +98,7 @@ SpawnModelRequest.prototype.deserialize = function(buff, idx) {
     var decoder_robot_namespace = new TextDecoder('utf8');
     this.robot_namespace = decoder_robot_namespace.decode(buff.slice(offset, offset + length_robot_namespace));
     offset += length_robot_namespace;
-    offset += this.initial_pose.deserialize(buff, offset);
+    offset = this.initial_pose.deserialize(buff, offset);
     var length_reference_frame = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_reference_frame |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_reference_frame |= +((buff[offset + 2] & 0xFF) << (8 * 2));

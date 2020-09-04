@@ -11,7 +11,7 @@ function ContactsState() {
 
 ContactsState.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var length_states = this.states.length;
     buff[offset + 0] = (length_states >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_states >> (8 * 1)) & 0xFF;
@@ -19,14 +19,14 @@ ContactsState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_states >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_states; i++) {
-        offset += this.states[i].serialize(buff, offset);
+        offset = this.states[i].serialize(buff, offset);
     }
     return offset;
 };
 
 ContactsState.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_states = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_states |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_states |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -35,7 +35,7 @@ ContactsState.prototype.deserialize = function(buff, idx) {
     this.states = new Array(length_states);
     for (var i = 0; i < length_states; i++) {
         this.states[i] = gazebo_msgs.ContactState();
-        offset += this.states[i].deserialize(buff, offset);
+        offset = this.states[i].deserialize(buff, offset);
     }
     return offset;
 };

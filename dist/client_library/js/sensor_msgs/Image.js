@@ -15,7 +15,7 @@ function Image() {
 
 Image.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.height) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.height) >> (8 * 1)) & 0xFF;
     buff[offset + 2] = ((+this.height) >> (8 * 2)) & 0xFF;
@@ -59,7 +59,7 @@ Image.prototype.serialize = function(buff, idx) {
 
 Image.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.height = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.height |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     this.height |= +((buff[offset + 2] & 0xFF) << (8 * 2));

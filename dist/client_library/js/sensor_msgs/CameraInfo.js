@@ -20,7 +20,7 @@ function CameraInfo() {
 
 CameraInfo.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.height) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.height) >> (8 * 1)) & 0xFF;
     buff[offset + 2] = ((+this.height) >> (8 * 2)) & 0xFF;
@@ -114,13 +114,13 @@ CameraInfo.prototype.serialize = function(buff, idx) {
     buff[offset + 2] = ((+this.binning_y) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.binning_y) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.roi.serialize(buff, offset);
+    offset = this.roi.serialize(buff, offset);
     return offset;
 };
 
 CameraInfo.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.height = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.height |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     this.height |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -211,7 +211,7 @@ CameraInfo.prototype.deserialize = function(buff, idx) {
     this.binning_y |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.binning_y |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.roi.deserialize(buff, offset);
+    offset = this.roi.deserialize(buff, offset);
     return offset;
 };
 

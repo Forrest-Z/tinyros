@@ -21,7 +21,7 @@ MultiDOFJointTrajectoryPoint.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_transforms >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_transforms; i++) {
-        offset += this.transforms[i].serialize(buff, offset);
+        offset = this.transforms[i].serialize(buff, offset);
     }
     var length_velocities = this.velocities.length;
     buff[offset + 0] = (length_velocities >> (8 * 0)) & 0xFF;
@@ -30,7 +30,7 @@ MultiDOFJointTrajectoryPoint.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_velocities >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_velocities; i++) {
-        offset += this.velocities[i].serialize(buff, offset);
+        offset = this.velocities[i].serialize(buff, offset);
     }
     var length_accelerations = this.accelerations.length;
     buff[offset + 0] = (length_accelerations >> (8 * 0)) & 0xFF;
@@ -39,7 +39,7 @@ MultiDOFJointTrajectoryPoint.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_accelerations >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_accelerations; i++) {
-        offset += this.accelerations[i].serialize(buff, offset);
+        offset = this.accelerations[i].serialize(buff, offset);
     }
     buff[offset + 0] = ((+this.time_from_start.sec) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.time_from_start.sec) >> (8 * 1)) & 0xFF;
@@ -64,7 +64,7 @@ MultiDOFJointTrajectoryPoint.prototype.deserialize = function(buff, idx) {
     this.transforms = new Array(length_transforms);
     for (var i = 0; i < length_transforms; i++) {
         this.transforms[i] = geometry_msgs.Transform();
-        offset += this.transforms[i].deserialize(buff, offset);
+        offset = this.transforms[i].deserialize(buff, offset);
     }
     var length_velocities = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_velocities |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -74,7 +74,7 @@ MultiDOFJointTrajectoryPoint.prototype.deserialize = function(buff, idx) {
     this.velocities = new Array(length_velocities);
     for (var i = 0; i < length_velocities; i++) {
         this.velocities[i] = geometry_msgs.Twist();
-        offset += this.velocities[i].deserialize(buff, offset);
+        offset = this.velocities[i].deserialize(buff, offset);
     }
     var length_accelerations = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_accelerations |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -84,7 +84,7 @@ MultiDOFJointTrajectoryPoint.prototype.deserialize = function(buff, idx) {
     this.accelerations = new Array(length_accelerations);
     for (var i = 0; i < length_accelerations; i++) {
         this.accelerations[i] = geometry_msgs.Twist();
-        offset += this.accelerations[i].deserialize(buff, offset);
+        offset = this.accelerations[i].deserialize(buff, offset);
     }
     this.time_from_start.sec = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.time_from_start.sec |= +((buff[offset + 1] & 0xFF) << (8 * 1));

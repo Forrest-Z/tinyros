@@ -11,7 +11,7 @@ function GoalStatusArray() {
 
 GoalStatusArray.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var length_status_list = this.status_list.length;
     buff[offset + 0] = (length_status_list >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_status_list >> (8 * 1)) & 0xFF;
@@ -19,14 +19,14 @@ GoalStatusArray.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_status_list >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_status_list; i++) {
-        offset += this.status_list[i].serialize(buff, offset);
+        offset = this.status_list[i].serialize(buff, offset);
     }
     return offset;
 };
 
 GoalStatusArray.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_status_list = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_status_list |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_status_list |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -35,7 +35,7 @@ GoalStatusArray.prototype.deserialize = function(buff, idx) {
     this.status_list = new Array(length_status_list);
     for (var i = 0; i < length_status_list; i++) {
         this.status_list[i] = actionlib_msgs.GoalStatus();
-        offset += this.status_list[i].deserialize(buff, offset);
+        offset = this.status_list[i].deserialize(buff, offset);
     }
     return offset;
 };

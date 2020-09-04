@@ -10,7 +10,7 @@ function Int32MultiArray() {
 
 Int32MultiArray.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.layout.serialize(buff, offset);
+    offset = this.layout.serialize(buff, offset);
     var length_data = this.data.length;
     buff[offset + 0] = (length_data >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_data >> (8 * 1)) & 0xFF;
@@ -29,7 +29,7 @@ Int32MultiArray.prototype.serialize = function(buff, idx) {
 
 Int32MultiArray.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.layout.deserialize(buff, offset);
+    offset = this.layout.deserialize(buff, offset);
     var length_data = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_data |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_data |= +((buff[offset + 2] & 0xFF) << (8 * 2));

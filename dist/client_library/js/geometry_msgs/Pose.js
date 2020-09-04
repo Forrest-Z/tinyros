@@ -11,15 +11,15 @@ function Pose() {
 
 Pose.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.position.serialize(buff, offset);
-    offset += this.orientation.serialize(buff, offset);
+    offset = this.position.serialize(buff, offset);
+    offset = this.orientation.serialize(buff, offset);
     return offset;
 };
 
 Pose.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.position.deserialize(buff, offset);
-    offset += this.orientation.deserialize(buff, offset);
+    offset = this.position.deserialize(buff, offset);
+    offset = this.orientation.deserialize(buff, offset);
     return offset;
 };
 

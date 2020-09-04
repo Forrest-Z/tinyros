@@ -10,7 +10,7 @@ function AccelWithCovariance() {
 
 AccelWithCovariance.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.accel.serialize(buff, offset);
+    offset = this.accel.serialize(buff, offset);
     for (var i = 0; i < 36; i++) {
         var float64Array_covariancei = new Float64Array(1);
         var uInt8Float64Array_covariancei = new Uint8Array(float64Array_covariancei.buffer);
@@ -30,7 +30,7 @@ AccelWithCovariance.prototype.serialize = function(buff, idx) {
 
 AccelWithCovariance.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.accel.deserialize(buff, offset);
+    offset = this.accel.deserialize(buff, offset);
     for (var i = 0; i < 36; i++) {
         var float64Array_covariancei = new Float64Array(1);
         var uInt8Float64Array_covariancei = new Uint8Array(float64Array_covariancei.buffer);

@@ -9,13 +9,13 @@ function GetMapResult() {
 
 GetMapResult.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.map.serialize(buff, offset);
+    offset = this.map.serialize(buff, offset);
     return offset;
 };
 
 GetMapResult.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.map.deserialize(buff, offset);
+    offset = this.map.deserialize(buff, offset);
     return offset;
 };
 

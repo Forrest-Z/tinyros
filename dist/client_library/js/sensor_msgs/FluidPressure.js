@@ -11,7 +11,7 @@ function FluidPressure() {
 
 FluidPressure.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var float64Array_fluid_pressure = new Float64Array(1);
     var uInt8Float64Array_fluid_pressure = new Uint8Array(float64Array_fluid_pressure.buffer);
     float64Array_fluid_pressure[0] = +this.fluid_pressure;
@@ -41,7 +41,7 @@ FluidPressure.prototype.serialize = function(buff, idx) {
 
 FluidPressure.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var float64Array_fluid_pressure = new Float64Array(1);
     var uInt8Float64Array_fluid_pressure = new Uint8Array(float64Array_fluid_pressure.buffer);
     uInt8Float64Array_fluid_pressure[0] = buff[offset + 0];

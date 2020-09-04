@@ -24,7 +24,7 @@ function Log() {
 
 Log.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.level) >> (8 * 0)) & 0xFF;
     offset += 1;
     var encoder_name = new TextEncoder('utf8');
@@ -100,7 +100,7 @@ Log.prototype.serialize = function(buff, idx) {
 
 Log.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.level = +((buff[offset + 0] & 0xFF) << (8 * 0));
     offset += 1;
     var length_name = +((buff[offset + 0] & 0xFF) << (8 * 0));

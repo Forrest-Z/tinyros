@@ -11,7 +11,7 @@ function RelativeHumidity() {
 
 RelativeHumidity.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var float64Array_relative_humidity = new Float64Array(1);
     var uInt8Float64Array_relative_humidity = new Uint8Array(float64Array_relative_humidity.buffer);
     float64Array_relative_humidity[0] = +this.relative_humidity;
@@ -41,7 +41,7 @@ RelativeHumidity.prototype.serialize = function(buff, idx) {
 
 RelativeHumidity.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var float64Array_relative_humidity = new Float64Array(1);
     var uInt8Float64Array_relative_humidity = new Uint8Array(float64Array_relative_humidity.buffer);
     uInt8Float64Array_relative_humidity[0] = buff[offset + 0];

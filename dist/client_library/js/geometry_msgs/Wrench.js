@@ -10,15 +10,15 @@ function Wrench() {
 
 Wrench.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.force.serialize(buff, offset);
-    offset += this.torque.serialize(buff, offset);
+    offset = this.force.serialize(buff, offset);
+    offset = this.torque.serialize(buff, offset);
     return offset;
 };
 
 Wrench.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.force.deserialize(buff, offset);
-    offset += this.torque.deserialize(buff, offset);
+    offset = this.force.deserialize(buff, offset);
+    offset = this.torque.deserialize(buff, offset);
     return offset;
 };
 

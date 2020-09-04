@@ -12,7 +12,7 @@ function JointTrajectory() {
 
 JointTrajectory.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var length_joint_names = this.joint_names.length;
     buff[offset + 0] = (length_joint_names >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_joint_names >> (8 * 1)) & 0xFF;
@@ -39,14 +39,14 @@ JointTrajectory.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_points >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_points; i++) {
-        offset += this.points[i].serialize(buff, offset);
+        offset = this.points[i].serialize(buff, offset);
     }
     return offset;
 };
 
 JointTrajectory.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_joint_names = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_joint_names |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_joint_names |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -71,7 +71,7 @@ JointTrajectory.prototype.deserialize = function(buff, idx) {
     this.points = new Array(length_points);
     for (var i = 0; i < length_points; i++) {
         this.points[i] = trajectory_msgs.JointTrajectoryPoint();
-        offset += this.points[i].deserialize(buff, offset);
+        offset = this.points[i].deserialize(buff, offset);
     }
     return offset;
 };

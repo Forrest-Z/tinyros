@@ -11,15 +11,15 @@ function AccelStamped() {
 
 AccelStamped.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.accel.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.accel.serialize(buff, offset);
     return offset;
 };
 
 AccelStamped.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.accel.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.accel.deserialize(buff, offset);
     return offset;
 };
 

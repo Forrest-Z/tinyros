@@ -35,7 +35,7 @@ SetLinkPropertiesRequest.prototype.serialize = function(buff, idx) {
         buff[offset + i] = utf8array_link_name[i];
     }
     offset += utf8array_link_name.length;
-    offset += this.com.serialize(buff, offset);
+    offset = this.com.serialize(buff, offset);
     buff[offset] = this.gravity_mode === false ? 0 : 1;
     offset += 1;
     var float64Array_mass = new Float64Array(1);
@@ -140,7 +140,7 @@ SetLinkPropertiesRequest.prototype.deserialize = function(buff, idx) {
     var decoder_link_name = new TextDecoder('utf8');
     this.link_name = decoder_link_name.decode(buff.slice(offset, offset + length_link_name));
     offset += length_link_name;
-    offset += this.com.deserialize(buff, offset);
+    offset = this.com.deserialize(buff, offset);
     this.gravity_mode = buff[offset] !== 0 ? true : false;
     offset += 1;
     var float64Array_mass = new Float64Array(1);

@@ -65,7 +65,7 @@ GetMapResponse.prototype.serialize = function(buff, idx) {
     buff[offset + 2] = ((+this.__id__) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.__id__) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.map.serialize(buff, offset);
+    offset = this.map.serialize(buff, offset);
     return offset;
 };
 
@@ -76,7 +76,7 @@ GetMapResponse.prototype.deserialize = function(buff, idx) {
     this.__id__ |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.__id__ |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.map.deserialize(buff, offset);
+    offset = this.map.deserialize(buff, offset);
     return offset;
 };
 

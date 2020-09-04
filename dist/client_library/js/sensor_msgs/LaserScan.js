@@ -18,7 +18,7 @@ function LaserScan() {
 
 LaserScan.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var float32Array_angle_min = new Float32Array(1);
     var uInt8Float32Array_angle_min = new Uint8Array(float32Array_angle_min.buffer);
     float32Array_angle_min[0] = +this.angle_min;
@@ -112,7 +112,7 @@ LaserScan.prototype.serialize = function(buff, idx) {
 
 LaserScan.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var float32Array_angle_min = new Float32Array(1);
     var uInt8Float32Array_angle_min = new Uint8Array(float32Array_angle_min.buffer);
     uInt8Float32Array_angle_min[0] = buff[offset + 0];

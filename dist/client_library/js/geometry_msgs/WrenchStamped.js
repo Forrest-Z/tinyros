@@ -11,15 +11,15 @@ function WrenchStamped() {
 
 WrenchStamped.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
-    offset += this.wrench.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
+    offset = this.wrench.serialize(buff, offset);
     return offset;
 };
 
 WrenchStamped.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
-    offset += this.wrench.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
+    offset = this.wrench.deserialize(buff, offset);
     return offset;
 };
 

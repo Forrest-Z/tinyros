@@ -11,15 +11,15 @@ function LookupTransformResult() {
 
 LookupTransformResult.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.transform.serialize(buff, offset);
-    offset += this.error.serialize(buff, offset);
+    offset = this.transform.serialize(buff, offset);
+    offset = this.error.serialize(buff, offset);
     return offset;
 };
 
 LookupTransformResult.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.transform.deserialize(buff, offset);
-    offset += this.error.deserialize(buff, offset);
+    offset = this.transform.deserialize(buff, offset);
+    offset = this.error.deserialize(buff, offset);
     return offset;
 };
 

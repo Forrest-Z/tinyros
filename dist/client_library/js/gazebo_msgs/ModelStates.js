@@ -38,7 +38,7 @@ ModelStates.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_pose >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_pose; i++) {
-        offset += this.pose[i].serialize(buff, offset);
+        offset = this.pose[i].serialize(buff, offset);
     }
     var length_twist = this.twist.length;
     buff[offset + 0] = (length_twist >> (8 * 0)) & 0xFF;
@@ -47,7 +47,7 @@ ModelStates.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_twist >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_twist; i++) {
-        offset += this.twist[i].serialize(buff, offset);
+        offset = this.twist[i].serialize(buff, offset);
     }
     return offset;
 };
@@ -78,7 +78,7 @@ ModelStates.prototype.deserialize = function(buff, idx) {
     this.pose = new Array(length_pose);
     for (var i = 0; i < length_pose; i++) {
         this.pose[i] = geometry_msgs.Pose();
-        offset += this.pose[i].deserialize(buff, offset);
+        offset = this.pose[i].deserialize(buff, offset);
     }
     var length_twist = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_twist |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -88,7 +88,7 @@ ModelStates.prototype.deserialize = function(buff, idx) {
     this.twist = new Array(length_twist);
     for (var i = 0; i < length_twist; i++) {
         this.twist[i] = geometry_msgs.Twist();
-        offset += this.twist[i].deserialize(buff, offset);
+        offset = this.twist[i].deserialize(buff, offset);
     }
     return offset;
 };

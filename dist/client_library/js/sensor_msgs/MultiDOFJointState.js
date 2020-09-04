@@ -16,7 +16,7 @@ function MultiDOFJointState() {
 
 MultiDOFJointState.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var length_joint_names = this.joint_names.length;
     buff[offset + 0] = (length_joint_names >> (8 * 0)) & 0xFF;
     buff[offset + 1] = (length_joint_names >> (8 * 1)) & 0xFF;
@@ -43,7 +43,7 @@ MultiDOFJointState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_transforms >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_transforms; i++) {
-        offset += this.transforms[i].serialize(buff, offset);
+        offset = this.transforms[i].serialize(buff, offset);
     }
     var length_twist = this.twist.length;
     buff[offset + 0] = (length_twist >> (8 * 0)) & 0xFF;
@@ -52,7 +52,7 @@ MultiDOFJointState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_twist >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_twist; i++) {
-        offset += this.twist[i].serialize(buff, offset);
+        offset = this.twist[i].serialize(buff, offset);
     }
     var length_wrench = this.wrench.length;
     buff[offset + 0] = (length_wrench >> (8 * 0)) & 0xFF;
@@ -61,14 +61,14 @@ MultiDOFJointState.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_wrench >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_wrench; i++) {
-        offset += this.wrench[i].serialize(buff, offset);
+        offset = this.wrench[i].serialize(buff, offset);
     }
     return offset;
 };
 
 MultiDOFJointState.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_joint_names = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_joint_names |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_joint_names |= +((buff[offset + 2] & 0xFF) << (8 * 2));
@@ -93,7 +93,7 @@ MultiDOFJointState.prototype.deserialize = function(buff, idx) {
     this.transforms = new Array(length_transforms);
     for (var i = 0; i < length_transforms; i++) {
         this.transforms[i] = geometry_msgs.Transform();
-        offset += this.transforms[i].deserialize(buff, offset);
+        offset = this.transforms[i].deserialize(buff, offset);
     }
     var length_twist = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_twist |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -103,7 +103,7 @@ MultiDOFJointState.prototype.deserialize = function(buff, idx) {
     this.twist = new Array(length_twist);
     for (var i = 0; i < length_twist; i++) {
         this.twist[i] = geometry_msgs.Twist();
-        offset += this.twist[i].deserialize(buff, offset);
+        offset = this.twist[i].deserialize(buff, offset);
     }
     var length_wrench = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_wrench |= +((buff[offset + 1] & 0xFF) << (8 * 1));
@@ -113,7 +113,7 @@ MultiDOFJointState.prototype.deserialize = function(buff, idx) {
     this.wrench = new Array(length_wrench);
     for (var i = 0; i < length_wrench; i++) {
         this.wrench[i] = geometry_msgs.Wrench();
-        offset += this.wrench[i].deserialize(buff, offset);
+        offset = this.wrench[i].deserialize(buff, offset);
     }
     return offset;
 };

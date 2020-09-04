@@ -62,7 +62,7 @@ DiagnosticStatus.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_values >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_values; i++) {
-        offset += this.values[i].serialize(buff, offset);
+        offset = this.values[i].serialize(buff, offset);
     }
     return offset;
 };
@@ -103,7 +103,7 @@ DiagnosticStatus.prototype.deserialize = function(buff, idx) {
     this.values = new Array(length_values);
     for (var i = 0; i < length_values; i++) {
         this.values[i] = diagnostic_msgs.KeyValue();
-        offset += this.values[i].deserialize(buff, offset);
+        offset = this.values[i].deserialize(buff, offset);
     }
     return offset;
 };

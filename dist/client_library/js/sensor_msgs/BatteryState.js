@@ -46,7 +46,7 @@ function BatteryState() {
 
 BatteryState.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var float32Array_voltage = new Float32Array(1);
     var uInt8Float32Array_voltage = new Uint8Array(float32Array_voltage.buffer);
     float32Array_voltage[0] = +this.voltage;
@@ -146,7 +146,7 @@ BatteryState.prototype.serialize = function(buff, idx) {
 
 BatteryState.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var float32Array_voltage = new Float32Array(1);
     var uInt8Float32Array_voltage = new Uint8Array(float32Array_voltage.buffer);
     uInt8Float32Array_voltage[0] = buff[offset + 0];

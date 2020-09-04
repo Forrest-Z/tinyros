@@ -16,7 +16,7 @@ JoyFeedbackArray.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_array >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_array; i++) {
-        offset += this.array[i].serialize(buff, offset);
+        offset = this.array[i].serialize(buff, offset);
     }
     return offset;
 };
@@ -31,7 +31,7 @@ JoyFeedbackArray.prototype.deserialize = function(buff, idx) {
     this.array = new Array(length_array);
     for (var i = 0; i < length_array; i++) {
         this.array[i] = sensor_msgs.JoyFeedback();
-        offset += this.array[i].deserialize(buff, offset);
+        offset = this.array[i].deserialize(buff, offset);
     }
     return offset;
 };

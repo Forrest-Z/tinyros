@@ -14,7 +14,7 @@ function SmachContainerStatus() {
 
 SmachContainerStatus.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var encoder_path = new TextEncoder('utf8');
     var utf8array_path = encoder_path.encode(this.path);
     buff[offset + 0] = (utf8array_path.length >> (8 * 0)) & 0xFF;
@@ -91,7 +91,7 @@ SmachContainerStatus.prototype.serialize = function(buff, idx) {
 
 SmachContainerStatus.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_path = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_path |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_path |= +((buff[offset + 2] & 0xFF) << (8 * 2));

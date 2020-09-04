@@ -10,7 +10,7 @@ function TwistWithCovariance() {
 
 TwistWithCovariance.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.twist.serialize(buff, offset);
+    offset = this.twist.serialize(buff, offset);
     for (var i = 0; i < 36; i++) {
         var float64Array_covariancei = new Float64Array(1);
         var uInt8Float64Array_covariancei = new Uint8Array(float64Array_covariancei.buffer);
@@ -30,7 +30,7 @@ TwistWithCovariance.prototype.serialize = function(buff, idx) {
 
 TwistWithCovariance.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.twist.deserialize(buff, offset);
+    offset = this.twist.deserialize(buff, offset);
     for (var i = 0; i < 36; i++) {
         var float64Array_covariancei = new Float64Array(1);
         var uInt8Float64Array_covariancei = new Uint8Array(float64Array_covariancei.buffer);

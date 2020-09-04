@@ -42,7 +42,7 @@ MapMetaData.prototype.serialize = function(buff, idx) {
     buff[offset + 2] = ((+this.height) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.height) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.origin.serialize(buff, offset);
+    offset = this.origin.serialize(buff, offset);
     return offset;
 };
 
@@ -76,7 +76,7 @@ MapMetaData.prototype.deserialize = function(buff, idx) {
     this.height |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.height |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.origin.deserialize(buff, offset);
+    offset = this.origin.deserialize(buff, offset);
     return offset;
 };
 

@@ -47,11 +47,11 @@ func (self *ServiceClient) Go_call(request Msg, response Msg, args ...int) (bool
     self.cond_.L.Lock()
 
     if !self.pub_.nh_.ok() {
-      self.call_req_ = nil
-      self.call_resp_ = nil
-      self.cond_.L.Unlock()
-      self.g_mutex_.Unlock()
-      return false;
+        self.call_req_ = nil
+        self.call_resp_ = nil
+        self.cond_.L.Unlock()
+        self.g_mutex_.Unlock()
+        return false;
     }
     
     self.call_req_ = request
@@ -63,22 +63,22 @@ func (self *ServiceClient) Go_call(request Msg, response Msg, args ...int) (bool
     gg_mutex_.Unlock()
     
     if self.pub_.Go_publish(request) <= 0 {
-      self.call_req_ = nil
-      self.call_resp_ = nil
-      self.cond_.L.Unlock()
-      self.g_mutex_.Unlock()
-      return false
+        self.call_req_ = nil
+        self.call_resp_ = nil
+        self.cond_.L.Unlock()
+        self.g_mutex_.Unlock()
+        return false
     }
 
     self.call_wait_ = true
     
     timer := time.AfterFunc(time.Duration(duration) * time.Second , func() {
-		self.cond_.Signal()
-	})
-	defer timer.Stop()
-	
-	self.cond_.Wait()
-	
+        self.cond_.Signal()
+    })
+    defer timer.Stop()
+    
+    self.cond_.Wait()
+    
     result := !self.call_wait_
     self.call_req_ = nil
     self.call_resp_ = nil

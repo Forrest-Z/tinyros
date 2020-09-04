@@ -13,7 +13,7 @@ function GridCells() {
 
 GridCells.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var float32Array_cell_width = new Float32Array(1);
     var uInt8Float32Array_cell_width = new Uint8Array(float32Array_cell_width.buffer);
     float32Array_cell_width[0] = +this.cell_width;
@@ -37,14 +37,14 @@ GridCells.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_cells >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_cells; i++) {
-        offset += this.cells[i].serialize(buff, offset);
+        offset = this.cells[i].serialize(buff, offset);
     }
     return offset;
 };
 
 GridCells.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var float32Array_cell_width = new Float32Array(1);
     var uInt8Float32Array_cell_width = new Uint8Array(float32Array_cell_width.buffer);
     uInt8Float32Array_cell_width[0] = buff[offset + 0];
@@ -69,7 +69,7 @@ GridCells.prototype.deserialize = function(buff, idx) {
     this.cells = new Array(length_cells);
     for (var i = 0; i < length_cells; i++) {
         this.cells[i] = geometry_msgs.Point();
-        offset += this.cells[i].deserialize(buff, offset);
+        offset = this.cells[i].deserialize(buff, offset);
     }
     return offset;
 };

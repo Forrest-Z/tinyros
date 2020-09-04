@@ -31,8 +31,8 @@ SetJointTrajectoryRequest.prototype.serialize = function(buff, idx) {
         buff[offset + i] = utf8array_model_name[i];
     }
     offset += utf8array_model_name.length;
-    offset += this.joint_trajectory.serialize(buff, offset);
-    offset += this.model_pose.serialize(buff, offset);
+    offset = this.joint_trajectory.serialize(buff, offset);
+    offset = this.model_pose.serialize(buff, offset);
     buff[offset] = this.set_model_pose === false ? 0 : 1;
     offset += 1;
     buff[offset] = this.disable_physics_updates === false ? 0 : 1;
@@ -55,8 +55,8 @@ SetJointTrajectoryRequest.prototype.deserialize = function(buff, idx) {
     var decoder_model_name = new TextDecoder('utf8');
     this.model_name = decoder_model_name.decode(buff.slice(offset, offset + length_model_name));
     offset += length_model_name;
-    offset += this.joint_trajectory.deserialize(buff, offset);
-    offset += this.model_pose.deserialize(buff, offset);
+    offset = this.joint_trajectory.deserialize(buff, offset);
+    offset = this.model_pose.deserialize(buff, offset);
     this.set_model_pose = buff[offset] !== 0 ? true : false;
     offset += 1;
     this.disable_physics_updates = buff[offset] !== 0 ? true : false;

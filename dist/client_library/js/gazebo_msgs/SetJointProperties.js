@@ -27,7 +27,7 @@ SetJointPropertiesRequest.prototype.serialize = function(buff, idx) {
         buff[offset + i] = utf8array_joint_name[i];
     }
     offset += utf8array_joint_name.length;
-    offset += this.ode_joint_config.serialize(buff, offset);
+    offset = this.ode_joint_config.serialize(buff, offset);
     return offset;
 };
 
@@ -46,7 +46,7 @@ SetJointPropertiesRequest.prototype.deserialize = function(buff, idx) {
     var decoder_joint_name = new TextDecoder('utf8');
     this.joint_name = decoder_joint_name.decode(buff.slice(offset, offset + length_joint_name));
     offset += length_joint_name;
-    offset += this.ode_joint_config.deserialize(buff, offset);
+    offset = this.ode_joint_config.deserialize(buff, offset);
     return offset;
 };
 

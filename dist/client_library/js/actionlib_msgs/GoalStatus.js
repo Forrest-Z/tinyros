@@ -24,7 +24,7 @@ function GoalStatus() {
 
 GoalStatus.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.goal_id.serialize(buff, offset);
+    offset = this.goal_id.serialize(buff, offset);
     buff[offset + 0] = ((+this.status) >> (8 * 0)) & 0xFF;
     offset += 1;
     var encoder_text = new TextEncoder('utf8');
@@ -43,7 +43,7 @@ GoalStatus.prototype.serialize = function(buff, idx) {
 
 GoalStatus.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.goal_id.deserialize(buff, offset);
+    offset = this.goal_id.deserialize(buff, offset);
     this.status = +((buff[offset + 0] & 0xFF) << (8 * 0));
     offset += 1;
     var length_text = +((buff[offset + 0] & 0xFF) << (8 * 0));

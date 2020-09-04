@@ -11,15 +11,15 @@ function Transform() {
 
 Transform.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.translation.serialize(buff, offset);
-    offset += this.rotation.serialize(buff, offset);
+    offset = this.translation.serialize(buff, offset);
+    offset = this.rotation.serialize(buff, offset);
     return offset;
 };
 
 Transform.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.translation.deserialize(buff, offset);
-    offset += this.rotation.deserialize(buff, offset);
+    offset = this.translation.deserialize(buff, offset);
+    offset = this.rotation.deserialize(buff, offset);
     return offset;
 };
 

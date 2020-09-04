@@ -10,15 +10,15 @@ function Twist() {
 
 Twist.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.linear.serialize(buff, offset);
-    offset += this.angular.serialize(buff, offset);
+    offset = this.linear.serialize(buff, offset);
+    offset = this.angular.serialize(buff, offset);
     return offset;
 };
 
 Twist.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.linear.deserialize(buff, offset);
-    offset += this.angular.deserialize(buff, offset);
+    offset = this.linear.deserialize(buff, offset);
+    offset = this.angular.deserialize(buff, offset);
     return offset;
 };
 

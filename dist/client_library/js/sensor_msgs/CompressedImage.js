@@ -11,7 +11,7 @@ function CompressedImage() {
 
 CompressedImage.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     var encoder_format = new TextEncoder('utf8');
     var utf8array_format = encoder_format.encode(this.format);
     buff[offset + 0] = (utf8array_format.length >> (8 * 0)) & 0xFF;
@@ -38,7 +38,7 @@ CompressedImage.prototype.serialize = function(buff, idx) {
 
 CompressedImage.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     var length_format = +((buff[offset + 0] & 0xFF) << (8 * 0));
     length_format |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     length_format |= +((buff[offset + 2] & 0xFF) << (8 * 2));

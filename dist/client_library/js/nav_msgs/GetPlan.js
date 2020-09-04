@@ -17,8 +17,8 @@ GetPlanRequest.prototype.serialize = function(buff, idx) {
     buff[offset + 2] = ((+this.__id__) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.__id__) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.start.serialize(buff, offset);
-    offset += this.goal.serialize(buff, offset);
+    offset = this.start.serialize(buff, offset);
+    offset = this.goal.serialize(buff, offset);
     var float32Array_tolerance = new Float32Array(1);
     var uInt8Float32Array_tolerance = new Uint8Array(float32Array_tolerance.buffer);
     float32Array_tolerance[0] = +this.tolerance;
@@ -37,8 +37,8 @@ GetPlanRequest.prototype.deserialize = function(buff, idx) {
     this.__id__ |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.__id__ |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.start.deserialize(buff, offset);
-    offset += this.goal.deserialize(buff, offset);
+    offset = this.start.deserialize(buff, offset);
+    offset = this.goal.deserialize(buff, offset);
     var float32Array_tolerance = new Float32Array(1);
     var uInt8Float32Array_tolerance = new Uint8Array(float32Array_tolerance.buffer);
     uInt8Float32Array_tolerance[0] = buff[offset + 0];
@@ -94,7 +94,7 @@ GetPlanResponse.prototype.serialize = function(buff, idx) {
     buff[offset + 2] = ((+this.__id__) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.__id__) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.plan.serialize(buff, offset);
+    offset = this.plan.serialize(buff, offset);
     return offset;
 };
 
@@ -105,7 +105,7 @@ GetPlanResponse.prototype.deserialize = function(buff, idx) {
     this.__id__ |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.__id__ |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.plan.deserialize(buff, offset);
+    offset = this.plan.deserialize(buff, offset);
     return offset;
 };
 

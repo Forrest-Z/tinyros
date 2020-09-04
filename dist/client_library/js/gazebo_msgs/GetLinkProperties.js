@@ -99,7 +99,7 @@ GetLinkPropertiesResponse.prototype.serialize = function(buff, idx) {
     buff[offset + 2] = ((+this.__id__) >> (8 * 2)) & 0xFF;
     buff[offset + 3] = ((+this.__id__) >> (8 * 3)) & 0xFF;
     offset += 4;
-    offset += this.com.serialize(buff, offset);
+    offset = this.com.serialize(buff, offset);
     buff[offset] = this.gravity_mode === false ? 0 : 1;
     offset += 1;
     var float64Array_mass = new Float64Array(1);
@@ -209,7 +209,7 @@ GetLinkPropertiesResponse.prototype.deserialize = function(buff, idx) {
     this.__id__ |= +((buff[offset + 2] & 0xFF) << (8 * 2));
     this.__id__ |= +((buff[offset + 3] & 0xFF) << (8 * 3));
     offset += 4;
-    offset += this.com.deserialize(buff, offset);
+    offset = this.com.deserialize(buff, offset);
     this.gravity_mode = buff[offset] !== 0 ? true : false;
     offset += 1;
     var float64Array_mass = new Float64Array(1);

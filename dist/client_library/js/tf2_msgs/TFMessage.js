@@ -16,7 +16,7 @@ TFMessage.prototype.serialize = function(buff, idx) {
     buff[offset + 3] = (length_transforms >> (8 * 3)) & 0xFF;
     offset += 4;
     for (var i = 0; i < length_transforms; i++) {
-        offset += this.transforms[i].serialize(buff, offset);
+        offset = this.transforms[i].serialize(buff, offset);
     }
     return offset;
 };
@@ -31,7 +31,7 @@ TFMessage.prototype.deserialize = function(buff, idx) {
     this.transforms = new Array(length_transforms);
     for (var i = 0; i < length_transforms; i++) {
         this.transforms[i] = geometry_msgs.TransformStamped();
-        offset += this.transforms[i].deserialize(buff, offset);
+        offset = this.transforms[i].deserialize(buff, offset);
     }
     return offset;
 };

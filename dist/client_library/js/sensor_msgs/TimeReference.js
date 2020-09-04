@@ -12,7 +12,7 @@ function TimeReference() {
 
 TimeReference.prototype.serialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.serialize(buff, offset);
+    offset = this.header.serialize(buff, offset);
     buff[offset + 0] = ((+this.time_ref.sec) >> (8 * 0)) & 0xFF;
     buff[offset + 1] = ((+this.time_ref.sec) >> (8 * 1)) & 0xFF;
     buff[offset + 2] = ((+this.time_ref.sec) >> (8 * 2)) & 0xFF;
@@ -39,7 +39,7 @@ TimeReference.prototype.serialize = function(buff, idx) {
 
 TimeReference.prototype.deserialize = function(buff, idx) {
     var offset = idx;
-    offset += this.header.deserialize(buff, offset);
+    offset = this.header.deserialize(buff, offset);
     this.time_ref.sec = +((buff[offset + 0] & 0xFF) << (8 * 0));
     this.time_ref.sec |= +((buff[offset + 1] & 0xFF) << (8 * 1));
     this.time_ref.sec |= +((buff[offset + 2] & 0xFF) << (8 * 2));
