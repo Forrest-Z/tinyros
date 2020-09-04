@@ -58,14 +58,12 @@ static void web_service_run(int web_server_port) {
 #endif
 
 int main(int argc, char* argv[]) {
-#ifdef __linux__
-  signal(SIGPIPE, SIG_IGN);
-#endif
-    
   int tcp_server_port = 11315;
   int udp_server_port = 11316;
   int udp_client_port = 11317;
   int web_server_port = 11318;
+  
+  signal(SIGPIPE, SIG_IGN);
 
   auto stdout_sink = std::make_shared<spdlog::sinks::stdout_sink_mt>();
   auto rotating_file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>
