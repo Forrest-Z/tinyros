@@ -14,7 +14,7 @@ static void udp_service_run(int server_port, int client_port) {
   tinyros::Session<tinyros::UdpStream> new_session(stream, tinyros::UDP_STREAM);
   while (1) {
     if (!new_session.is_active()) {
-      if (new_session.socket().open(server_port, client_port, new_session.session_id_)) {
+      if (new_session.socket().open(server_port, client_port)) {
         new_session.start();
       }
     }
@@ -58,11 +58,6 @@ static void web_service_run(int web_server_port) {
 #endif
 
 int main(int argc, char* argv[]) {
-  int tcp_server_port = 11315;
-  int udp_server_port = 11316;
-  int udp_client_port = 11317;
-  int web_server_port = 11318;
-  
   signal(SIGPIPE, SIG_IGN);
 
   auto stdout_sink = std::make_shared<spdlog::sinks::stdout_sink_mt>();
@@ -77,15 +72,15 @@ int main(int argc, char* argv[]) {
   logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
   spdlog::register_logger(logger);
 
-  std::thread tidudp(std::bind(udp_service_run, udp_server_port, udp_client_port));
+  std::thread tidudp(std::bind(udp_service_run, UDP_SERVER_PORT, UDP_CLIENT_PORT));
   tidudp.detach();
 
 #ifdef TINYROS_WITH_WEBSOCKETS
-  std::thread tidws(std::bind(web_service_run, web_server_port));
+  std::thread tidws(std::bind(web_service_run, WEB_SERVER_PORT));
   tidws.detach();
 #endif
 
-  tinyros::TcpServer tcp_server(tcp_server_port);
+  tinyros::TcpServer tcp_server(TCP_SERVER_PORT);
   tcp_server.start_accept();
   
   return 0;

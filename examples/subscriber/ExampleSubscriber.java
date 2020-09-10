@@ -20,8 +20,11 @@ public class ExampleSubscriber {
             }
         }, new TinyrosHello());
 
-        Tinyros.nh().subscribe(sub);
-        /*Tinyros.udp().subscribe(sub);*/
+        if (true) {
+            Tinyros.nh().subscribe(sub);
+        } else {
+            Tinyros.udp().subscribe(sub);
+        }
 
         while(true) {
             Thread.sleep(10*1000);

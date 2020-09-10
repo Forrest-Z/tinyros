@@ -1,19 +1,11 @@
 #ifndef TINY_ROS_TCP_STREAM_H
 #define TINY_ROS_TCP_STREAM_H
-#include <iostream>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include "common.h"
+
+#include "stream_base.h"
 
 namespace tinyros
 {
-class TcpStream
+class TcpStream: public StreamBase
 {
 public:
   TcpStream(int fd): sock_fd_(fd)  {
@@ -25,18 +17,18 @@ public:
     setsockopt(sock_fd_, SOL_SOCKET, SO_LINGER, (const char *)&so_linger, sizeof(so_linger));
   }
   
-  int write_some(uint8_t* data, int length, const std::string& session_id) {
+  virtual int write_some(uint8_t* data, int length) {
    int rv, len = length, totalsent = 0;
     do {
       rv = ::write(sock_fd_, data + totalsent, len - totalsent);
       if (rv > 0) {
         totalsent += rv;
       } else if (rv == 0) {
-        spdlog_error("[{0}] TcpStream::write_some socket close: {1}(errno: {2})", session_id.c_str(), strerror(errno), errno);
+        spdlog_error("[{0}] TcpStream::write_some socket close: {1}(errno: {2})", session_id_.c_str(), strerror(errno), errno);
         return -1;
       } else {
         if ((errno != EAGAIN) && (errno != EWOULDBLOCK) && (errno != EINTR)) {
-          spdlog_error("[{0}] TcpStream::write_some error: {1}(errno: {2})", session_id.c_str(), strerror(errno), errno);
+          spdlog_error("[{0}] TcpStream::write_some error: {1}(errno: {2})", session_id_.c_str(), strerror(errno), errno);
           return -1;
         }
       }
@@ -45,25 +37,25 @@ public:
     return totalsent;
   } 
 
-  int read_some(uint8_t* data, int length, const std::string& session_id) {
+  virtual int read_some(uint8_t* data, int length) {
     int rv = ::read(sock_fd_, data, length);
     if (rv > 0) {
       return rv;
     } else if (rv == 0) {
-      spdlog_error("[{0}] TcpStream::read_some socket close: {1}(errno: {2})", session_id.c_str(), strerror(errno), errno);
+      spdlog_error("[{0}] TcpStream::read_some socket close: {1}(errno: {2})", session_id_.c_str(), strerror(errno), errno);
       return -1;
     } else {
       if ((errno != EAGAIN) && (errno != EWOULDBLOCK) && (errno != EINTR))  {
-        spdlog_error("[{0}] TcpStream::read_some error: {1}(errno: {2})", session_id.c_str(), strerror(errno), errno);
+        spdlog_error("[{0}] TcpStream::read_some error: {1}(errno: {2})", session_id_.c_str(), strerror(errno), errno);
         return -1;
       }
       return 0;
     }
   }
 
-  int getFd() { return sock_fd_; }
+  virtual int getFd() { return sock_fd_; }
   
-  void close() {
+  virtual void close() {
     ::close(sock_fd_);
   }
 

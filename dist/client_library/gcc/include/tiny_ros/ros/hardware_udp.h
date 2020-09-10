@@ -20,7 +20,7 @@ namespace tinyros {
 #undef SERVER_PORTNUM
 #undef CLIENT_PORTNUM
 #define SERVER_PORTNUM 11316
-#define CLIENT_PORTNUM 11317
+#define CLIENT_PORTNUM 0
 
 #ifdef WIN32
 #undef errno
@@ -33,7 +33,6 @@ class HardwareUdp: public Hardware
 public:
   HardwareUdp()
     : sockfd_(-1)
-    , sock_binded_(false)
     , connected_(false) {
 #ifdef WIN32
     WSADATA wsaData;
@@ -75,6 +74,11 @@ public:
     client_endpoint_.sin_family = AF_INET;
     client_endpoint_.sin_port = htons(CLIENT_PORTNUM);
     client_endpoint_.sin_addr.s_addr = htonl(INADDR_ANY);
+    if (bind(sockfd_, (struct sockaddr*)&client_endpoint_, sizeof(client_endpoint_)) < 0) {
+      std::cerr << "HardwareUdp::init() bind socket: " << strerror(errno) << "(errno: " << errno <<")" << std::endl;
+      this->close();
+      return false;
+    }
 
     connected_ = true;
     return connected_;
@@ -82,14 +86,6 @@ public:
 
   virtual int read(uint8_t* data, int length) {
     if (connected_) {
-      if (!sock_binded_) {
-        if (bind(sockfd_, (struct sockaddr*)&client_endpoint_, sizeof(client_endpoint_)) < 0) {
-          std::cerr << "HardwareUdp::read() bind socket: " << strerror(errno) << "(errno: " << errno <<")" << std::endl;
-        } else {
-          sock_binded_ = true;
-        }
-      }
-
       struct sockaddr_in from;
       socklen_t from_len = sizeof(from);
       int rv = recvfrom(sockfd_, (char*)data, length, 0, (struct sockaddr*)&from, &from_len);
@@ -120,7 +116,6 @@ public:
 
   virtual void close() {
     connected_ = false;
-    sock_binded_ = false;
     if (sockfd_ > 0) {
 #ifdef WIN32
       closesocket(sockfd_);
@@ -133,7 +128,6 @@ public:
   
 private:
   int sockfd_;
-  bool sock_binded_;
   bool connected_;
   struct sockaddr_in server_endpoint_;
   struct sockaddr_in client_endpoint_;

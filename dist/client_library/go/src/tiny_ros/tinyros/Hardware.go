@@ -90,8 +90,7 @@ func (self *HardwareTCP) close() {
 
 
 type HardwareUDP struct {
-    conn_send_ *net.UDPConn `json:"conn_send"`
-    conn_recv_ *net.UDPConn `json:"conn_recv"`
+    conn_ *net.UDPConn `json:"conn_"`
     addr_send_ *net.UDPAddr `json:"addr_send"`
     addr_recv_ *net.UDPAddr `json:"addr_recv"`
     client_port_ string `json:"client_port"`
@@ -101,19 +100,18 @@ type HardwareUDP struct {
 
 func NewHardwareUDP() (*HardwareUDP) {
     newHardwareUDP := new(HardwareUDP)
-    newHardwareUDP.conn_send_ = nil
-    newHardwareUDP.conn_recv_ = nil
+    newHardwareUDP.conn_ = nil
     newHardwareUDP.addr_send_ = nil
     newHardwareUDP.addr_recv_ = nil
     newHardwareUDP.server_port_ = ":11316"
-    newHardwareUDP.client_port_ = ":11317"
+    newHardwareUDP.client_port_ = ":0"
     newHardwareUDP.connected_ = false
     return newHardwareUDP
 }
 
 func (self *HardwareUDP) init(ip string) (bool) {
-    target := ip + self.server_port_
     self.close()
+    target := ip + self.server_port_
     addr_send, err := net.ResolveUDPAddr("udp", string(target))
     if err != nil {
         fmt.Println("HardwareUDP.init", err)
@@ -127,8 +125,8 @@ func (self *HardwareUDP) init(ip string) (bool) {
         fmt.Println("HardwareUDP.init", err)
         return false
     }
-    
-    self.conn_send_, err = net.DialUDP("udp", nil, self.addr_send_)
+
+    self.conn_, err = net.ListenUDP("udp", self.addr_recv_)
     if err != nil {
         fmt.Println("HardwareUDP.init", err)
         return false
@@ -139,16 +137,7 @@ func (self *HardwareUDP) init(ip string) (bool) {
 
 func (self *HardwareUDP) read(data []byte) (int) {
     if self.connected_ {
-        if self.conn_recv_ == nil {
-            conn_recv, err := net.ListenUDP("udp", self.addr_recv_)
-            if err != nil {
-                fmt.Println("HardwareUDP.read", err)
-                return -1
-            }
-            self.conn_recv_ = conn_recv
-        }
-        
-        rv, _, err := self.conn_recv_.ReadFrom(data)
+        rv, _, err := self.conn_.ReadFromUDP(data)
         if err != nil {
             fmt.Println("HardwareUDP.read", err)
             self.close()
@@ -161,7 +150,7 @@ func (self *HardwareUDP) read(data []byte) (int) {
 
 func (self *HardwareUDP) write(data []byte) (int) {
     if self.connected_ {
-        rv, err := self.conn_send_.Write(data)
+        rv, err := self.conn_.WriteToUDP(data, self.addr_send_)
         if err != nil {
             fmt.Println("HardwareUDP.write", err)
             self.close()
@@ -180,12 +169,8 @@ func (self *HardwareUDP) close() {
     self.connected_ = false
     self.addr_send_ = nil
     self.addr_recv_ = nil
-    if self.conn_send_ != nil {
-        self.conn_send_.Close()
-        self.conn_send_ = nil
-    }
-    if self.conn_recv_ != nil {
-        self.conn_recv_.Close()
-        self.conn_recv_ = nil
+    if self.conn_ != nil {
+        self.conn_.Close()
+        self.conn_ = nil
     }
 }

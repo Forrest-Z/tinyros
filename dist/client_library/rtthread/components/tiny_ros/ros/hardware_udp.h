@@ -17,11 +17,11 @@ namespace tinyros {
 #undef SERVER_PORTNUM
 #undef CLIENT_PORTNUM
 #define SERVER_PORTNUM 11316
-#define CLIENT_PORTNUM 11317
+#define CLIENT_PORTNUM 0
 class HardwareUdp
 {
 public:
-  HardwareUdp(): sockfd_(-1), connected_(false), sock_binded_(false) {
+  HardwareUdp(): sockfd_(-1), connected_(false) {
 
   }
 
@@ -46,6 +46,11 @@ public:
     client_endpoint_.sin_family = AF_INET;
     client_endpoint_.sin_port = htons(CLIENT_PORTNUM);
     client_endpoint_.sin_addr.s_addr = htonl(INADDR_ANY);
+    if (bind(sockfd_, (struct sockaddr*)&client_endpoint_, sizeof(client_endpoint_)) < 0) {
+      rt_kprintf("HardwareUdp::init bind socket: %s(errno: %d)\n", strerror(errno), errno);
+      this->close();
+      return false;
+    }
 
     connected_ = true;
     return connected_;
@@ -53,14 +58,6 @@ public:
 
   virtual int read(uint8_t* data, int length) {
     if (connected_) {
-      if (!sock_binded_) {
-        if (bind(sockfd_, (struct sockaddr*)&client_endpoint_, sizeof(client_endpoint_)) < 0) {
-          printf("HardwareUdp::read bind socket: %s(errno: %d)\n", strerror(errno), errno);
-        } else {
-          sock_binded_ = true;
-        }
-      }
-      
       struct sockaddr_in from;
       socklen_t from_len = sizeof(from);
       int rv = recvfrom(sockfd_, data, length, 0, (struct sockaddr*)&from, &from_len);
@@ -90,7 +87,6 @@ public:
 
   virtual void close() {
     connected_ = false;
-    sock_binded_ = false;
     if (sockfd_ > 0) {
       closesocket(sockfd_);
       sockfd_ = -1;
@@ -100,7 +96,6 @@ public:
 private:
   int sockfd_;
   bool connected_;
-  bool sock_binded_;
   struct sockaddr_in server_endpoint_;
   struct sockaddr_in client_endpoint_;
 };

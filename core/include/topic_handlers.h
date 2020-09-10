@@ -59,6 +59,7 @@ public:
     md5sum_ = topic_info.md5sum;
     node_name_ = topic_info.node;
     buffer_size_ = topic_info.buffer_size;
+    bzero(&from_,sizeof(from_));
   }
 
   ~PublisherCore() {
@@ -82,13 +83,14 @@ public:
   std::string node_name_;
   int32_t buffer_size_;
   uint64_t alive_time_;
+  struct sockaddr_in from_;
   RostopicConnection connection_;
 };
 
 class SubscriberCore {
 public:
   SubscriberCore(tinyros_msgs::TopicInfo& topic_info,
-      std::function<void(tinyros::serialization::IStream& message)> write_fn)
+      std::function<void(tinyros::serialization::IStream&, struct sockaddr_in&)> write_fn)
     : write_fn_(write_fn) {
     topic_id_ = topic_info.topic_id;
     topic_name_ = topic_info.topic_name;
@@ -96,6 +98,7 @@ public:
     md5sum_ = topic_info.md5sum;
     node_name_ = topic_info.node;
     buffer_size_ = topic_info.buffer_size;
+    bzero(&from_,sizeof(from_));
   }
 
   ~SubscriberCore() {
@@ -108,10 +111,10 @@ public:
   }
   
   void handle(tinyros::serialization::IStream& message) {
-    write_fn_(message);
+    write_fn_(message, from_);
   }
 
-  std::function<void(tinyros::serialization::IStream& message)> write_fn_;
+  std::function<void(tinyros::serialization::IStream&, struct sockaddr_in&)> write_fn_;
   uint32_t topic_id_;
   std::string topic_name_;
   std::string message_type_;
@@ -119,13 +122,14 @@ public:
   std::string node_name_;
   int32_t buffer_size_;
   uint64_t alive_time_;
+  struct sockaddr_in from_;
   RostopicConnection connection_;
 };
 
 class ServiceServerCore {
 public:
   ServiceServerCore(tinyros_msgs::TopicInfo& topic_info,
-      std::function<void(tinyros::serialization::IStream& message, const uint16_t topic_id)> write_fn)
+      std::function<void(tinyros::serialization::IStream&, struct sockaddr_in&, const uint16_t)> write_fn)
     : write_fn_(write_fn) {
     topic_id_ = -1;
     topic_name_ = topic_info.topic_name;
@@ -133,6 +137,7 @@ public:
     md5sum_ = topic_info.md5sum;
     node_name_ = topic_info.node;
     buffer_size_ = topic_info.buffer_size;
+    bzero(&from_,sizeof(from_));
     signal_ = std::shared_ptr<Signal<tinyros::serialization::IStream&> >(new Signal<tinyros::serialization::IStream&>);
     destroy_signal_ = std::shared_ptr<Signal<std::string&> >(new Signal<std::string&>);
   }
@@ -145,11 +150,11 @@ public:
   }
 
   void callback(tinyros::serialization::IStream& message) {
-    write_fn_(message, topic_id_);
+    write_fn_(message, from_, topic_id_);
   }
 
 public:
-  std::function<void(tinyros::serialization::IStream& message, const uint16_t topic_id)> write_fn_;
+  std::function<void(tinyros::serialization::IStream&, struct sockaddr_in&, const uint16_t)> write_fn_;
   std::shared_ptr<Signal<tinyros::serialization::IStream&> > signal_;
   std::shared_ptr<Signal<std::string&> > destroy_signal_;
   static std::map<std::string, ServiceServerPtr> services_;
@@ -160,6 +165,7 @@ public:
   std::string md5sum_;
   std::string node_name_;
   int32_t buffer_size_;
+  struct sockaddr_in from_;
 };
 std::mutex ServiceServerCore::services_mutex_;
 std::map<std::string, ServiceServerPtr> ServiceServerCore::services_;
@@ -167,7 +173,7 @@ std::map<std::string, ServiceServerPtr> ServiceServerCore::services_;
 class ServiceClientCore {
 public:
   ServiceClientCore(tinyros_msgs::TopicInfo& topic_info,
-      std::function<void(tinyros::serialization::IStream& message, const uint16_t topic_id)> write_fn)
+      std::function<void(tinyros::serialization::IStream&, struct sockaddr_in&, const uint16_t)> write_fn)
     : write_fn_(write_fn) {
     topic_id_ = -1;
     topic_name_ = topic_info.topic_name;
@@ -175,6 +181,7 @@ public:
     md5sum_ = topic_info.md5sum;
     node_name_ = topic_info.node;
     buffer_size_ = topic_info.buffer_size;
+    bzero(&from_,sizeof(from_));
     signal_ = std::shared_ptr<Signal<tinyros::serialization::IStream&> >(new Signal<tinyros::serialization::IStream&>);
   }
 
@@ -187,11 +194,11 @@ public:
   }
 
   void callback(tinyros::serialization::IStream& message) {
-    write_fn_(message, topic_id_);
+    write_fn_(message, from_, topic_id_);
   }
 
 public:
-  std::function<void(tinyros::serialization::IStream& message, const uint16_t topic_id)> write_fn_;
+  std::function<void(tinyros::serialization::IStream&, struct sockaddr_in&, const uint16_t)> write_fn_;
   std::shared_ptr<Signal<tinyros::serialization::IStream&> > signal_;
   int client_connection_;
   int service_connection_;
@@ -202,6 +209,7 @@ public:
   std::string md5sum_;
   std::string node_name_;
   int32_t buffer_size_;
+  struct sockaddr_in from_;
 };
 
 }  // namespace

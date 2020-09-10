@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <uv.h>
+#include "stream_base.h"
 
 namespace uWS {
 
@@ -16,7 +17,7 @@ enum OpCode : unsigned char {
 
 class Server;
 
-class WebSocket
+class WebSocket: public tinyros::StreamBase
 {
     friend class Server;
     friend class Parser;
@@ -49,10 +50,7 @@ public:
     bool operator==(const WebSocket &other) const {return p == other.p;}
     bool operator<(const WebSocket &other) const {return p < other.p;}
 
-    // with tinyros
-    int write_some(uint8_t* data, int length, const std::string& session_id);
-    int read_some(uint8_t* data, int length, const std::string& session_id) ;
-    int getFd();
+    virtual int write_some(uint8_t* data, int length);
 };
 
 }

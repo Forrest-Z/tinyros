@@ -96,9 +96,12 @@ public class ExamplePublisher {
         
         Publisher<TinyrosHello> pub =
             new Publisher<TinyrosHello>("tinyros_hello", new TinyrosHello());
-        
-        Tinyros.nh().advertise(pub);
-        /*Tinyros.udp().advertise(pub);*/
+
+        if (true) {
+            Tinyros.nh().advertise(pub);
+        } else {
+            Tinyros.udp().advertise(pub);
+        }
         
         while(true) {
             TinyrosHello msg = new TinyrosHello();
@@ -251,8 +254,11 @@ public class ExampleSubscriber {
             }
         }, new TinyrosHello());
 
-        Tinyros.nh().subscribe(sub);
-        /*Tinyros.udp().subscribe(sub);*/
+        if (true) {
+            Tinyros.nh().subscribe(sub);
+        } else {
+            Tinyros.udp().subscribe(sub);
+        }
 
         while(true) {
             Thread.sleep(10*1000);

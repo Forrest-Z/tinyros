@@ -47,7 +47,13 @@ namespace tinyros
 
 typedef std::vector<uint8_t> Buffer;
 typedef std::shared_ptr<Buffer> BufferPtr;
-typedef std::deque<BufferPtr> AsyncWritebuffer;
+
+struct Writebuffer {
+  struct sockaddr_in addr = {0};
+  BufferPtr buffer = nullptr;
+};
+typedef std::shared_ptr<Writebuffer> WritebufferPtr;
+typedef std::deque<WritebufferPtr> AsyncWritebuffer;
 
 template<typename Socket>
 class Session
@@ -64,6 +70,7 @@ public:
   {
     if (type == tinyros::UDP_STREAM) {
       session_id_ = "session_udp";
+      socket_.session_id_ = session_id_;
     }
   }
 
@@ -285,7 +292,8 @@ private:
   void read_message_sync_udp() {
     uint8_t *message_in = (uint8_t*)calloc(buffer_max, sizeof(uint8_t));
     while (is_active()) {
-      int32_t rv = socket_.read_some(message_in, buffer_max, session_id_);
+      bzero(&from_,sizeof(from_));
+      int32_t rv = socket_.read_some_udp(message_in, buffer_max, from_);
       consume_message(message_in, rv);
     }
 
@@ -327,7 +335,7 @@ private:
         continue;
       }
       
-      if ((rv = socket_.read_some(message_tmp, len, session_id_)) < 0) {
+      if ((rv = socket_.read_some(message_tmp, len)) < 0) {
         if (is_active()) {
           std::thread tid(std::bind(&Session::stop, this));
           tid.detach();
@@ -458,11 +466,14 @@ private:
     stream << msg_checksum;
 
     std::unique_lock<std::mutex> lock(async_write_mutex_);
-    async_write_buffers_.push_back(buffer_ptr);
+    WritebufferPtr write_buffer_ptr(new Writebuffer());
+    write_buffer_ptr->addr = from_;
+    write_buffer_ptr->buffer = buffer_ptr;
+    async_write_buffers_.push_back(write_buffer_ptr);
     async_write_cond_.notify_one();
   }
 
-  void write_message_stream(tinyros::serialization::IStream& message, const uint32_t topic_id) {
+  void write_message_stream(tinyros::serialization::IStream& message, struct sockaddr_in &to, const uint32_t topic_id) {
     if (!is_active()) return;
     
     uint8_t msg_checksum;
@@ -480,7 +491,10 @@ private:
     stream << msg_checksum;
 
     std::unique_lock<std::mutex> lock(async_write_mutex_);
-    async_write_buffers_.push_back(buffer_ptr);
+    WritebufferPtr write_buffer_ptr(new Writebuffer());
+    write_buffer_ptr->addr = to;
+    write_buffer_ptr->buffer = buffer_ptr;
+    async_write_buffers_.push_back(write_buffer_ptr);
     async_write_cond_.notify_one();
   }
 
@@ -491,15 +505,22 @@ private:
         async_write_cond_.wait(lock);
       }
 
-      BufferPtr buffer_ptr = nullptr;
+      WritebufferPtr write_buffer_ptr = nullptr;
       if(is_active() && !async_write_buffers_.empty()) {
-        buffer_ptr = async_write_buffers_.front();
+        write_buffer_ptr = async_write_buffers_.front();
         async_write_buffers_.pop_front();
       }
       lock.unlock();
 
-      if (is_active() && buffer_ptr) {
-        if ((socket_.write_some((uint8_t*)buffer_ptr->data(), (int)buffer_ptr->size(), session_id_)) < 0) {
+      if (is_active() && write_buffer_ptr) {
+        int ret = 0;
+        if (stream_type_ == tinyros::UDP_STREAM) {
+          ret = socket_.write_some_udp((uint8_t*)write_buffer_ptr->buffer->data(), (int)write_buffer_ptr->buffer->size(), write_buffer_ptr->addr);
+        } else {
+          ret = socket_.write_some((uint8_t*)write_buffer_ptr->buffer->data(), (int)write_buffer_ptr->buffer->size());
+        }
+        
+        if (ret < 0) {
           if (is_active()) {
             std::thread tid(std::bind(&Session::stop, this));
             tid.detach();
@@ -513,12 +534,12 @@ private:
   //// HELPERS ////
   void request_topics() {
     while(require_check_running_) {
-
-      handle_time_done();
-      
       if (stream_type_ != tinyros::UDP_STREAM) {
         std::vector<uint8_t> message(0);
         write_message(message, tinyros_msgs::TopicInfo::ID_PUBLISHER);
+
+        // Post dds time
+        handle_time_done();
       } else {
         std::map<uint32_t, PublisherPtr>::iterator pit;
         for(pit = publishers_.begin(); pit != publishers_.end(); ) {
@@ -580,6 +601,7 @@ private:
       spdlog_info("[{0}] setup_publisher(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
         session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
       PublisherPtr pub(new PublisherCore(topic_info));
+      pub->from_ = from_;
       pub->alive_time_ = std::chrono::system_clock::now().time_since_epoch().count() * 1e-9;
       callbacks_[topic_info.topic_id] = std::bind(&PublisherCore::handle, pub, std::placeholders::_1);
       publishers_[topic_info.topic_id] = pub;
@@ -609,7 +631,8 @@ private:
     if (!subscribers_.count(topic_info.topic_id)) {
       spdlog_info("[{0}] setup_subscriber(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
         session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
-      SubscriberPtr sub(new SubscriberCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, topic_info.topic_id)));
+      SubscriberPtr sub(new SubscriberCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, std::placeholders::_2, topic_info.topic_id)));
+      sub->from_ = from_;
       sub->alive_time_ = std::chrono::system_clock::now().time_since_epoch().count() * 1e-9;
       subscribers_[topic_info.topic_id] = sub;
 
@@ -640,7 +663,7 @@ private:
     if (!ServiceServerCore::services_.count(topic_info.topic_name)) {
       spdlog_info("[{0}] setup_service_server(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
         session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
-      ServiceServerPtr srv(new ServiceServerCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, std::placeholders::_2)));
+      ServiceServerPtr srv(new ServiceServerCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
       callbacks_[topic_info.topic_id] = std::bind(&ServiceServerCore::handle, srv, std::placeholders::_1);
       ServiceServerCore::services_[topic_info.topic_name] = srv;
       ServiceServerCore::services_[topic_info.topic_name]->setTopicId(topic_info.topic_id);
@@ -662,7 +685,7 @@ private:
         spdlog_info("[{0}] setup_service_client(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
           session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
         ServiceServerPtr service = ServiceServerCore::services_[topic_info.topic_name];
-        ServiceClientPtr client(new ServiceClientCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, std::placeholders::_2)));
+        ServiceClientPtr client(new ServiceClientCore(topic_info, std::bind(&Session::write_message_stream, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
         client->setTopicId(topic_info.topic_id);
         client->client_connection_ = client->signal_->connect(std::bind(&ServiceServerCore::callback, service, std::placeholders::_1));
         client->service_connection_ = service->signal_->connect(std::bind(&ServiceClientCore::callback, client, std::placeholders::_1));
@@ -776,6 +799,7 @@ private:
     tinyros::serialization::Serializer<std_msgs::String>::read(stream, session_info);
     spdlog_info("[{0}] Starting session...", session_info.data.c_str());
     session_id_ = session_info.data;
+    socket_.session_id_ = session_id_;
   }
 
   std::mutex async_write_mutex_;
@@ -802,6 +826,7 @@ private:
 
   std::thread* require_check_thread_;
   bool require_check_running_;
+  struct sockaddr_in from_;
 };
 }  // namespace
 

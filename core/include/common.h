@@ -21,5 +21,17 @@
 #undef spdlog_critical
 #define spdlog_critical spdlog::get("logger")->critical
 
+#undef TCP_SERVER_PORT
+#define TCP_SERVER_PORT (11315)
+
+#undef UDP_SERVER_PORT
+#define UDP_SERVER_PORT (11316)
+
+#undef UDP_CLIENT_PORT
+#define UDP_CLIENT_PORT (11317)
+
+#undef WEB_SERVER_PORT
+#define WEB_SERVER_PORT (11318)
+
 #endif
 

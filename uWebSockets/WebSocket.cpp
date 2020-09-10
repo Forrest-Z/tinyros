@@ -530,17 +530,12 @@ void WebSocket::write(char *data, size_t length, bool transferOwnership, void(*c
     }
 }
 
-// with tinyros
-int WebSocket::write_some(uint8_t* data, int length, const std::string& session_id) {
+int WebSocket::write_some(uint8_t* data, int length) {
   if (((SocketData *) p->data)->session_id.empty()) {
-    ((SocketData *) p->data)->session_id = session_id;
+    ((SocketData *) p->data)->session_id = session_id_;
   }
   send((char*)data, length, BINARY);
   return length;
 }
-int WebSocket::read_some(uint8_t* data, int length, const std::string& session_id) {
-  return 0;
-}
-int WebSocket::getFd() { return -1; }
 
 }

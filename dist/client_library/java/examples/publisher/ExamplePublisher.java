@@ -10,10 +10,13 @@ public class ExamplePublisher {
         Tinyros.init("JavaExamplePublisher", "127.0.0.1");
         
         Publisher<TinyrosHello> pub = new Publisher<TinyrosHello>("tinyros_hello", new TinyrosHello());
-        
-        Tinyros.nh().advertise(pub);
-        /*Tinyros.udp().advertise(pub);*/
-        
+
+        if (true) {
+            Tinyros.nh().advertise(pub);
+        } else {
+            Tinyros.udp().advertise(pub);
+        }
+
         while(true) {
             TinyrosHello msg = new TinyrosHello();
             msg.hello = "Hello, tiny-ros ^_^";
