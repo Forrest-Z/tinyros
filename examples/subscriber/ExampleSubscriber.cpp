@@ -5,14 +5,23 @@ static void subscriber_cb(const tinyros_hello::TinyrosHello& received_msg) {
   printf("%s\n", received_msg.hello.c_str());
 }
 
-int main(void) {
-  tinyros::init("ExampleSubscriber", "127.0.0.1");
+int main(int argc, char *argv[]) {
+  bool isudp = false;
+  std::string ipaddr = "127.0.0.1";
+  if (argc >= 2) {
+    ipaddr = argv[1];
+  }
+  if (argc >= 3) {
+    isudp = atoi(argv[2]);
+  }
+  tinyros::init("GccExampleSubscriber", ipaddr);
   tinyros::Subscriber<tinyros_hello::TinyrosHello> sub("tinyros_hello", subscriber_cb);
-#if 1
-  tinyros::nh()->subscribe(sub);
-#else
-  tinyros::udp()->subscribe(sub);
-#endif
+  if (!isudp) {
+      tinyros::nh()->subscribe(sub);
+  } else {
+      tinyros::udp()->subscribe(sub);
+  }
+  
   while(true) {
 #ifdef WIN32
     Sleep(10*1000);

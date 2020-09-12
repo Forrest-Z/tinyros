@@ -17,9 +17,10 @@ public class ExamplePublisher {
             Tinyros.udp().advertise(pub);
         }
 
+		int count = 0;
         while(true) {
             TinyrosHello msg = new TinyrosHello();
-            msg.hello = "Hello, tiny-ros ^_^";
+            msg.hello = (count++) + ": JavaHello, tiny-ros ^_^";
             pub.publish(msg);
             Thread.sleep(1000);
         }

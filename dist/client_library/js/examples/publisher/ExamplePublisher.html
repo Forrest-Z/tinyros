@@ -13,9 +13,9 @@
       var pub = tinyros.Publisher("tinyros_hello", tinyros_hello.TinyrosHello);
       tinyros.nh().advertise(pub);
       (function publish() {
-        msg.hello = "Hello, tiny-ros ^_^";
+        msg.hello = (count++) + ": JsHello, tiny-ros ^_^";
         pub.publish(msg);
-        document.body.innerHTML = "JsExamplePublisher <<-" + (count++) + "->> " + msg.hello;
+        document.body.innerHTML = "JsExamplePublisher >> " + msg.hello;
         setTimeout(publish, 1000);
       })();
     </script>

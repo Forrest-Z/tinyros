@@ -14,11 +14,14 @@ def main():
         tinyros.nh().advertise(pub)
     else:
         tinyros.udp().advertise(pub)
+
+    count = 0
     while True:
         msg = tinyros_hello.msg.TinyrosHello()
-        msg.hello = 'Hello, tiny-ros ^_^ '
+        msg.hello = str(count) + ': PyHello, tiny-ros ^_^'
         pub.publish(msg)
         time.sleep(1)
+        count += 1
 
 if __name__ == '__main__':
     main()
