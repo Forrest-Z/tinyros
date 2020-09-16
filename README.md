@@ -1,4 +1,4 @@
-# tiny-ros
+# tinyros
 微小分布式操作系统，支持Windows、Linux、MacOS、Android、MCU RTThread或无操作系统。分布式应用的开发支持C/C++、Java、Python、Go、JavaScript编程语言。
 
 ![](doc/tinyros.png)
