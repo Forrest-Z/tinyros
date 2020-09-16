@@ -19,8 +19,8 @@
 **（注：可以进入 "{SOURCE_DIR}/core/CMakeLists.txt" 选择开启/关闭Websocket支持）**
 
 ```
-$ git clone https://github.com/tinyros/tiny-ros.git
-$ cd tiny-ros && make
+$ git clone https://github.com/tinyros/tinyros.git
+$ cd tinyros && make
 ```
 
 make clean清除项目，通过make重新编译安装。编译完成后目标文件生成在源代码目录下的：build/output下。更多可以查看Makefile了解。
