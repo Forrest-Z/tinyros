@@ -6,6 +6,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/map_msgs/ProjectedMapInfo.h"
 
+namespace tinyros
+{
 namespace map_msgs
 {
 
@@ -19,7 +21,7 @@ static const char PROJECTEDMAPSINFO[] = "map_msgs/ProjectedMapsInfo";
 
     public:
       uint32_t projected_maps_info_length;
-      typedef map_msgs::ProjectedMapInfo _projected_maps_info_type;
+      typedef tinyros::map_msgs::ProjectedMapInfo _projected_maps_info_type;
       _projected_maps_info_type st_projected_maps_info;
       _projected_maps_info_type * projected_maps_info;
 
@@ -62,11 +64,11 @@ static const char PROJECTEDMAPSINFO[] = "map_msgs/ProjectedMapsInfo";
       projected_maps_info_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->projected_maps_info_length);
       if(projected_maps_info_lengthT > projected_maps_info_length)
-        this->projected_maps_info = (map_msgs::ProjectedMapInfo*)realloc(this->projected_maps_info, projected_maps_info_lengthT * sizeof(map_msgs::ProjectedMapInfo));
+        this->projected_maps_info = (tinyros::map_msgs::ProjectedMapInfo*)realloc(this->projected_maps_info, projected_maps_info_lengthT * sizeof(tinyros::map_msgs::ProjectedMapInfo));
       projected_maps_info_length = projected_maps_info_lengthT;
       for( uint32_t i = 0; i < projected_maps_info_length; i++) {
         offset += this->st_projected_maps_info.deserialize(inbuffer + offset);
-        memcpy( &(this->projected_maps_info[i]), &(this->st_projected_maps_info), sizeof(map_msgs::ProjectedMapInfo));
+        memcpy( &(this->projected_maps_info[i]), &(this->st_projected_maps_info), sizeof(tinyros::map_msgs::ProjectedMapInfo));
       }
       return offset;
     }
@@ -142,5 +144,6 @@ static const char PROJECTEDMAPSINFO[] = "map_msgs/ProjectedMapsInfo";
     typedef ProjectedMapsInfoResponse Response;
   };
 
+}
 }
 #endif

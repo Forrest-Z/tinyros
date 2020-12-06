@@ -7,6 +7,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/ros/time.h"
 
+namespace tinyros
+{
 namespace std_msgs
 {
 
@@ -100,5 +102,6 @@ namespace std_msgs
 
   };
 
+}
 }
 #endif

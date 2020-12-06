@@ -9,13 +9,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class BatteryState : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef float _voltage_type;
       _voltage_type voltage;
@@ -408,5 +410,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

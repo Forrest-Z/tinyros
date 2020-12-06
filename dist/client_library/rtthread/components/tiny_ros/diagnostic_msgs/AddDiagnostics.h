@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace diagnostic_msgs
 {
 
@@ -171,5 +173,6 @@ static const char ADDDIAGNOSTICS[] = "diagnostic_msgs/AddDiagnostics";
     typedef AddDiagnosticsResponse Response;
   };
 
+}
 }
 #endif

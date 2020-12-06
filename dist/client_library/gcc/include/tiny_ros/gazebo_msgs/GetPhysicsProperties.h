@@ -9,6 +9,8 @@
 #include "tiny_ros/geometry_msgs/Vector3.h"
 #include "tiny_ros/gazebo_msgs/ODEPhysics.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -82,9 +84,9 @@ static const char GETPHYSICSPROPERTIES[] = "gazebo_msgs/GetPhysicsProperties";
       _pause_type pause;
       typedef double _max_update_rate_type;
       _max_update_rate_type max_update_rate;
-      typedef geometry_msgs::Vector3 _gravity_type;
+      typedef tinyros::geometry_msgs::Vector3 _gravity_type;
       _gravity_type gravity;
-      typedef gazebo_msgs::ODEPhysics _ode_config_type;
+      typedef tinyros::gazebo_msgs::ODEPhysics _ode_config_type;
       _ode_config_type ode_config;
       typedef bool _success_type;
       _success_type success;
@@ -288,5 +290,6 @@ static const char GETPHYSICSPROPERTIES[] = "gazebo_msgs/GetPhysicsProperties";
     typedef GetPhysicsPropertiesResponse Response;
   };
 
+}
 }
 #endif

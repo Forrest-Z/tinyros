@@ -9,13 +9,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/actionlib_msgs/GoalID.h"
 
+namespace tinyros
+{
 namespace actionlib_msgs
 {
 
   class GoalStatus : public tinyros::Msg
   {
     public:
-      typedef actionlib_msgs::GoalID _goal_id_type;
+      typedef tinyros::actionlib_msgs::GoalID _goal_id_type;
       _goal_id_type goal_id;
       typedef uint8_t _status_type;
       _status_type status;
@@ -107,5 +109,6 @@ namespace actionlib_msgs
 
   };
 
+}
 }
 #endif

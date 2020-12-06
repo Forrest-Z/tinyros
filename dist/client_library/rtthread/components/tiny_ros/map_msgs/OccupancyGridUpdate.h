@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace map_msgs
 {
 
   class OccupancyGridUpdate : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef int32_t _x_type;
       _x_type x;
@@ -167,5 +169,6 @@ namespace map_msgs
 
   };
 
+}
 }
 #endif

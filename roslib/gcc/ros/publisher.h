@@ -12,7 +12,7 @@ namespace tinyros
 class Publisher
 {
 public:
-  Publisher(std::string topic_name, Msg * msg, int endpoint = tinyros_msgs::TopicInfo::ID_PUBLISHER) :
+  Publisher(std::string topic_name, Msg * msg, int endpoint = tinyros::tinyros_msgs::TopicInfo::ID_PUBLISHER) :
     topic_(topic_name),
     msg_(msg),
     nh_(NULL),
@@ -24,7 +24,7 @@ public:
     if (nh_ != NULL) {
       return nh_->publish(id_, msg, islog);
     } else {
-      log_error("%s topic_name: %s, nh is NULL, please advertise.", __FUNCTION__, topic_.c_str());
+      tinyros_log_error("%s topic_name: %s, nh is NULL, please advertise.", __FUNCTION__, topic_.c_str());
       return -1;
     }
   }

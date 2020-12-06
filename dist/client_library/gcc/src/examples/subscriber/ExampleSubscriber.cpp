@@ -1,7 +1,7 @@
 #include "tiny_ros/ros.h"
 #include "tiny_ros/tinyros_hello/TinyrosHello.h"
 
-static void subscriber_cb(const tinyros_hello::TinyrosHello& received_msg) {
+static void subscriber_cb(const tinyros::tinyros_hello::TinyrosHello& received_msg) {
   printf("%s\n", received_msg.hello.c_str());
 }
 
@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     isudp = atoi(argv[2]);
   }
   tinyros::init("GccExampleSubscriber", ipaddr);
-  tinyros::Subscriber<tinyros_hello::TinyrosHello> sub("tinyros_hello", subscriber_cb);
+  tinyros::Subscriber<tinyros::tinyros_hello::TinyrosHello> sub("tinyros_hello", subscriber_cb);
   if (!isudp) {
       tinyros::nh()->subscribe(sub);
   } else {

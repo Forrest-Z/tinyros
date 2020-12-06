@@ -11,21 +11,23 @@
 #include "tiny_ros/sensor_msgs/Image.h"
 #include "tiny_ros/sensor_msgs/RegionOfInterest.h"
 
+namespace tinyros
+{
 namespace stereo_msgs
 {
 
   class DisparityImage : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef sensor_msgs::Image _image_type;
+      typedef tinyros::sensor_msgs::Image _image_type;
       _image_type image;
       typedef float _f_type;
       _f_type f;
       typedef float _T_type;
       _T_type T;
-      typedef sensor_msgs::RegionOfInterest _valid_window_type;
+      typedef tinyros::sensor_msgs::RegionOfInterest _valid_window_type;
       _valid_window_type valid_window;
       typedef float _min_disparity_type;
       _min_disparity_type min_disparity;
@@ -214,5 +216,6 @@ namespace stereo_msgs
 
   };
 
+}
 }
 #endif

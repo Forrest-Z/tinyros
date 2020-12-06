@@ -10,17 +10,19 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/Transform.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class TransformStamped : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef std::string _child_frame_id_type;
       _child_frame_id_type child_frame_id;
-      typedef geometry_msgs::Transform _transform_type;
+      typedef tinyros::geometry_msgs::Transform _transform_type;
       _transform_type transform;
 
     TransformStamped():
@@ -97,5 +99,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

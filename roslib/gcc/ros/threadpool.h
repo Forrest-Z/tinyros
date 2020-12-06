@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <vector>
 #include <utility>
-#include <queue>
+#include <deque>
 #include <thread>
 #include <functional>
 #include <mutex>

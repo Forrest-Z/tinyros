@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
@@ -40,5 +42,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

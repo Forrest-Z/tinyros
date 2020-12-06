@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/gazebo_msgs/ModelState.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -20,7 +22,7 @@ static const char SETMODELSTATE[] = "gazebo_msgs/SetModelState";
       ___id___type __id__;
 
     public:
-      typedef gazebo_msgs::ModelState _model_state_type;
+      typedef tinyros::gazebo_msgs::ModelState _model_state_type;
       _model_state_type model_state;
 
     SetModelStateRequest():
@@ -187,5 +189,6 @@ static const char SETMODELSTATE[] = "gazebo_msgs/SetModelState";
     typedef SetModelStateResponse Response;
   };
 
+}
 }
 #endif

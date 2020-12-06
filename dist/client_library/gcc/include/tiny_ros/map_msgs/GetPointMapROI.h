@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/sensor_msgs/PointCloud2.h"
 
+namespace tinyros
+{
 namespace map_msgs
 {
 
@@ -320,7 +322,7 @@ static const char GETPOINTMAPROI[] = "map_msgs/GetPointMapROI";
       ___id___type __id__;
 
     public:
-      typedef sensor_msgs::PointCloud2 _sub_map_type;
+      typedef tinyros::sensor_msgs::PointCloud2 _sub_map_type;
       _sub_map_type sub_map;
 
     GetPointMapROIResponse():
@@ -383,5 +385,6 @@ static const char GETPOINTMAPROI[] = "map_msgs/GetPointMapROI";
     typedef GetPointMapROIResponse Response;
   };
 
+}
 }
 #endif

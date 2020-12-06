@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace std_srvs
 {
 
@@ -151,5 +153,6 @@ static const char TRIGGER[] = "std_srvs/Trigger";
     typedef TriggerResponse Response;
   };
 
+}
 }
 #endif

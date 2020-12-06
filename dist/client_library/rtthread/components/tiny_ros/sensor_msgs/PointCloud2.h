@@ -8,20 +8,22 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/sensor_msgs/PointField.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class PointCloud2 : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef uint32_t _height_type;
       _height_type height;
       typedef uint32_t _width_type;
       _width_type width;
       uint32_t fields_length;
-      typedef sensor_msgs::PointField _fields_type;
+      typedef tinyros::sensor_msgs::PointField _fields_type;
       _fields_type st_fields;
       _fields_type * fields;
       typedef bool _is_bigendian_type;
@@ -128,11 +130,11 @@ namespace sensor_msgs
       fields_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->fields_length);
       if(fields_lengthT > fields_length)
-        this->fields = (sensor_msgs::PointField*)realloc(this->fields, fields_lengthT * sizeof(sensor_msgs::PointField));
+        this->fields = (tinyros::sensor_msgs::PointField*)realloc(this->fields, fields_lengthT * sizeof(tinyros::sensor_msgs::PointField));
       fields_length = fields_lengthT;
       for( uint32_t i = 0; i < fields_length; i++) {
         offset += this->st_fields.deserialize(inbuffer + offset);
-        memcpy( &(this->fields[i]), &(this->st_fields), sizeof(sensor_msgs::PointField));
+        memcpy( &(this->fields[i]), &(this->st_fields), sizeof(tinyros::sensor_msgs::PointField));
       }
       union {
         bool real;
@@ -202,5 +204,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

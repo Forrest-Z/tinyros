@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace std_srvs
 {
 
@@ -128,5 +130,6 @@ static const char EMPTY[] = "std_srvs/Empty";
     typedef EmptyResponse Response;
   };
 
+}
 }
 #endif

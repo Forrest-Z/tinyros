@@ -7,15 +7,17 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Vector3.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class Accel : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::Vector3 _linear_type;
+      typedef tinyros::geometry_msgs::Vector3 _linear_type;
       _linear_type linear;
-      typedef geometry_msgs::Vector3 _angular_type;
+      typedef tinyros::geometry_msgs::Vector3 _angular_type;
       _angular_type angular;
 
     Accel():
@@ -53,5 +55,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

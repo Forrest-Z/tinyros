@@ -90,21 +90,21 @@ static int create_dir(const char *dirname) {
     return ret;
 }
 
-static void messageCb(const tinyros_msgs::Log& l) {
-  if(l.level == tinyros_msgs::Log::ROSDEBUG && level_ <= LEVEL_DEBUG) {
+static void messageCb(const tinyros::tinyros_msgs::Log& l) {
+  if(l.level == tinyros::tinyros_msgs::Log::ROSDEBUG && level_ <= LEVEL_DEBUG) {
     if (spdlog::get("logger")) spdlog::get("logger")->debug("{0}", l.msg);
-  } else if(l.level == tinyros_msgs::Log::ROSINFO && level_ <= LEVEL_INFO) {
+  } else if(l.level == tinyros::tinyros_msgs::Log::ROSINFO && level_ <= LEVEL_INFO) {
     if (spdlog::get("logger")) spdlog::get("logger")->info("{0}", l.msg); 
-  } else if(l.level == tinyros_msgs::Log::ROSWARN && level_ <= LEVEL_WARN) {
+  } else if(l.level == tinyros::tinyros_msgs::Log::ROSWARN && level_ <= LEVEL_WARN) {
     if (spdlog::get("logger")) spdlog::get("logger")->warn("{0}", l.msg);
-  } else if(l.level == tinyros_msgs::Log::ROSERROR && level_ <= LEVEL_ERROR) {
+  } else if(l.level == tinyros::tinyros_msgs::Log::ROSERROR && level_ <= LEVEL_ERROR) {
     if (spdlog::get("logger")) spdlog::get("logger")->error("{0}", l.msg);
-  } else if(l.level == tinyros_msgs::Log::ROSFATAL && level_ <= LEVEL_FATAL) {
+  } else if(l.level == tinyros::tinyros_msgs::Log::ROSFATAL && level_ <= LEVEL_FATAL) {
     if (spdlog::get("logger")) spdlog::get("logger")->critical("{0}", l.msg);
   }
 }
 
-static tinyros::Subscriber<tinyros_msgs::Log> sub(TINYROS_LOG_TOPIC, messageCb);
+static tinyros::Subscriber<tinyros::tinyros_msgs::Log> sub(TINYROS_LOG_TOPIC, messageCb);
 
 static void init_log_environment() {
   std::shared_ptr<spdlog::sinks::sink> log_sink = nullptr;

@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace smach_msgs
 {
 
@@ -173,5 +175,6 @@ namespace smach_msgs
 
   };
 
+}
 }
 #endif

@@ -9,13 +9,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/nav_msgs/OccupancyGrid.h"
 
+namespace tinyros
+{
 namespace map_msgs
 {
 
   class ProjectedMap : public tinyros::Msg
   {
     public:
-      typedef nav_msgs::OccupancyGrid _map_type;
+      typedef tinyros::nav_msgs::OccupancyGrid _map_type;
       _map_type map;
       typedef double _min_z_type;
       _min_z_type min_z;
@@ -129,5 +131,6 @@ namespace map_msgs
 
   };
 
+}
 }
 #endif

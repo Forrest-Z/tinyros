@@ -8,15 +8,17 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/sensor_msgs/NavSatStatus.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class NavSatFix : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef sensor_msgs::NavSatStatus _status_type;
+      typedef tinyros::sensor_msgs::NavSatStatus _status_type;
       _status_type status;
       typedef double _latitude_type;
       _latitude_type latitude;
@@ -203,5 +205,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

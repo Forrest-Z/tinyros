@@ -8,6 +8,8 @@
 #include "tiny_ros/geometry_msgs/Wrench.h"
 #include "tiny_ros/geometry_msgs/Vector3.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -21,17 +23,17 @@ namespace gazebo_msgs
       typedef tinyros::string _collision2_name_type;
       _collision2_name_type collision2_name;
       uint32_t wrenches_length;
-      typedef geometry_msgs::Wrench _wrenches_type;
+      typedef tinyros::geometry_msgs::Wrench _wrenches_type;
       _wrenches_type st_wrenches;
       _wrenches_type * wrenches;
-      typedef geometry_msgs::Wrench _total_wrench_type;
+      typedef tinyros::geometry_msgs::Wrench _total_wrench_type;
       _total_wrench_type total_wrench;
       uint32_t contact_positions_length;
-      typedef geometry_msgs::Vector3 _contact_positions_type;
+      typedef tinyros::geometry_msgs::Vector3 _contact_positions_type;
       _contact_positions_type st_contact_positions;
       _contact_positions_type * contact_positions;
       uint32_t contact_normals_length;
-      typedef geometry_msgs::Vector3 _contact_normals_type;
+      typedef tinyros::geometry_msgs::Vector3 _contact_normals_type;
       _contact_normals_type st_contact_normals;
       _contact_normals_type * contact_normals;
       uint32_t depths_length;
@@ -154,11 +156,11 @@ namespace gazebo_msgs
       wrenches_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->wrenches_length);
       if(wrenches_lengthT > wrenches_length)
-        this->wrenches = (geometry_msgs::Wrench*)realloc(this->wrenches, wrenches_lengthT * sizeof(geometry_msgs::Wrench));
+        this->wrenches = (tinyros::geometry_msgs::Wrench*)realloc(this->wrenches, wrenches_lengthT * sizeof(tinyros::geometry_msgs::Wrench));
       wrenches_length = wrenches_lengthT;
       for( uint32_t i = 0; i < wrenches_length; i++) {
         offset += this->st_wrenches.deserialize(inbuffer + offset);
-        memcpy( &(this->wrenches[i]), &(this->st_wrenches), sizeof(geometry_msgs::Wrench));
+        memcpy( &(this->wrenches[i]), &(this->st_wrenches), sizeof(tinyros::geometry_msgs::Wrench));
       }
       offset += this->total_wrench.deserialize(inbuffer + offset);
       uint32_t contact_positions_lengthT = ((uint32_t) (*(inbuffer + offset))); 
@@ -167,11 +169,11 @@ namespace gazebo_msgs
       contact_positions_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->contact_positions_length);
       if(contact_positions_lengthT > contact_positions_length)
-        this->contact_positions = (geometry_msgs::Vector3*)realloc(this->contact_positions, contact_positions_lengthT * sizeof(geometry_msgs::Vector3));
+        this->contact_positions = (tinyros::geometry_msgs::Vector3*)realloc(this->contact_positions, contact_positions_lengthT * sizeof(tinyros::geometry_msgs::Vector3));
       contact_positions_length = contact_positions_lengthT;
       for( uint32_t i = 0; i < contact_positions_length; i++) {
         offset += this->st_contact_positions.deserialize(inbuffer + offset);
-        memcpy( &(this->contact_positions[i]), &(this->st_contact_positions), sizeof(geometry_msgs::Vector3));
+        memcpy( &(this->contact_positions[i]), &(this->st_contact_positions), sizeof(tinyros::geometry_msgs::Vector3));
       }
       uint32_t contact_normals_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       contact_normals_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -179,11 +181,11 @@ namespace gazebo_msgs
       contact_normals_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->contact_normals_length);
       if(contact_normals_lengthT > contact_normals_length)
-        this->contact_normals = (geometry_msgs::Vector3*)realloc(this->contact_normals, contact_normals_lengthT * sizeof(geometry_msgs::Vector3));
+        this->contact_normals = (tinyros::geometry_msgs::Vector3*)realloc(this->contact_normals, contact_normals_lengthT * sizeof(tinyros::geometry_msgs::Vector3));
       contact_normals_length = contact_normals_lengthT;
       for( uint32_t i = 0; i < contact_normals_length; i++) {
         offset += this->st_contact_normals.deserialize(inbuffer + offset);
-        memcpy( &(this->contact_normals[i]), &(this->st_contact_normals), sizeof(geometry_msgs::Vector3));
+        memcpy( &(this->contact_normals[i]), &(this->st_contact_normals), sizeof(tinyros::geometry_msgs::Vector3));
       }
       uint32_t depths_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       depths_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -251,5 +253,6 @@ namespace gazebo_msgs
 
   };
 
+}
 }
 #endif

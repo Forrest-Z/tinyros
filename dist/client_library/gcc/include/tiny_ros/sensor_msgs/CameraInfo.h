@@ -10,13 +10,15 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/sensor_msgs/RegionOfInterest.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class CameraInfo : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef uint32_t _height_type;
       _height_type height;
@@ -35,7 +37,7 @@ namespace sensor_msgs
       _binning_x_type binning_x;
       typedef uint32_t _binning_y_type;
       _binning_y_type binning_y;
-      typedef sensor_msgs::RegionOfInterest _roi_type;
+      typedef tinyros::sensor_msgs::RegionOfInterest _roi_type;
       _roi_type roi;
 
     CameraInfo():
@@ -375,5 +377,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

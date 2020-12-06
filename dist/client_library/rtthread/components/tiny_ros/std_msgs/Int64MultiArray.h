@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/MultiArrayLayout.h"
 
+namespace tinyros
+{
 namespace std_msgs
 {
 
   class Int64MultiArray : public tinyros::Msg
   {
     public:
-      typedef std_msgs::MultiArrayLayout _layout_type;
+      typedef tinyros::std_msgs::MultiArrayLayout _layout_type;
       _layout_type layout;
       uint32_t data_length;
       typedef int64_t _data_type;
@@ -103,5 +105,6 @@ namespace std_msgs
 
   };
 
+}
 }
 #endif

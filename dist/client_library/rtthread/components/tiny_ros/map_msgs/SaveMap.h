@@ -6,6 +6,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/String.h"
 
+namespace tinyros
+{
 namespace map_msgs
 {
 
@@ -18,7 +20,7 @@ static const char SAVEMAP[] = "map_msgs/SaveMap";
       ___id___type __id__;
 
     public:
-      typedef std_msgs::String _filename_type;
+      typedef tinyros::std_msgs::String _filename_type;
       _filename_type filename;
 
     SaveMapRequest():
@@ -119,5 +121,6 @@ static const char SAVEMAP[] = "map_msgs/SaveMap";
     typedef SaveMapResponse Response;
   };
 
+}
 }
 #endif

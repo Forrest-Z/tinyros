@@ -34,7 +34,7 @@ public:
   typedef void(ObjT::*CallbackT)(const MsgT&);
   MsgT msg;
 
-  Subscriber(std::string topic_name, CallbackT cb, ObjT* obj, int endpoint = tinyros_msgs::TopicInfo::ID_SUBSCRIBER) :
+  Subscriber(std::string topic_name, CallbackT cb, ObjT* obj, int endpoint = tinyros::tinyros_msgs::TopicInfo::ID_SUBSCRIBER) :
     cb_(cb),
     obj_(obj),
     endpoint_(endpoint) {
@@ -77,7 +77,7 @@ public:
   typedef void(*CallbackT)(const MsgT&);
   MsgT msg;
 
-  Subscriber(std::string topic_name, CallbackT cb, int endpoint = tinyros_msgs::TopicInfo::ID_SUBSCRIBER) :
+  Subscriber(std::string topic_name, CallbackT cb, int endpoint = tinyros::tinyros_msgs::TopicInfo::ID_SUBSCRIBER) :
     cb_(cb),
     endpoint_(endpoint) {
     topic_ = topic_name;

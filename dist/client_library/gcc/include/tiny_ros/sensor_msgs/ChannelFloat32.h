@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
@@ -136,5 +138,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

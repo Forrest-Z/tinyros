@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Pose.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class PoseWithCovariance : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::Pose _pose_type;
+      typedef tinyros::geometry_msgs::Pose _pose_type;
       _pose_type pose;
       double covariance[36];
 
@@ -85,5 +87,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

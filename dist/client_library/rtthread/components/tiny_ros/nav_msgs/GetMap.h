@@ -6,6 +6,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/nav_msgs/OccupancyGrid.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
@@ -66,7 +68,7 @@ static const char GETMAP[] = "nav_msgs/GetMap";
       ___id___type __id__;
 
     public:
-      typedef nav_msgs::OccupancyGrid _map_type;
+      typedef tinyros::nav_msgs::OccupancyGrid _map_type;
       _map_type map;
 
     GetMapResponse():
@@ -119,5 +121,6 @@ static const char GETMAP[] = "nav_msgs/GetMap";
     typedef GetMapResponse Response;
   };
 
+}
 }
 #endif

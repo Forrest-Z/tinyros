@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/nav_msgs/OccupancyGrid.h"
 
+namespace tinyros
+{
 namespace map_msgs
 {
 
@@ -215,7 +217,7 @@ static const char GETMAPROI[] = "map_msgs/GetMapROI";
       ___id___type __id__;
 
     public:
-      typedef nav_msgs::OccupancyGrid _sub_map_type;
+      typedef tinyros::nav_msgs::OccupancyGrid _sub_map_type;
       _sub_map_type sub_map;
 
     GetMapROIResponse():
@@ -278,5 +280,6 @@ static const char GETMAPROI[] = "map_msgs/GetMapROI";
     typedef GetMapROIResponse Response;
   };
 
+}
 }
 #endif

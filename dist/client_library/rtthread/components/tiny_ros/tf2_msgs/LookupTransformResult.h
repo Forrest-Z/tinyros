@@ -8,15 +8,17 @@
 #include "tiny_ros/geometry_msgs/TransformStamped.h"
 #include "tiny_ros/tf2_msgs/TF2Error.h"
 
+namespace tinyros
+{
 namespace tf2_msgs
 {
 
   class LookupTransformResult : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::TransformStamped _transform_type;
+      typedef tinyros::geometry_msgs::TransformStamped _transform_type;
       _transform_type transform;
-      typedef tf2_msgs::TF2Error _error_type;
+      typedef tinyros::tf2_msgs::TF2Error _error_type;
       _error_type error;
 
     LookupTransformResult():
@@ -54,5 +56,6 @@ namespace tf2_msgs
 
   };
 
+}
 }
 #endif

@@ -9,6 +9,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/MultiArrayDimension.h"
 
+namespace tinyros
+{
 namespace std_msgs
 {
 
@@ -16,7 +18,7 @@ namespace std_msgs
   {
     public:
       uint32_t dim_length;
-      typedef std_msgs::MultiArrayDimension _dim_type;
+      typedef tinyros::std_msgs::MultiArrayDimension _dim_type;
       _dim_type st_dim;
       _dim_type * dim;
       typedef uint32_t _data_offset_type;
@@ -56,11 +58,11 @@ namespace std_msgs
       dim_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->dim_length);
       if(dim_lengthT > dim_length)
-        this->dim = (std_msgs::MultiArrayDimension*)realloc(this->dim, dim_lengthT * sizeof(std_msgs::MultiArrayDimension));
+        this->dim = (tinyros::std_msgs::MultiArrayDimension*)realloc(this->dim, dim_lengthT * sizeof(tinyros::std_msgs::MultiArrayDimension));
       dim_length = dim_lengthT;
       for( uint32_t i = 0; i < dim_length; i++) {
         offset += this->st_dim.deserialize(inbuffer + offset);
-        memcpy( &(this->dim[i]), &(this->st_dim), sizeof(std_msgs::MultiArrayDimension));
+        memcpy( &(this->dim[i]), &(this->st_dim), sizeof(tinyros::std_msgs::MultiArrayDimension));
       }
       this->data_offset =  ((uint32_t) (*(inbuffer + offset)));
       this->data_offset |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
@@ -106,5 +108,6 @@ namespace std_msgs
 
   };
 
+}
 }
 #endif

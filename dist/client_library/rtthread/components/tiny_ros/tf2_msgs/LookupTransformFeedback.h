@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace tf2_msgs
 {
 
@@ -40,5 +42,6 @@ namespace tf2_msgs
 
   };
 
+}
 }
 #endif

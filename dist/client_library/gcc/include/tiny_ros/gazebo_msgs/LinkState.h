@@ -10,6 +10,8 @@
 #include "tiny_ros/geometry_msgs/Pose.h"
 #include "tiny_ros/geometry_msgs/Twist.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -18,9 +20,9 @@ namespace gazebo_msgs
     public:
       typedef std::string _link_name_type;
       _link_name_type link_name;
-      typedef geometry_msgs::Pose _pose_type;
+      typedef tinyros::geometry_msgs::Pose _pose_type;
       _pose_type pose;
-      typedef geometry_msgs::Twist _twist_type;
+      typedef tinyros::geometry_msgs::Twist _twist_type;
       _twist_type twist;
       typedef std::string _reference_frame_type;
       _reference_frame_type reference_frame;
@@ -125,5 +127,6 @@ namespace gazebo_msgs
 
   };
 
+}
 }
 #endif

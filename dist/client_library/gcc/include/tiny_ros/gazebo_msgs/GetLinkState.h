@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/gazebo_msgs/LinkState.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -131,7 +133,7 @@ static const char GETLINKSTATE[] = "gazebo_msgs/GetLinkState";
       ___id___type __id__;
 
     public:
-      typedef gazebo_msgs::LinkState _link_state_type;
+      typedef tinyros::gazebo_msgs::LinkState _link_state_type;
       _link_state_type link_state;
       typedef bool _success_type;
       _success_type success;
@@ -243,5 +245,6 @@ static const char GETLINKSTATE[] = "gazebo_msgs/GetLinkState";
     typedef GetLinkStateResponse Response;
   };
 
+}
 }
 #endif

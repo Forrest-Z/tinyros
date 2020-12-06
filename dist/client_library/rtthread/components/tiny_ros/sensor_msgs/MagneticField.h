@@ -8,15 +8,17 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/Vector3.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class MagneticField : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef geometry_msgs::Vector3 _magnetic_field_type;
+      typedef tinyros::geometry_msgs::Vector3 _magnetic_field_type;
       _magnetic_field_type magnetic_field;
       double magnetic_field_covariance[9];
 
@@ -92,5 +94,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/gazebo_msgs/ODEJointProperties.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -22,7 +24,7 @@ static const char SETJOINTPROPERTIES[] = "gazebo_msgs/SetJointProperties";
     public:
       typedef std::string _joint_name_type;
       _joint_name_type joint_name;
-      typedef gazebo_msgs::ODEJointProperties _ode_joint_config_type;
+      typedef tinyros::gazebo_msgs::ODEJointProperties _ode_joint_config_type;
       _ode_joint_config_type ode_joint_config;
 
     SetJointPropertiesRequest():
@@ -215,5 +217,6 @@ static const char SETJOINTPROPERTIES[] = "gazebo_msgs/SetJointProperties";
     typedef SetJointPropertiesResponse Response;
   };
 
+}
 }
 #endif

@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -156,5 +158,6 @@ static const char JOINTREQUEST[] = "gazebo_msgs/JointRequest";
     typedef JointRequestResponse Response;
   };
 
+}
 }
 #endif

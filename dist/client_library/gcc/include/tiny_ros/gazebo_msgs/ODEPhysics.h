@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -328,5 +330,6 @@ namespace gazebo_msgs
 
   };
 
+}
 }
 #endif

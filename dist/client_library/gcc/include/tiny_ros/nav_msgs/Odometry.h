@@ -11,19 +11,21 @@
 #include "tiny_ros/geometry_msgs/PoseWithCovariance.h"
 #include "tiny_ros/geometry_msgs/TwistWithCovariance.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class Odometry : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef std::string _child_frame_id_type;
       _child_frame_id_type child_frame_id;
-      typedef geometry_msgs::PoseWithCovariance _pose_type;
+      typedef tinyros::geometry_msgs::PoseWithCovariance _pose_type;
       _pose_type pose;
-      typedef geometry_msgs::TwistWithCovariance _twist_type;
+      typedef tinyros::geometry_msgs::TwistWithCovariance _twist_type;
       _twist_type twist;
 
     Odometry():
@@ -107,5 +109,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

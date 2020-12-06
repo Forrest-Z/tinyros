@@ -8,20 +8,22 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/trajectory_msgs/JointTrajectoryPoint.h"
 
+namespace tinyros
+{
 namespace trajectory_msgs
 {
 
   class JointTrajectory : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       uint32_t joint_names_length;
       typedef tinyros::string _joint_names_type;
       _joint_names_type st_joint_names;
       _joint_names_type * joint_names;
       uint32_t points_length;
-      typedef trajectory_msgs::JointTrajectoryPoint _points_type;
+      typedef tinyros::trajectory_msgs::JointTrajectoryPoint _points_type;
       _points_type st_points;
       _points_type * points;
 
@@ -89,11 +91,11 @@ namespace trajectory_msgs
       points_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->points_length);
       if(points_lengthT > points_length)
-        this->points = (trajectory_msgs::JointTrajectoryPoint*)realloc(this->points, points_lengthT * sizeof(trajectory_msgs::JointTrajectoryPoint));
+        this->points = (tinyros::trajectory_msgs::JointTrajectoryPoint*)realloc(this->points, points_lengthT * sizeof(tinyros::trajectory_msgs::JointTrajectoryPoint));
       points_length = points_lengthT;
       for( uint32_t i = 0; i < points_length; i++) {
         offset += this->st_points.deserialize(inbuffer + offset);
-        memcpy( &(this->points[i]), &(this->st_points), sizeof(trajectory_msgs::JointTrajectoryPoint));
+        memcpy( &(this->points[i]), &(this->st_points), sizeof(tinyros::trajectory_msgs::JointTrajectoryPoint));
       }
       return offset;
     }
@@ -120,5 +122,6 @@ namespace trajectory_msgs
 
   };
 
+}
 }
 #endif

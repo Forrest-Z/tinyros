@@ -12,28 +12,30 @@
 #include "tiny_ros/geometry_msgs/Twist.h"
 #include "tiny_ros/geometry_msgs/Wrench.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class MultiDOFJointState : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       uint32_t joint_names_length;
       typedef std::string _joint_names_type;
       _joint_names_type st_joint_names;
       _joint_names_type * joint_names;
       uint32_t transforms_length;
-      typedef geometry_msgs::Transform _transforms_type;
+      typedef tinyros::geometry_msgs::Transform _transforms_type;
       _transforms_type st_transforms;
       _transforms_type * transforms;
       uint32_t twist_length;
-      typedef geometry_msgs::Twist _twist_type;
+      typedef tinyros::geometry_msgs::Twist _twist_type;
       _twist_type st_twist;
       _twist_type * twist;
       uint32_t wrench_length;
-      typedef geometry_msgs::Wrench _wrench_type;
+      typedef tinyros::geometry_msgs::Wrench _wrench_type;
       _wrench_type st_wrench;
       _wrench_type * wrench;
 
@@ -119,11 +121,11 @@ namespace sensor_msgs
       transforms_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->transforms_length);
       if(transforms_lengthT > transforms_length)
-        this->transforms = (geometry_msgs::Transform*)realloc(this->transforms, transforms_lengthT * sizeof(geometry_msgs::Transform));
+        this->transforms = (tinyros::geometry_msgs::Transform*)realloc(this->transforms, transforms_lengthT * sizeof(tinyros::geometry_msgs::Transform));
       transforms_length = transforms_lengthT;
       for( uint32_t i = 0; i < transforms_length; i++) {
         offset += this->st_transforms.deserialize(inbuffer + offset);
-        memcpy( &(this->transforms[i]), &(this->st_transforms), sizeof(geometry_msgs::Transform));
+        memcpy( &(this->transforms[i]), &(this->st_transforms), sizeof(tinyros::geometry_msgs::Transform));
       }
       uint32_t twist_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       twist_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -131,11 +133,11 @@ namespace sensor_msgs
       twist_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->twist_length);
       if(twist_lengthT > twist_length)
-        this->twist = (geometry_msgs::Twist*)realloc(this->twist, twist_lengthT * sizeof(geometry_msgs::Twist));
+        this->twist = (tinyros::geometry_msgs::Twist*)realloc(this->twist, twist_lengthT * sizeof(tinyros::geometry_msgs::Twist));
       twist_length = twist_lengthT;
       for( uint32_t i = 0; i < twist_length; i++) {
         offset += this->st_twist.deserialize(inbuffer + offset);
-        memcpy( &(this->twist[i]), &(this->st_twist), sizeof(geometry_msgs::Twist));
+        memcpy( &(this->twist[i]), &(this->st_twist), sizeof(tinyros::geometry_msgs::Twist));
       }
       uint32_t wrench_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       wrench_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -143,11 +145,11 @@ namespace sensor_msgs
       wrench_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->wrench_length);
       if(wrench_lengthT > wrench_length)
-        this->wrench = (geometry_msgs::Wrench*)realloc(this->wrench, wrench_lengthT * sizeof(geometry_msgs::Wrench));
+        this->wrench = (tinyros::geometry_msgs::Wrench*)realloc(this->wrench, wrench_lengthT * sizeof(tinyros::geometry_msgs::Wrench));
       wrench_length = wrench_lengthT;
       for( uint32_t i = 0; i < wrench_length; i++) {
         offset += this->st_wrench.deserialize(inbuffer + offset);
-        memcpy( &(this->wrench[i]), &(this->st_wrench), sizeof(geometry_msgs::Wrench));
+        memcpy( &(this->wrench[i]), &(this->st_wrench), sizeof(tinyros::geometry_msgs::Wrench));
       }
       return offset;
     }
@@ -250,5 +252,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

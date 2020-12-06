@@ -16,7 +16,7 @@ public:
   typedef void(ObjT::*CallbackT)(const MReq&,  MRes&);
 
   ServiceServer(std::string topic_name, CallbackT cb, ObjT* obj) :
-    pub(topic_name, &resp, tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros_msgs::TopicInfo::ID_PUBLISHER),
+    pub(topic_name, &resp, tinyros::tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros::tinyros_msgs::TopicInfo::ID_PUBLISHER),
     obj_(obj)
   {
     this->negotiated_ = false;
@@ -44,7 +44,7 @@ public:
   }
   virtual int getEndpointType()
   {
-    return tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros_msgs::TopicInfo::ID_SUBSCRIBER;
+    return tinyros::tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros::tinyros_msgs::TopicInfo::ID_SUBSCRIBER;
   }
   
   virtual bool negotiated()
@@ -67,7 +67,7 @@ public:
   typedef void(*CallbackT)(const MReq&,  MRes&);
 
   ServiceServer(std::string topic_name, CallbackT cb) :
-    pub(topic_name, &resp, tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros_msgs::TopicInfo::ID_PUBLISHER)
+    pub(topic_name, &resp, tinyros::tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros::tinyros_msgs::TopicInfo::ID_PUBLISHER)
   {
     this->negotiated_ = false;
     this->srv_flag_ = true;
@@ -94,7 +94,7 @@ public:
   }
   virtual int getEndpointType()
   {
-    return tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros_msgs::TopicInfo::ID_SUBSCRIBER;
+    return tinyros::tinyros_msgs::TopicInfo::ID_SERVICE_SERVER + tinyros::tinyros_msgs::TopicInfo::ID_SUBSCRIBER;
   }
 
   MReq req;

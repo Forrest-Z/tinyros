@@ -873,11 +873,11 @@ def MakeLibrary(pkg_dir, package, output_path, build_dir):
     package_import.write('\n')
     package_import.close()
 
-def messages_generate(path):
+def messages_generate(path, build, msgs):
     # gimme messages
     failed = []
-    mydir = sys.argv[1] + "/msgs"
-    builddir = sys.argv[1] + "/build/CMake/python_msgs"
+    mydir = msgs
+    builddir = build
     for d in sorted(os.listdir(mydir)):
         try:
             MakeLibrary(mydir + "/" + d, d, path, builddir + "/" + d)
@@ -953,8 +953,8 @@ print("\nExporting to %s" % path)
 
 roslib_copy_roslib_files(path+"/")
 roslib_copy_examples_files(path+"/")
-messages_generate(path+"/")
+messages_generate(path+"/", sys.argv[1] + "/build/CMake/python_msgs", sys.argv[3] + "/msgs")
 if os.path.exists(sys.argv[1] + "/build/CMake/python_msgs"):
     shutil.rmtree(sys.argv[1] + "/build/CMake/python_msgs")
-shutil.copytree(sys.argv[1] + "/msgs", sys.argv[1] + "/build/CMake/python_msgs")
+shutil.copytree(sys.argv[3] + "/msgs", sys.argv[1] + "/build/CMake/python_msgs")
 

@@ -9,13 +9,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class Joy : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       uint32_t axes_length;
       typedef float _axes_type;
@@ -177,5 +179,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

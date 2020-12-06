@@ -9,17 +9,19 @@
 #include "tiny_ros/actionlib_msgs/GoalID.h"
 #include "tiny_ros/nav_msgs/GetMapGoal.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class GetMapActionGoal : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef actionlib_msgs::GoalID _goal_id_type;
+      typedef tinyros::actionlib_msgs::GoalID _goal_id_type;
       _goal_id_type goal_id;
-      typedef nav_msgs::GetMapGoal _goal_type;
+      typedef tinyros::nav_msgs::GetMapGoal _goal_type;
       _goal_type goal;
 
     GetMapActionGoal():
@@ -61,5 +63,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

@@ -7,6 +7,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/diagnostic_msgs/KeyValue.h"
 
+namespace tinyros
+{
 namespace diagnostic_msgs
 {
 
@@ -22,7 +24,7 @@ namespace diagnostic_msgs
       typedef tinyros::string _hardware_id_type;
       _hardware_id_type hardware_id;
       uint32_t values_length;
-      typedef diagnostic_msgs::KeyValue _values_type;
+      typedef tinyros::diagnostic_msgs::KeyValue _values_type;
       _values_type st_values;
       _values_type * values;
       enum { OK = 0 };
@@ -119,11 +121,11 @@ namespace diagnostic_msgs
       values_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->values_length);
       if(values_lengthT > values_length)
-        this->values = (diagnostic_msgs::KeyValue*)realloc(this->values, values_lengthT * sizeof(diagnostic_msgs::KeyValue));
+        this->values = (tinyros::diagnostic_msgs::KeyValue*)realloc(this->values, values_lengthT * sizeof(tinyros::diagnostic_msgs::KeyValue));
       values_length = values_lengthT;
       for( uint32_t i = 0; i < values_length; i++) {
         offset += this->st_values.deserialize(inbuffer + offset);
-        memcpy( &(this->values[i]), &(this->st_values), sizeof(diagnostic_msgs::KeyValue));
+        memcpy( &(this->values[i]), &(this->st_values), sizeof(tinyros::diagnostic_msgs::KeyValue));
       }
       return offset;
     }
@@ -153,5 +155,6 @@ namespace diagnostic_msgs
 
   };
 
+}
 }
 #endif

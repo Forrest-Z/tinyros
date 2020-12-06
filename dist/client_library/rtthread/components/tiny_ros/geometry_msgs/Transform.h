@@ -8,15 +8,17 @@
 #include "tiny_ros/geometry_msgs/Vector3.h"
 #include "tiny_ros/geometry_msgs/Quaternion.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class Transform : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::Vector3 _translation_type;
+      typedef tinyros::geometry_msgs::Vector3 _translation_type;
       _translation_type translation;
-      typedef geometry_msgs::Quaternion _rotation_type;
+      typedef tinyros::geometry_msgs::Quaternion _rotation_type;
       _rotation_type rotation;
 
     Transform():
@@ -54,5 +56,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

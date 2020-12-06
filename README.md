@@ -60,14 +60,14 @@ Tinyros分布式操作系统提供由C/C++、Java、Python、Go、JavaScript语�
 #include "tiny_ros/tinyros_hello/TinyrosHello.h"
 int main (int argc, char *argv[]) {
   tinyros::init("ExamplePublisher", "127.0.0.1");
-  tinyros::Publisher hello_pub ("tinyros_hello", new tinyros_hello::TinyrosHello());
+  tinyros::Publisher hello_pub ("tinyros_hello", new tinyros::tinyros_hello::TinyrosHello());
 #if 1
   tinyros::nh()->advertise(hello_pub);
 #else
   tinyros::udp()->advertise(hello_pub);
 #endif
   while (true) {
-    tinyros_hello::TinyrosHello msg;
+    tinyros::tinyros_hello::TinyrosHello msg;
     msg.hello = "Hello, tiny-ros ^_^ ";
     hello_pub.publish (&msg);
 #ifdef WIN32
@@ -207,12 +207,12 @@ func main() {
 ```c++
 #include "tiny_ros/ros.h"
 #include "tiny_ros/tinyros_hello/TinyrosHello.h"
-static void subscriber_cb(const tinyros_hello::TinyrosHello& received_msg) {
+static void subscriber_cb(const tinyros::tinyros_hello::TinyrosHello& received_msg) {
   printf("%s\n", received_msg.hello.c_str());
 }
 int main(void) {
   tinyros::init("ExampleSubscriber", "127.0.0.1");
-  tinyros::Subscriber<tinyros_hello::TinyrosHello> sub("tinyros_hello", subscriber_cb);
+  tinyros::Subscriber<tinyros::tinyros_hello::TinyrosHello> sub("tinyros_hello", subscriber_cb);
 #if 1
   tinyros::nh()->subscribe(sub);
 #else
@@ -357,13 +357,13 @@ func main() {
 ```c++
 #include "tiny_ros/ros.h"
 #include "tiny_ros/tinyros_hello/Test.h"
-static void service_cb(const tinyros_hello::Test::Request & req, tinyros_hello::Test::Response & res) {
+static void service_cb(const tinyros::tinyros_hello::Test::Request & req, tinyros::tinyros_hello::Test::Response & res) {
   res.output = "Hello, tiny-ros ^_^";
 }
 int main() {
   tinyros::init("ExampleService", "127.0.0.1");
-  tinyros::ServiceServer<tinyros_hello::Test::Request, 
-    tinyros_hello::Test::Response> server("test_srv", &service_cb);
+  tinyros::ServiceServer<tinyros::tinyros_hello::Test::Request, 
+  tinyros::tinyros_hello::Test::Response> server("test_srv", &service_cb);
   tinyros::nh()->advertiseService(server);
   while(true) {
 #ifdef WIN32
@@ -470,11 +470,11 @@ func main() {
 #include "tiny_ros/tinyros_hello/Test.h"
 int main() {
   tinyros::init("ExampleServiceClient", "127.0.0.1");
-  tinyros::ServiceClient<tinyros_hello::Test::Request, tinyros_hello::Test::Response> client("test_srv");
+  tinyros::ServiceClient<tinyros::tinyros_hello::Test::Request, tinyros::tinyros_hello::Test::Response> client("test_srv");
   tinyros::nh()->serviceClient(client);
   while (true) {
-    tinyros_hello::Test::Request req;
-    tinyros_hello::Test::Response res;
+    tinyros::tinyros_hello::Test::Request req;
+    tinyros::tinyros_hello::Test::Response res;
     req.input = "hello world!";
     if (client.call(req, res)) {
        printf("Service responsed with \"%s\"\n", res.output.c_str());
@@ -621,14 +621,14 @@ void tinyros_example_service_client(void* parameter);
 //////////////////////////////////////////////////////////
 void tinyros_example_publisher(void* parameter) {
   tinyros::init("RT-Thread", "192.168.8.1");
-  tinyros::Publisher hello_pub ("tinyros_hello", new tinyros_hello::TinyrosHello());
+  tinyros::Publisher hello_pub ("tinyros_hello", new tinyros::tinyros_hello::TinyrosHello());
 #if 1
   tinyros::nh()->advertise(hello_pub);
 #else
   tinyros::udp()->advertise(hello_pub);
 #endif
   while (true) {
-    tinyros_hello::TinyrosHello msg;
+    tinyros::tinyros_hello::TinyrosHello msg;
     msg.hello = "Hello, tiny-ros ^_^ ";
     hello_pub.publish (&msg);
     rt_thread_delay(1000);
@@ -636,12 +636,12 @@ void tinyros_example_publisher(void* parameter) {
 }
 
 //////////////////////////////////////////////////////////
-static void subscriber_cb(const tinyros_hello::TinyrosHello& received_msg) {
+static void subscriber_cb(const tinyros::tinyros_hello::TinyrosHello& received_msg) {
   rt_kprintf("%s\n", received_msg.hello.c_str());
 }
 extern "C" void tinyros_example_subscriber(void* parameter) {
   tinyros::init("RT-Thread", "192.168.8.1");
-  tinyros::Subscriber<tinyros_hello::TinyrosHello> sub("tinyros_hello", subscriber_cb);
+  tinyros::Subscriber<tinyros::tinyros_hello::TinyrosHello> sub("tinyros_hello", subscriber_cb);
 #if 1
   tinyros::nh()->subscribe(sub);
 #else
@@ -653,12 +653,12 @@ extern "C" void tinyros_example_subscriber(void* parameter) {
 }
 
 //////////////////////////////////////////////////////////
-static void service_cb(const tinyros_hello::Test::Request & req, tinyros_hello::Test::Response & res) {
+static void service_cb(const tinyros::tinyros_hello::Test::Request & req, tinyros::tinyros_hello::Test::Response & res) {
   res.output = "Hello, tiny-ros ^_^";
 }
 void tinyros_example_service(void* parameter) {
   tinyros::init("RT-Thread", "192.168.8.1");
-  tinyros::ServiceServer<tinyros_hello::Test::Request, tinyros_hello::Test::Response> server("test_srv", &service_cb);
+  tinyros::ServiceServer<tinyros::tinyros_hello::Test::Request, tinyros::tinyros_hello::Test::Response> server("test_srv", &service_cb);
   tinyros::nh()->advertiseService(server);
   while(true) {
     rt_thread_delay(10*1000);
@@ -668,11 +668,11 @@ void tinyros_example_service(void* parameter) {
 //////////////////////////////////////////////////////////
 extern "C" void tinyros_example_service_client(void* parameter) {
   tinyros::init("RT-Thread", "192.168.8.1");
-  tinyros::ServiceClient<tinyros_hello::Test::Request, tinyros_hello::Test::Response> client("test_srv");
+  tinyros::ServiceClient<tinyros::tinyros_hello::Test::Request, tinyros::tinyros_hello::Test::Response> client("test_srv");
   tinyros::nh()->serviceClient(client);
   while (true) {
-    tinyros_hello::Test::Request req;
-    tinyros_hello::Test::Response res;
+    tinyros::tinyros_hello::Test::Request req;
+    tinyros::tinyros_hello::Test::Response res;
     req.input = "hello world!";
     if (client.call(req, res)) {
       rt_kprintf("Service responsed with \"%s\"\n", res.output.c_str());

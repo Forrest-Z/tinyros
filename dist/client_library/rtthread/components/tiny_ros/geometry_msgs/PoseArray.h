@@ -8,16 +8,18 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/Pose.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class PoseArray : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       uint32_t poses_length;
-      typedef geometry_msgs::Pose _poses_type;
+      typedef tinyros::geometry_msgs::Pose _poses_type;
       _poses_type st_poses;
       _poses_type * poses;
 
@@ -52,11 +54,11 @@ namespace geometry_msgs
       poses_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->poses_length);
       if(poses_lengthT > poses_length)
-        this->poses = (geometry_msgs::Pose*)realloc(this->poses, poses_lengthT * sizeof(geometry_msgs::Pose));
+        this->poses = (tinyros::geometry_msgs::Pose*)realloc(this->poses, poses_lengthT * sizeof(tinyros::geometry_msgs::Pose));
       poses_length = poses_lengthT;
       for( uint32_t i = 0; i < poses_length; i++) {
         offset += this->st_poses.deserialize(inbuffer + offset);
-        memcpy( &(this->poses[i]), &(this->st_poses), sizeof(geometry_msgs::Pose));
+        memcpy( &(this->poses[i]), &(this->st_poses), sizeof(tinyros::geometry_msgs::Pose));
       }
       return offset;
     }
@@ -77,5 +79,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

@@ -67,13 +67,13 @@ private:
       
       int64_t time_end = (int64_t)tinyros::Time().now().toMSec();
       if (time_end > timeout_time) {
-        log_warn("subscriber topic: %s, time escape: %lld(ms)", subscribers_[obj->id]->topic_.c_str(), (time_end - time_start));
+        tinyros_log_warn("subscriber topic: %s, time escape: %lld(ms)", subscribers_[obj->id]->topic_.c_str(), (time_end - time_start));
       }
     }
   }
 
   void negotiateTopics(Publisher * p) {
-    tinyros_msgs::TopicInfo ti;
+    tinyros::tinyros_msgs::TopicInfo ti;
     ti.topic_id = p->id_;
     ti.topic_name = p->topic_;
     ti.message_type = p->msg_->getType();
@@ -84,7 +84,7 @@ private:
   }
   
   void negotiateTopics(Subscriber_ * s) {
-    tinyros_msgs::TopicInfo ti;
+    tinyros::tinyros_msgs::TopicInfo ti;
     ti.topic_id = s->id_;
     ti.topic_name = s->topic_;
     ti.message_type = s->getMsgType();

@@ -8,15 +8,17 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/Inertia.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class InertiaStamped : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef geometry_msgs::Inertia _inertia_type;
+      typedef tinyros::geometry_msgs::Inertia _inertia_type;
       _inertia_type inertia;
 
     InertiaStamped():
@@ -54,5 +56,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

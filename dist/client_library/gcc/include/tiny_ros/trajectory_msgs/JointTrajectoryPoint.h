@@ -9,6 +9,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/ros/duration.h"
 
+namespace tinyros
+{
 namespace trajectory_msgs
 {
 
@@ -347,5 +349,6 @@ namespace trajectory_msgs
 
   };
 
+}
 }
 #endif

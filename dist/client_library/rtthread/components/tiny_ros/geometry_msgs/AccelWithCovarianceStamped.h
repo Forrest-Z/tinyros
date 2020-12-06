@@ -8,15 +8,17 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/AccelWithCovariance.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class AccelWithCovarianceStamped : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef geometry_msgs::AccelWithCovariance _accel_type;
+      typedef tinyros::geometry_msgs::AccelWithCovariance _accel_type;
       _accel_type accel;
 
     AccelWithCovarianceStamped():
@@ -54,5 +56,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

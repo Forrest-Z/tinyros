@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
@@ -154,5 +156,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

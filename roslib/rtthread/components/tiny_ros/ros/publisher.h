@@ -11,7 +11,7 @@ namespace tinyros
 class Publisher
 {
 public:
-  Publisher(tinyros::string topic_name, Msg * msg, int endpoint = tinyros_msgs::TopicInfo::ID_PUBLISHER) :
+  Publisher(tinyros::string topic_name, Msg * msg, int endpoint = tinyros::tinyros_msgs::TopicInfo::ID_PUBLISHER) :
     topic_(topic_name),
     msg_(msg),
     nh_(NULL),

@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -171,5 +173,6 @@ static const char DELETEMODEL[] = "gazebo_msgs/DeleteModel";
     typedef DeleteModelResponse Response;
   };
 
+}
 }
 #endif

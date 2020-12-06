@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -290,5 +292,6 @@ static const char SETMODELCONFIGURATION[] = "gazebo_msgs/SetModelConfiguration";
     typedef SetModelConfigurationResponse Response;
   };
 
+}
 }
 #endif

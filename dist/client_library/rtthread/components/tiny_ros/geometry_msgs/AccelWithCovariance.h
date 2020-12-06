@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Accel.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class AccelWithCovariance : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::Accel _accel_type;
+      typedef tinyros::geometry_msgs::Accel _accel_type;
       _accel_type accel;
       double covariance[36];
 
@@ -85,5 +87,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

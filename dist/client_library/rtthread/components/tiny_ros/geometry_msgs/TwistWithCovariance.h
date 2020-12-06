@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Twist.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class TwistWithCovariance : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::Twist _twist_type;
+      typedef tinyros::geometry_msgs::Twist _twist_type;
       _twist_type twist;
       double covariance[36];
 
@@ -85,5 +87,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

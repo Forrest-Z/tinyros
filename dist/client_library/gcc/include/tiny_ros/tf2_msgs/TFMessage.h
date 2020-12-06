@@ -9,6 +9,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/TransformStamped.h"
 
+namespace tinyros
+{
 namespace tf2_msgs
 {
 
@@ -16,7 +18,7 @@ namespace tf2_msgs
   {
     public:
       uint32_t transforms_length;
-      typedef geometry_msgs::TransformStamped _transforms_type;
+      typedef tinyros::geometry_msgs::TransformStamped _transforms_type;
       _transforms_type st_transforms;
       _transforms_type * transforms;
 
@@ -48,11 +50,11 @@ namespace tf2_msgs
       transforms_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->transforms_length);
       if(transforms_lengthT > transforms_length)
-        this->transforms = (geometry_msgs::TransformStamped*)realloc(this->transforms, transforms_lengthT * sizeof(geometry_msgs::TransformStamped));
+        this->transforms = (tinyros::geometry_msgs::TransformStamped*)realloc(this->transforms, transforms_lengthT * sizeof(tinyros::geometry_msgs::TransformStamped));
       transforms_length = transforms_lengthT;
       for( uint32_t i = 0; i < transforms_length; i++) {
         offset += this->st_transforms.deserialize(inbuffer + offset);
-        memcpy( &(this->transforms[i]), &(this->st_transforms), sizeof(geometry_msgs::TransformStamped));
+        memcpy( &(this->transforms[i]), &(this->st_transforms), sizeof(tinyros::geometry_msgs::TransformStamped));
       }
       return offset;
     }
@@ -90,5 +92,6 @@ namespace tf2_msgs
 
   };
 
+}
 }
 #endif

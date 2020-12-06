@@ -7,6 +7,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/ros/time.h"
 
+namespace tinyros
+{
 namespace rosgraph_msgs
 {
 
@@ -66,5 +68,6 @@ namespace rosgraph_msgs
 
   };
 
+}
 }
 #endif

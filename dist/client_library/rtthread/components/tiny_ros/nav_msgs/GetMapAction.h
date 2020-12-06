@@ -9,17 +9,19 @@
 #include "tiny_ros/nav_msgs/GetMapActionResult.h"
 #include "tiny_ros/nav_msgs/GetMapActionFeedback.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class GetMapAction : public tinyros::Msg
   {
     public:
-      typedef nav_msgs::GetMapActionGoal _action_goal_type;
+      typedef tinyros::nav_msgs::GetMapActionGoal _action_goal_type;
       _action_goal_type action_goal;
-      typedef nav_msgs::GetMapActionResult _action_result_type;
+      typedef tinyros::nav_msgs::GetMapActionResult _action_result_type;
       _action_result_type action_result;
-      typedef nav_msgs::GetMapActionFeedback _action_feedback_type;
+      typedef tinyros::nav_msgs::GetMapActionFeedback _action_feedback_type;
       _action_feedback_type action_feedback;
 
     GetMapAction():
@@ -61,5 +63,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

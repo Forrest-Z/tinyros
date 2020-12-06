@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/nav_msgs/OccupancyGrid.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class GetMapResult : public tinyros::Msg
   {
     public:
-      typedef nav_msgs::OccupancyGrid _map_type;
+      typedef tinyros::nav_msgs::OccupancyGrid _map_type;
       _map_type map;
 
     GetMapResult():
@@ -47,5 +49,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

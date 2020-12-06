@@ -7,6 +7,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Point32.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
@@ -14,7 +16,7 @@ namespace geometry_msgs
   {
     public:
       uint32_t points_length;
-      typedef geometry_msgs::Point32 _points_type;
+      typedef tinyros::geometry_msgs::Point32 _points_type;
       _points_type st_points;
       _points_type * points;
 
@@ -46,11 +48,11 @@ namespace geometry_msgs
       points_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->points_length);
       if(points_lengthT > points_length)
-        this->points = (geometry_msgs::Point32*)realloc(this->points, points_lengthT * sizeof(geometry_msgs::Point32));
+        this->points = (tinyros::geometry_msgs::Point32*)realloc(this->points, points_lengthT * sizeof(tinyros::geometry_msgs::Point32));
       points_length = points_lengthT;
       for( uint32_t i = 0; i < points_length; i++) {
         offset += this->st_points.deserialize(inbuffer + offset);
-        memcpy( &(this->points[i]), &(this->st_points), sizeof(geometry_msgs::Point32));
+        memcpy( &(this->points[i]), &(this->st_points), sizeof(tinyros::geometry_msgs::Point32));
       }
       return offset;
     }
@@ -70,5 +72,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

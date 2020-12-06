@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace diagnostic_msgs
 {
 
@@ -105,5 +107,6 @@ namespace diagnostic_msgs
 
   };
 
+}
 }
 #endif

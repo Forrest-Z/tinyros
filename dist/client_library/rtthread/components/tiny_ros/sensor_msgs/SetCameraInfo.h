@@ -6,6 +6,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/sensor_msgs/CameraInfo.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
@@ -18,7 +20,7 @@ static const char SETCAMERAINFO[] = "sensor_msgs/SetCameraInfo";
       ___id___type __id__;
 
     public:
-      typedef sensor_msgs::CameraInfo _camera_info_type;
+      typedef tinyros::sensor_msgs::CameraInfo _camera_info_type;
       _camera_info_type camera_info;
 
     SetCameraInfoRequest():
@@ -158,5 +160,6 @@ static const char SETCAMERAINFO[] = "sensor_msgs/SetCameraInfo";
     typedef SetCameraInfoResponse Response;
   };
 
+}
 }
 #endif

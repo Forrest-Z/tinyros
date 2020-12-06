@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace std_msgs
 {
 
@@ -76,5 +78,6 @@ namespace std_msgs
 
   };
 
+}
 }
 #endif

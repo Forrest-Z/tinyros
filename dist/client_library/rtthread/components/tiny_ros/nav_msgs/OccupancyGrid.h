@@ -8,15 +8,17 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/nav_msgs/MapMetaData.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class OccupancyGrid : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef nav_msgs::MapMetaData _info_type;
+      typedef tinyros::nav_msgs::MapMetaData _info_type;
       _info_type info;
       uint32_t data_length;
       typedef int8_t _data_type;
@@ -96,5 +98,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

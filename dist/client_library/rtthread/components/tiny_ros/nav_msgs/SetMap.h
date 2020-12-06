@@ -7,6 +7,8 @@
 #include "tiny_ros/nav_msgs/OccupancyGrid.h"
 #include "tiny_ros/geometry_msgs/PoseWithCovarianceStamped.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
@@ -19,9 +21,9 @@ static const char SETMAP[] = "nav_msgs/SetMap";
       ___id___type __id__;
 
     public:
-      typedef nav_msgs::OccupancyGrid _map_type;
+      typedef tinyros::nav_msgs::OccupancyGrid _map_type;
       _map_type map;
-      typedef geometry_msgs::PoseWithCovarianceStamped _initial_pose_type;
+      typedef tinyros::geometry_msgs::PoseWithCovarianceStamped _initial_pose_type;
       _initial_pose_type initial_pose;
 
     SetMapRequest():
@@ -145,5 +147,6 @@ static const char SETMAP[] = "nav_msgs/SetMap";
     typedef SetMapResponse Response;
   };
 
+}
 }
 #endif

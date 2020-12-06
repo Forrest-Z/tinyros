@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace tinyros_hello
 {
 
@@ -60,5 +62,6 @@ namespace tinyros_hello
 
   };
 
+}
 }
 #endif

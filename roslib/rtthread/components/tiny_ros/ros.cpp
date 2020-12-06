@@ -68,11 +68,10 @@ void init(tinyros::string node_name, tinyros::string ip_addr) {
   tinyros::nh();
 }
 
-void logdebug(tinyros::string msg) { nh()->log(tinyros_msgs::Log::ROSDEBUG, msg); }
-void loginfo(tinyros::string msg) { nh()->log(tinyros_msgs::Log::ROSINFO, msg); }
-void logwarn(tinyros::string msg) { nh()->log(tinyros_msgs::Log::ROSWARN, msg); }
-void logerror(tinyros::string msg) { nh()->log(tinyros_msgs::Log::ROSERROR, msg); }
-void logfatal(tinyros::string msg) { nh()->log(tinyros_msgs::Log::ROSFATAL, msg); }
-void logdiag(tinyros::string msg) { nh()->log(tinyros_msgs::Log::ROSDIAG, msg); }
+void logdebug(tinyros::string msg) { nh()->log(tinyros::tinyros_msgs::Log::ROSDEBUG, msg); }
+void loginfo(tinyros::string msg) { nh()->log(tinyros::tinyros_msgs::Log::ROSINFO, msg); }
+void logwarn(tinyros::string msg) { nh()->log(tinyros::tinyros_msgs::Log::ROSWARN, msg); }
+void logerror(tinyros::string msg) { nh()->log(tinyros::tinyros_msgs::Log::ROSERROR, msg); }
+void logfatal(tinyros::string msg) { nh()->log(tinyros::tinyros_msgs::Log::ROSFATAL, msg); }
 }
 

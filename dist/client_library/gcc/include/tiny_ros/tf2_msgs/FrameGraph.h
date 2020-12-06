@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace tf2_msgs
 {
 
@@ -156,5 +158,6 @@ static const char FRAMEGRAPH[] = "tf2_msgs/FrameGraph";
     typedef FrameGraphResponse Response;
   };
 
+}
 }
 #endif

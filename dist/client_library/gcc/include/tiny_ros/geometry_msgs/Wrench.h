@@ -9,15 +9,17 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Vector3.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class Wrench : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::Vector3 _force_type;
+      typedef tinyros::geometry_msgs::Vector3 _force_type;
       _force_type force;
-      typedef geometry_msgs::Vector3 _torque_type;
+      typedef tinyros::geometry_msgs::Vector3 _torque_type;
       _torque_type torque;
 
     Wrench():
@@ -68,5 +70,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

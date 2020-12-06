@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -554,5 +556,6 @@ static const char GETMODELPROPERTIES[] = "gazebo_msgs/GetModelProperties";
     typedef GetModelPropertiesResponse Response;
   };
 
+}
 }
 #endif

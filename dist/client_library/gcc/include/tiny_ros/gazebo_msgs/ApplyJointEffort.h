@@ -9,6 +9,8 @@
 #include "tiny_ros/ros/duration.h"
 #include "tiny_ros/ros/time.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -300,5 +302,6 @@ static const char APPLYJOINTEFFORT[] = "gazebo_msgs/ApplyJointEffort";
     typedef ApplyJointEffortResponse Response;
   };
 
+}
 }
 #endif

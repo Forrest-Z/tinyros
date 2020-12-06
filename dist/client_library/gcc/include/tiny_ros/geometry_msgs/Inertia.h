@@ -9,6 +9,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Vector3.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
@@ -17,7 +19,7 @@ namespace geometry_msgs
     public:
       typedef double _m_type;
       _m_type m;
-      typedef geometry_msgs::Vector3 _com_type;
+      typedef tinyros::geometry_msgs::Vector3 _com_type;
       _com_type com;
       typedef double _ixx_type;
       _ixx_type ixx;
@@ -304,5 +306,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

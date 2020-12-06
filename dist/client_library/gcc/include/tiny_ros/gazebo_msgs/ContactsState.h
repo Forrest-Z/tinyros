@@ -10,16 +10,18 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/gazebo_msgs/ContactState.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
   class ContactsState : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       uint32_t states_length;
-      typedef gazebo_msgs::ContactState _states_type;
+      typedef tinyros::gazebo_msgs::ContactState _states_type;
       _states_type st_states;
       _states_type * states;
 
@@ -54,11 +56,11 @@ namespace gazebo_msgs
       states_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->states_length);
       if(states_lengthT > states_length)
-        this->states = (gazebo_msgs::ContactState*)realloc(this->states, states_lengthT * sizeof(gazebo_msgs::ContactState));
+        this->states = (tinyros::gazebo_msgs::ContactState*)realloc(this->states, states_lengthT * sizeof(tinyros::gazebo_msgs::ContactState));
       states_length = states_lengthT;
       for( uint32_t i = 0; i < states_length; i++) {
         offset += this->st_states.deserialize(inbuffer + offset);
-        memcpy( &(this->states[i]), &(this->st_states), sizeof(gazebo_msgs::ContactState));
+        memcpy( &(this->states[i]), &(this->st_states), sizeof(tinyros::gazebo_msgs::ContactState));
       }
       return offset;
     }
@@ -100,5 +102,6 @@ namespace gazebo_msgs
 
   };
 
+}
 }
 #endif

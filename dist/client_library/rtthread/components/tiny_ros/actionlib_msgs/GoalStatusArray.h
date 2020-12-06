@@ -8,16 +8,18 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/actionlib_msgs/GoalStatus.h"
 
+namespace tinyros
+{
 namespace actionlib_msgs
 {
 
   class GoalStatusArray : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       uint32_t status_list_length;
-      typedef actionlib_msgs::GoalStatus _status_list_type;
+      typedef tinyros::actionlib_msgs::GoalStatus _status_list_type;
       _status_list_type st_status_list;
       _status_list_type * status_list;
 
@@ -52,11 +54,11 @@ namespace actionlib_msgs
       status_list_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->status_list_length);
       if(status_list_lengthT > status_list_length)
-        this->status_list = (actionlib_msgs::GoalStatus*)realloc(this->status_list, status_list_lengthT * sizeof(actionlib_msgs::GoalStatus));
+        this->status_list = (tinyros::actionlib_msgs::GoalStatus*)realloc(this->status_list, status_list_lengthT * sizeof(tinyros::actionlib_msgs::GoalStatus));
       status_list_length = status_list_lengthT;
       for( uint32_t i = 0; i < status_list_length; i++) {
         offset += this->st_status_list.deserialize(inbuffer + offset);
-        memcpy( &(this->status_list[i]), &(this->st_status_list), sizeof(actionlib_msgs::GoalStatus));
+        memcpy( &(this->status_list[i]), &(this->st_status_list), sizeof(tinyros::actionlib_msgs::GoalStatus));
       }
       return offset;
     }
@@ -77,5 +79,6 @@ namespace actionlib_msgs
 
   };
 
+}
 }
 #endif

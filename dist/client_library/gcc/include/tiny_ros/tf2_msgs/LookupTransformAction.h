@@ -11,17 +11,19 @@
 #include "tiny_ros/tf2_msgs/LookupTransformActionResult.h"
 #include "tiny_ros/tf2_msgs/LookupTransformActionFeedback.h"
 
+namespace tinyros
+{
 namespace tf2_msgs
 {
 
   class LookupTransformAction : public tinyros::Msg
   {
     public:
-      typedef tf2_msgs::LookupTransformActionGoal _action_goal_type;
+      typedef tinyros::tf2_msgs::LookupTransformActionGoal _action_goal_type;
       _action_goal_type action_goal;
-      typedef tf2_msgs::LookupTransformActionResult _action_result_type;
+      typedef tinyros::tf2_msgs::LookupTransformActionResult _action_result_type;
       _action_result_type action_result;
-      typedef tf2_msgs::LookupTransformActionFeedback _action_feedback_type;
+      typedef tinyros::tf2_msgs::LookupTransformActionFeedback _action_feedback_type;
       _action_feedback_type action_feedback;
 
     LookupTransformAction():
@@ -79,5 +81,6 @@ namespace tf2_msgs
 
   };
 
+}
 }
 #endif

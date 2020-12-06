@@ -14,7 +14,7 @@ class ServiceClient : public Subscriber_
 {
 public:
   ServiceClient(tinyros::string topic_name) :
-    pub(topic_name, &req, tinyros_msgs::TopicInfo::ID_SERVICE_CLIENT + tinyros_msgs::TopicInfo::ID_PUBLISHER)
+    pub(topic_name, &req, tinyros::tinyros_msgs::TopicInfo::ID_SERVICE_CLIENT + tinyros::tinyros_msgs::TopicInfo::ID_PUBLISHER)
 {
     this->negotiated_ = false;
     this->srv_flag_ = true;
@@ -45,7 +45,7 @@ public:
 
       if (rt_sem_take(&sem_, (duration * 1000)) != RT_EOK) {
         ret = false;
-        log_warn("Service[%s] call_req.id: %u, call timeout!\n", this->topic_.c_str(), call_req->getID());
+        tinyros_log_warn("Service[%s] call_req.id: %u, call timeout!\n", this->topic_.c_str(), call_req->getID());
       } else {
         ret = true;
       }
@@ -89,7 +89,7 @@ public:
   }
   virtual int getEndpointType()
   {
-    return tinyros_msgs::TopicInfo::ID_SERVICE_CLIENT + tinyros_msgs::TopicInfo::ID_SUBSCRIBER;
+    return tinyros::tinyros_msgs::TopicInfo::ID_SERVICE_CLIENT + tinyros::tinyros_msgs::TopicInfo::ID_SUBSCRIBER;
   }
 
   virtual bool negotiated()

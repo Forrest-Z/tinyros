@@ -10,17 +10,19 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/sensor_msgs/PointCloud2.h"
 
+namespace tinyros
+{
 namespace map_msgs
 {
 
   class PointCloud2Update : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef uint32_t _type_type;
       _type_type type;
-      typedef sensor_msgs::PointCloud2 _points_type;
+      typedef tinyros::sensor_msgs::PointCloud2 _points_type;
       _points_type points;
       enum { ADD = 0 };
       enum { DELETE = 1 };
@@ -87,5 +89,6 @@ namespace map_msgs
 
   };
 
+}
 }
 #endif

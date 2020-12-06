@@ -9,6 +9,8 @@
 #include "tiny_ros/geometry_msgs/Pose.h"
 #include "tiny_ros/geometry_msgs/Twist.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -132,9 +134,9 @@ static const char GETMODELSTATE[] = "gazebo_msgs/GetModelState";
       ___id___type __id__;
 
     public:
-      typedef geometry_msgs::Pose _pose_type;
+      typedef tinyros::geometry_msgs::Pose _pose_type;
       _pose_type pose;
-      typedef geometry_msgs::Twist _twist_type;
+      typedef tinyros::geometry_msgs::Twist _twist_type;
       _twist_type twist;
       typedef bool _success_type;
       _success_type success;
@@ -253,5 +255,6 @@ static const char GETMODELSTATE[] = "gazebo_msgs/GetModelState";
     typedef GetModelStateResponse Response;
   };
 
+}
 }
 #endif

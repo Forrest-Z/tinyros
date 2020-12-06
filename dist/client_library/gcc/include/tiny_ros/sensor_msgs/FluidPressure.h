@@ -9,13 +9,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class FluidPressure : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef double _fluid_pressure_type;
       _fluid_pressure_type fluid_pressure;
@@ -129,5 +131,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

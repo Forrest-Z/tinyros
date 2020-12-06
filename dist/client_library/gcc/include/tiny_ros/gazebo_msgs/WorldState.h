@@ -12,28 +12,30 @@
 #include "tiny_ros/geometry_msgs/Twist.h"
 #include "tiny_ros/geometry_msgs/Wrench.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
   class WorldState : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       uint32_t name_length;
       typedef std::string _name_type;
       _name_type st_name;
       _name_type * name;
       uint32_t pose_length;
-      typedef geometry_msgs::Pose _pose_type;
+      typedef tinyros::geometry_msgs::Pose _pose_type;
       _pose_type st_pose;
       _pose_type * pose;
       uint32_t twist_length;
-      typedef geometry_msgs::Twist _twist_type;
+      typedef tinyros::geometry_msgs::Twist _twist_type;
       _twist_type st_twist;
       _twist_type * twist;
       uint32_t wrench_length;
-      typedef geometry_msgs::Wrench _wrench_type;
+      typedef tinyros::geometry_msgs::Wrench _wrench_type;
       _wrench_type st_wrench;
       _wrench_type * wrench;
 
@@ -119,11 +121,11 @@ namespace gazebo_msgs
       pose_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->pose_length);
       if(pose_lengthT > pose_length)
-        this->pose = (geometry_msgs::Pose*)realloc(this->pose, pose_lengthT * sizeof(geometry_msgs::Pose));
+        this->pose = (tinyros::geometry_msgs::Pose*)realloc(this->pose, pose_lengthT * sizeof(tinyros::geometry_msgs::Pose));
       pose_length = pose_lengthT;
       for( uint32_t i = 0; i < pose_length; i++) {
         offset += this->st_pose.deserialize(inbuffer + offset);
-        memcpy( &(this->pose[i]), &(this->st_pose), sizeof(geometry_msgs::Pose));
+        memcpy( &(this->pose[i]), &(this->st_pose), sizeof(tinyros::geometry_msgs::Pose));
       }
       uint32_t twist_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       twist_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -131,11 +133,11 @@ namespace gazebo_msgs
       twist_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->twist_length);
       if(twist_lengthT > twist_length)
-        this->twist = (geometry_msgs::Twist*)realloc(this->twist, twist_lengthT * sizeof(geometry_msgs::Twist));
+        this->twist = (tinyros::geometry_msgs::Twist*)realloc(this->twist, twist_lengthT * sizeof(tinyros::geometry_msgs::Twist));
       twist_length = twist_lengthT;
       for( uint32_t i = 0; i < twist_length; i++) {
         offset += this->st_twist.deserialize(inbuffer + offset);
-        memcpy( &(this->twist[i]), &(this->st_twist), sizeof(geometry_msgs::Twist));
+        memcpy( &(this->twist[i]), &(this->st_twist), sizeof(tinyros::geometry_msgs::Twist));
       }
       uint32_t wrench_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       wrench_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -143,11 +145,11 @@ namespace gazebo_msgs
       wrench_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->wrench_length);
       if(wrench_lengthT > wrench_length)
-        this->wrench = (geometry_msgs::Wrench*)realloc(this->wrench, wrench_lengthT * sizeof(geometry_msgs::Wrench));
+        this->wrench = (tinyros::geometry_msgs::Wrench*)realloc(this->wrench, wrench_lengthT * sizeof(tinyros::geometry_msgs::Wrench));
       wrench_length = wrench_lengthT;
       for( uint32_t i = 0; i < wrench_length; i++) {
         offset += this->st_wrench.deserialize(inbuffer + offset);
-        memcpy( &(this->wrench[i]), &(this->st_wrench), sizeof(geometry_msgs::Wrench));
+        memcpy( &(this->wrench[i]), &(this->st_wrench), sizeof(tinyros::geometry_msgs::Wrench));
       }
       return offset;
     }
@@ -250,5 +252,6 @@ namespace gazebo_msgs
 
   };
 
+}
 }
 #endif

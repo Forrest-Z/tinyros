@@ -10,15 +10,17 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/Quaternion.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class QuaternionStamped : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef geometry_msgs::Quaternion _quaternion_type;
+      typedef tinyros::geometry_msgs::Quaternion _quaternion_type;
       _quaternion_type quaternion;
 
     QuaternionStamped():
@@ -69,5 +71,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

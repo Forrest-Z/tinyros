@@ -85,7 +85,7 @@ public:
 
   void start()
   {
-    using namespace tinyros_msgs;
+    using namespace tinyros::tinyros_msgs;
     callbacks_[TopicInfo::ID_PUBLISHER] = std::bind(&Session::setup_publisher, this, std::placeholders::_1);
     callbacks_[TopicInfo::ID_SUBSCRIBER] = std::bind(&Session::setup_subscriber, this, std::placeholders::_1);
     callbacks_[TopicInfo::ID_SERVICE_SERVER+TopicInfo::ID_PUBLISHER] = std::bind(&Session::setup_service_server, this, std::placeholders::_1);
@@ -267,7 +267,7 @@ public:
         }
 
         if ((checksum % 256) == 255) {
-          if (topic < tinyros_msgs::TopicInfo::ID_ROSTOPIC_REQUEST) {
+          if (topic < tinyros::tinyros_msgs::TopicInfo::ID_ROSTOPIC_REQUEST) {
             memset(message_in + index + bytes, 0, buffer_max - index - bytes);
             bytes = buffer_max - index;
           }
@@ -414,7 +414,7 @@ private:
         } else if (mode == MODE_MSG_CHECKSUM) {
           mode = MODE_FIRST_FF;
           if ((checksum % 256) == 255) {
-            if (topic < tinyros_msgs::TopicInfo::ID_ROSTOPIC_REQUEST) {
+            if (topic < tinyros::tinyros_msgs::TopicInfo::ID_ROSTOPIC_REQUEST) {
               memset(message_in + total_bytes, 0, buffer_max - total_bytes);
               total_bytes = buffer_max;
             }
@@ -536,7 +536,7 @@ private:
     while(require_check_running_) {
       if (stream_type_ != tinyros::UDP_STREAM) {
         std::vector<uint8_t> message(0);
-        write_message(message, tinyros_msgs::TopicInfo::ID_PUBLISHER);
+        write_message(message, tinyros::tinyros_msgs::TopicInfo::ID_PUBLISHER);
 
         // Post dds time
         handle_time_done();
@@ -595,8 +595,8 @@ private:
 
   //// RECEIVED MESSAGE HANDLERS ////
   void setup_publisher(tinyros::serialization::IStream& stream) {
-    tinyros_msgs::TopicInfo topic_info;
-    tinyros::serialization::Serializer<tinyros_msgs::TopicInfo>::read(stream, topic_info);
+    tinyros::tinyros_msgs::TopicInfo topic_info;
+    tinyros::serialization::Serializer<tinyros::tinyros_msgs::TopicInfo>::read(stream, topic_info);
     if (!publishers_.count(topic_info.topic_id)) {
       spdlog_info("[{0}] setup_publisher(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
         session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
@@ -626,8 +626,8 @@ private:
   }
 
   void setup_subscriber(tinyros::serialization::IStream& stream) {
-    tinyros_msgs::TopicInfo topic_info;
-    tinyros::serialization::Serializer<tinyros_msgs::TopicInfo>::read(stream, topic_info);
+    tinyros::tinyros_msgs::TopicInfo topic_info;
+    tinyros::serialization::Serializer<tinyros::tinyros_msgs::TopicInfo>::read(stream, topic_info);
     if (!subscribers_.count(topic_info.topic_id)) {
       spdlog_info("[{0}] setup_subscriber(topic_id: {1}, topic_name: {2}, node_name: {3}, md5sum: {4})", 
         session_id_.c_str(), topic_info.topic_id, topic_info.topic_name.c_str(), topic_info.node.c_str(), topic_info.md5sum.c_str());
@@ -656,8 +656,8 @@ private:
   }
 
   void setup_service_server(tinyros::serialization::IStream& stream) {
-    tinyros_msgs::TopicInfo topic_info;
-    tinyros::serialization::Serializer<tinyros_msgs::TopicInfo>::read(stream, topic_info);
+    tinyros::tinyros_msgs::TopicInfo topic_info;
+    tinyros::serialization::Serializer<tinyros::tinyros_msgs::TopicInfo>::read(stream, topic_info);
 
     std::unique_lock<std::mutex> lock(ServiceServerCore::services_mutex_);
     if (!ServiceServerCore::services_.count(topic_info.topic_name)) {
@@ -676,8 +676,8 @@ private:
   }
   
   void setup_service_client(tinyros::serialization::IStream& stream) {
-    tinyros_msgs::TopicInfo topic_info;
-    tinyros::serialization::Serializer<tinyros_msgs::TopicInfo>::read(stream, topic_info);
+    tinyros::tinyros_msgs::TopicInfo topic_info;
+    tinyros::serialization::Serializer<tinyros::tinyros_msgs::TopicInfo>::read(stream, topic_info);
 
     std::unique_lock<std::mutex> lock(ServiceServerCore::services_mutex_);
     if (ServiceServerCore::services_.count(topic_info.topic_name)) {
@@ -727,7 +727,7 @@ private:
   }
 
   void handle_time_done() {
-    tinyros_msgs::SyncTime time;
+    tinyros::tinyros_msgs::SyncTime time;
     time.data = tinyros::Time::now();
     time.tick = REQUEST_TOPICS_TIMER*1000;
 
@@ -735,20 +735,20 @@ private:
     std::vector<uint8_t> message(length);
 
     tinyros::serialization::OStream ostream(&message[0], length);
-    tinyros::serialization::Serializer<tinyros_msgs::SyncTime>::write(ostream, time);
+    tinyros::serialization::Serializer<tinyros::tinyros_msgs::SyncTime>::write(ostream, time);
 
-    write_message(message, tinyros_msgs::TopicInfo::ID_TIME);
+    write_message(message, tinyros::tinyros_msgs::TopicInfo::ID_TIME);
   }
 
-  void handle_negotiated(const tinyros_msgs::TopicInfo& topic_info) {
+  void handle_negotiated(const tinyros::tinyros_msgs::TopicInfo& topic_info) {
     if (stream_type_ != tinyros::UDP_STREAM) {
       size_t length = tinyros::serialization::serializationLength(topic_info);
       std::vector<uint8_t> message(length);
 
       tinyros::serialization::OStream ostream(&message[0], length);
-      tinyros::serialization::Serializer<tinyros_msgs::TopicInfo>::write(ostream, topic_info);
+      tinyros::serialization::Serializer<tinyros::tinyros_msgs::TopicInfo>::write(ostream, topic_info);
 
-      write_message(message, tinyros_msgs::TopicInfo::ID_NEGOTIATED);
+      write_message(message, tinyros::tinyros_msgs::TopicInfo::ID_NEGOTIATED);
     }
   }
 
@@ -757,7 +757,7 @@ private:
     {
       std::unique_lock<std::mutex> lock(Rostopic::topics_mutex_);
       if (!Rostopic::topics_.count(TINYROS_LOG_TOPIC)) {
-        tinyros_msgs::Log log;
+        tinyros::tinyros_msgs::Log log;
         topic_list += TINYROS_LOG_TOPIC " [type:" + log.getType() + ", md5:" + log.getMD5() + "]\n";
       }
       std::map<std::string, RostopicPtr>::iterator it;
@@ -766,13 +766,13 @@ private:
         it++;
       }
     }
-    std_msgs::String msg;
+    tinyros::std_msgs::String msg;
     msg.data = topic_list;
     size_t length = tinyros::serialization::serializationLength(msg);
     std::vector<uint8_t> message(length);
     tinyros::serialization::OStream ostream(&message[0], length);
-    tinyros::serialization::Serializer<std_msgs::String>::write(ostream, msg);
-    write_message(message, tinyros_msgs::TopicInfo::ID_ROSTOPIC_REQUEST);
+    tinyros::serialization::Serializer<tinyros::std_msgs::String>::write(ostream, msg);
+    write_message(message, tinyros::tinyros_msgs::TopicInfo::ID_ROSTOPIC_REQUEST);
   }
 
   void handle_rosservice_request(tinyros::serialization::IStream& stream) {
@@ -785,18 +785,18 @@ private:
         it++;
       }
     }
-    std_msgs::String msg;
+    tinyros::std_msgs::String msg;
     msg.data = service_list;
     size_t length = tinyros::serialization::serializationLength(msg);
     std::vector<uint8_t> message(length);
     tinyros::serialization::OStream ostream(&message[0], length);
-    tinyros::serialization::Serializer<std_msgs::String>::write(ostream, msg);
-    write_message(message, tinyros_msgs::TopicInfo::ID_ROSSERVICE_REQUEST);
+    tinyros::serialization::Serializer<tinyros::std_msgs::String>::write(ostream, msg);
+    write_message(message, tinyros::tinyros_msgs::TopicInfo::ID_ROSSERVICE_REQUEST);
   }
 
   void handle_session_id(tinyros::serialization::IStream& stream) {
-    std_msgs::String session_info;
-    tinyros::serialization::Serializer<std_msgs::String>::read(stream, session_info);
+    tinyros::std_msgs::String session_info;
+    tinyros::serialization::Serializer<tinyros::std_msgs::String>::read(stream, session_info);
     spdlog_info("[{0}] Starting session...", session_info.data.c_str());
     session_id_ = session_info.data;
     socket_.session_id_ = session_id_;

@@ -75,7 +75,7 @@ public:
   virtual void exit() {}
   virtual bool ok() { return false; }
   virtual void sync_time(unsigned char* data) {
-     tinyros_msgs::SyncTime t;
+     tinyros::tinyros_msgs::SyncTime t;
      t.deserialize(data);
      int64_t now = (int64_t)(Time::now().toMSec());
      rt_mutex_take(&sync_time_mutex_, RT_WAITING_FOREVER);

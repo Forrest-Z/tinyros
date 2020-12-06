@@ -9,6 +9,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/ros/time.h"
 
+namespace tinyros
+{
 namespace actionlib_msgs
 {
 
@@ -107,5 +109,6 @@ namespace actionlib_msgs
 
   };
 
+}
 }
 #endif

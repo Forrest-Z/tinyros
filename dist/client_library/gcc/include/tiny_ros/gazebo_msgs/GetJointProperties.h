@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -422,5 +424,6 @@ static const char GETJOINTPROPERTIES[] = "gazebo_msgs/GetJointProperties";
     typedef GetJointPropertiesResponse Response;
   };
 
+}
 }
 #endif

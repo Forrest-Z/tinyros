@@ -10,15 +10,17 @@
 #include "tiny_ros/geometry_msgs/Point.h"
 #include "tiny_ros/geometry_msgs/Quaternion.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class Pose : public tinyros::Msg
   {
     public:
-      typedef geometry_msgs::Point _position_type;
+      typedef tinyros::geometry_msgs::Point _position_type;
       _position_type position;
-      typedef geometry_msgs::Quaternion _orientation_type;
+      typedef tinyros::geometry_msgs::Quaternion _orientation_type;
       _orientation_type orientation;
 
     Pose():
@@ -69,5 +71,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

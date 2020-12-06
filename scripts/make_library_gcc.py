@@ -133,7 +133,7 @@ class PrimitiveDataType:
             elif self.type == 'uint8_t':
                 f.write('%s      std::stringstream ss_%s; ss_%s << (uint16_t)%s <<"%s";\n' % (header, cn, cn, self.name, trailer))
             elif self.type == 'char':
-                f.write('%s      std::stringstream ss_%s; ss_%s <<"\\"" << %s <<"\\"%s";\n' % (header, cn, cn, self.name, trailer))
+                f.write('%s      std::stringstream ss_%s; ss_%s << (int16_t)%s <<"%s";\n' % (header, cn, cn, self.name, trailer))
             else:
                 f.write('%s      std::stringstream ss_%s; ss_%s << %s <<"%s";\n' % (header, cn, cn, self.name, trailer))
             f.write('%s      string_echo += ss_%s.str();\n' % (header, cn))
@@ -143,7 +143,7 @@ class PrimitiveDataType:
             elif self.type == 'uint8_t':
                 f.write('%s      std::stringstream ss_%s; ss_%s << "\\"%s\\":" << (uint16_t)%s <<"%s";\n' % (header, self.name, self.name, self.name, self.name, trailer))
             elif self.type == 'char':
-                f.write('%s      std::stringstream ss_%s; ss_%s << "\\"%s\\":\\"" << %s <<"\\"%s";\n' % (header, self.name, self.name, self.name, self.name, trailer))
+                f.write('%s      std::stringstream ss_%s; ss_%s << "\\"%s\\":" << (int16_t)%s <<"%s";\n' % (header, self.name, self.name, self.name, self.name, trailer))
             else:
                 f.write('%s      std::stringstream ss_%s; ss_%s << "\\"%s\\":" << %s <<"%s";\n' % (header, self.name, self.name, self.name, self.name, trailer))
             f.write('%s      string_echo += ss_%s.str();\n' % (header, self.name)) 
@@ -382,7 +382,7 @@ ROS_TO_EMBEDDED_TYPES = {
     'time'    :   ('tinyros::Time',         8, TimeDataType, ['ros/time']),
     'duration':   ('tinyros::Duration',     8, TimeDataType, ['ros/duration']),
     'string'  :   ('std::string',             0, StringDataType, []),
-    'Header'  :   ('std_msgs::Header',  0, MessageDataType, ['std_msgs/Header'])
+    'Header'  :   ('tinyros::std_msgs::Header',  0, MessageDataType, ['std_msgs/Header'])
 }
 
 #####################################################################
@@ -454,7 +454,7 @@ class Message:
                 if type_package+"/"+type_name not in self.includes:
                     self.includes.append(type_package+"/"+type_name)
                 cls = MessageDataType
-                code_type = type_package + "::" + type_name
+                code_type = "tinyros::" + type_package + "::" + type_name
                 size = 0
             if type_array:
                 self.data.append( ArrayDataType(name, code_type, size, cls, type_array_size ) )
@@ -588,11 +588,13 @@ class Message:
         self._write_msg_includes(f)
 
         f.write('\n')
+        f.write('namespace tinyros\n{\n')
         f.write('namespace %s\n' % self.package)
         f.write('{\n')
         f.write('\n')
         self._write_impl(f)
         f.write('\n')
+        f.write('}\n')
         f.write('}\n')
 
         f.write('#endif\n')
@@ -632,6 +634,7 @@ class Service:
             f.write('#include "tiny_ros/%s.h"\n' % inc)
 
         f.write('\n')
+        f.write('namespace tinyros\n{\n')
         f.write('namespace %s\n' % self.package)
         f.write('{\n')
         f.write('\n')
@@ -702,6 +705,7 @@ class Service:
         f.write('\n')
 
         f.write('}\n')
+        f.write('}\n')
 
         f.write('#endif\n')
 
@@ -769,11 +773,11 @@ def MakeLibrary(pkg_dir, package, output_path, build_dir):
         msg.make_header(header)
         header.close()
 
-def messages_generate(path):
+def messages_generate(path, build, msgs):
     # gimme messages
     failed = []
-    mydir = sys.argv[1] + "/msgs"
-    builddir = sys.argv[1] + "/build/CMake/gcc_msgs"
+    mydir = msgs
+    builddir = build
     for d in sorted(os.listdir(mydir)):
 	    try:
 	        MakeLibrary(mydir + "/" + d, d, path, builddir + "/" + d)
@@ -795,7 +799,7 @@ def MakeSubscribers(messages, output_path):
     for msg in messages:
         if not os.path.exists(output_path):
             os.makedirs(output_path)
-        f = open(output_path + "/rostopic_subscribers.cpp", "w")
+        f = open(output_path + "/rostopic_subscribers.cpp.part", "w")
         f.write('#ifndef _TINYROS_ROSTOPIC_SUBSCRIBERS_h\n')
         f.write('#define _TINYROS_ROSTOPIC_SUBSCRIBERS_h\n')
         f.write('\n')
@@ -833,17 +837,29 @@ def MakeSubscribers(messages, output_path):
         for s in messages:
 	        pkg = s[0:s.find('/')]
 	        name = s[s.find('/')+1:]
-	        f.write('    {"%s", new EchoSubscriber<%s::%s>()},\n' % (s, pkg, name))
+	        f.write('    {"%s", new EchoSubscriber<tinyros::%s::%s>()},\n' % (s, pkg, name))
         f.write('};\n\n')
         f.write('}\n')
         f.write('#endif\n\n')
         f.close()
+
+        if not os.path.exists(output_path + "/rostopic_subscribers.cpp"):
+            shutil.move(output_path + "/rostopic_subscribers.cpp.part", output_path + "/rostopic_subscribers.cpp")
+        else:
+            tmp_file_definition = open(output_path + "/rostopic_subscribers.cpp").readlines()
+            file_definition = open(output_path + "/rostopic_subscribers.cpp.part").readlines()
+            tmp_file_md5 = hashlib_md5sum_definition(tmp_file_definition)
+            file_md5 = hashlib_md5sum_definition(file_definition)
+            if file_md5 != tmp_file_md5:
+                shutil.move(output_path + "/rostopic_subscribers.cpp.part", output_path + "/rostopic_subscribers.cpp")
+            else:
+                os.remove(output_path + "/rostopic_subscribers.cpp.part")
         
-def subscribers_generate(path):
+def subscribers_generate(path, msgs):
     # gimme messages
     failed = []
     messages = list()
-    mydir = sys.argv[1] + "/msgs"
+    mydir = msgs
     for d in sorted(os.listdir(mydir)):
 	    try:
 		    if os.path.exists(mydir + "/" + d +"/msg"):
@@ -968,8 +984,8 @@ print("\nExporting to %s" % path)
 
 roslib_copy_roslib_files(path+"/include/tiny_ros/")
 roslib_copy_examples_files(path+"/src/")
-messages_generate(path+"/include/tiny_ros/")
-subscribers_generate(path+"/include/tiny_ros/")
+messages_generate(path+"/include/tiny_ros/", sys.argv[1] + "/build/CMake/gcc_msgs", sys.argv[3] + "/msgs")
+subscribers_generate(path+"/include/tiny_ros/", sys.argv[3] + "/msgs")
 if os.path.exists(sys.argv[1] + "/build/CMake/gcc_msgs"):
     shutil.rmtree(sys.argv[1] + "/build/CMake/gcc_msgs")
-shutil.copytree(sys.argv[1] + "/msgs", sys.argv[1] + "/build/CMake/gcc_msgs")
+shutil.copytree(sys.argv[3] + "/msgs", sys.argv[1] + "/build/CMake/gcc_msgs")

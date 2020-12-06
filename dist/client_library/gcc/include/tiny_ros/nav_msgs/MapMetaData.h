@@ -10,6 +10,8 @@
 #include "tiny_ros/ros/time.h"
 #include "tiny_ros/geometry_msgs/Pose.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
@@ -24,7 +26,7 @@ namespace nav_msgs
       _width_type width;
       typedef uint32_t _height_type;
       _height_type height;
-      typedef geometry_msgs::Pose _origin_type;
+      typedef tinyros::geometry_msgs::Pose _origin_type;
       _origin_type origin;
 
     MapMetaData():
@@ -148,5 +150,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

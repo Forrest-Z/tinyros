@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class Illuminance : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef double _illuminance_type;
       _illuminance_type illuminance;
@@ -113,5 +115,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

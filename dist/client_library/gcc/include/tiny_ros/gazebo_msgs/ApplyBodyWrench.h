@@ -11,6 +11,8 @@
 #include "tiny_ros/ros/time.h"
 #include "tiny_ros/geometry_msgs/Point.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -27,9 +29,9 @@ static const char APPLYBODYWRENCH[] = "gazebo_msgs/ApplyBodyWrench";
       _body_name_type body_name;
       typedef std::string _reference_frame_type;
       _reference_frame_type reference_frame;
-      typedef geometry_msgs::Point _reference_point_type;
+      typedef tinyros::geometry_msgs::Point _reference_point_type;
       _reference_point_type reference_point;
-      typedef geometry_msgs::Wrench _wrench_type;
+      typedef tinyros::geometry_msgs::Wrench _wrench_type;
       _wrench_type wrench;
       typedef tinyros::Time _start_time_type;
       _start_time_type start_time;
@@ -313,5 +315,6 @@ static const char APPLYBODYWRENCH[] = "gazebo_msgs/ApplyBodyWrench";
     typedef ApplyBodyWrenchResponse Response;
   };
 
+}
 }
 #endif

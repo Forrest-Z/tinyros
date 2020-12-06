@@ -818,11 +818,11 @@ def MakeLibrary(pkg_dir, package, output_path, build_dir):
         msg.make_header(header)
         header.close()
 
-def messages_generate(path):
+def messages_generate(path, build, msgs):
     # gimme messages
     failed = []
-    mydir = sys.argv[1] + "/msgs"
-    builddir = sys.argv[1] + "/build/CMake/go_msgs"
+    mydir = msgs
+    builddir = build
     for d in sorted(os.listdir(mydir)):
 	    try:
 	        MakeLibrary(mydir + "/" + d, d, path, builddir + "/" + d)
@@ -898,7 +898,7 @@ print("\nExporting to %s" % path)
 
 roslib_copy_roslib_files(path+"/src/tiny_ros/")
 roslib_copy_examples_files(path+"/")
-messages_generate(path+"/src/tiny_ros/")
+messages_generate(path+"/src/tiny_ros/", sys.argv[1] + "/build/CMake/go_msgs", sys.argv[3] + "/msgs")
 if os.path.exists(sys.argv[1] + "/build/CMake/go_msgs"):
     shutil.rmtree(sys.argv[1] + "/build/CMake/go_msgs")
-shutil.copytree(sys.argv[1] + "/msgs", sys.argv[1] + "/build/CMake/go_msgs")
+shutil.copytree(sys.argv[3] + "/msgs", sys.argv[1] + "/build/CMake/go_msgs")

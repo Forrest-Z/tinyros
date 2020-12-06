@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Pose.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -26,7 +28,7 @@ static const char SPAWNMODEL[] = "gazebo_msgs/SpawnModel";
       _model_xml_type model_xml;
       typedef std::string _robot_namespace_type;
       _robot_namespace_type robot_namespace;
-      typedef geometry_msgs::Pose _initial_pose_type;
+      typedef tinyros::geometry_msgs::Pose _initial_pose_type;
       _initial_pose_type initial_pose;
       typedef std::string _reference_frame_type;
       _reference_frame_type reference_frame;
@@ -299,5 +301,6 @@ static const char SPAWNMODEL[] = "gazebo_msgs/SpawnModel";
     typedef SpawnModelResponse Response;
   };
 
+}
 }
 #endif

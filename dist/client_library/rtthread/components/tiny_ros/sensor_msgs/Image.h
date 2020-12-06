@@ -7,13 +7,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class Image : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef uint32_t _height_type;
       _height_type height;
@@ -148,5 +150,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

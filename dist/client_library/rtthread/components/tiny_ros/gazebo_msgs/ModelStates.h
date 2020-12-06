@@ -8,6 +8,8 @@
 #include "tiny_ros/geometry_msgs/Pose.h"
 #include "tiny_ros/geometry_msgs/Twist.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -19,11 +21,11 @@ namespace gazebo_msgs
       _name_type st_name;
       _name_type * name;
       uint32_t pose_length;
-      typedef geometry_msgs::Pose _pose_type;
+      typedef tinyros::geometry_msgs::Pose _pose_type;
       _pose_type st_pose;
       _pose_type * pose;
       uint32_t twist_length;
-      typedef geometry_msgs::Twist _twist_type;
+      typedef tinyros::geometry_msgs::Twist _twist_type;
       _twist_type st_twist;
       _twist_type * twist;
 
@@ -97,11 +99,11 @@ namespace gazebo_msgs
       pose_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->pose_length);
       if(pose_lengthT > pose_length)
-        this->pose = (geometry_msgs::Pose*)realloc(this->pose, pose_lengthT * sizeof(geometry_msgs::Pose));
+        this->pose = (tinyros::geometry_msgs::Pose*)realloc(this->pose, pose_lengthT * sizeof(tinyros::geometry_msgs::Pose));
       pose_length = pose_lengthT;
       for( uint32_t i = 0; i < pose_length; i++) {
         offset += this->st_pose.deserialize(inbuffer + offset);
-        memcpy( &(this->pose[i]), &(this->st_pose), sizeof(geometry_msgs::Pose));
+        memcpy( &(this->pose[i]), &(this->st_pose), sizeof(tinyros::geometry_msgs::Pose));
       }
       uint32_t twist_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       twist_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -109,11 +111,11 @@ namespace gazebo_msgs
       twist_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->twist_length);
       if(twist_lengthT > twist_length)
-        this->twist = (geometry_msgs::Twist*)realloc(this->twist, twist_lengthT * sizeof(geometry_msgs::Twist));
+        this->twist = (tinyros::geometry_msgs::Twist*)realloc(this->twist, twist_lengthT * sizeof(tinyros::geometry_msgs::Twist));
       twist_length = twist_lengthT;
       for( uint32_t i = 0; i < twist_length; i++) {
         offset += this->st_twist.deserialize(inbuffer + offset);
-        memcpy( &(this->twist[i]), &(this->st_twist), sizeof(geometry_msgs::Twist));
+        memcpy( &(this->twist[i]), &(this->st_twist), sizeof(tinyros::geometry_msgs::Twist));
       }
       return offset;
     }
@@ -143,5 +145,6 @@ namespace gazebo_msgs
 
   };
 
+}
 }
 #endif

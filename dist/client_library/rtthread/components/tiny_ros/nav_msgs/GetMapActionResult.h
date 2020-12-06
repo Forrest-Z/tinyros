@@ -9,17 +9,19 @@
 #include "tiny_ros/actionlib_msgs/GoalStatus.h"
 #include "tiny_ros/nav_msgs/GetMapResult.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class GetMapActionResult : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef actionlib_msgs::GoalStatus _status_type;
+      typedef tinyros::actionlib_msgs::GoalStatus _status_type;
       _status_type status;
-      typedef nav_msgs::GetMapResult _result_type;
+      typedef tinyros::nav_msgs::GetMapResult _result_type;
       _result_type result;
 
     GetMapActionResult():
@@ -61,5 +63,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

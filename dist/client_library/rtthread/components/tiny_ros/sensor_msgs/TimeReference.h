@@ -8,13 +8,15 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/ros/time.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class TimeReference : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef tinyros::Time _time_ref_type;
       _time_ref_type time_ref;
@@ -93,5 +95,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

@@ -15,7 +15,7 @@
 #include "tiny_ros/ros/hardware.h"
 
 namespace tinyros {
-using tinyros_msgs::TopicInfo;
+using tinyros::tinyros_msgs::TopicInfo;
 
 class NodeHandle : public NodeHandleBase_
 {
@@ -74,7 +74,7 @@ public:
     ip_addr_ = ip_addr;
     node_name_ = node_name;
 
-    std_msgs::String msg;
+    tinyros::std_msgs::String msg;
     if (hardware_.init(ip_addr_)) {
       msg.data = node_name_;
       publish(TopicInfo::ID_SESSION_ID, &msg);
@@ -98,7 +98,7 @@ public:
     while(nh->loghd_keepalive_) {
       if (!nh->loghd_.connected()) {
         if (nh->loghd_.init(nh->ip_addr_)) {
-          std_msgs::String msg;
+          tinyros::std_msgs::String msg;
           msg.data = nh->node_name_ + "_log";
           nh->publish(TopicInfo::ID_SESSION_ID, &msg, true);
         }
@@ -120,7 +120,7 @@ public:
 
 protected:
   //State machine variables for spin
-  uint32_t topic_;
+  int32_t topic_;
   int mode_;
   int bytes_;
   int index_;
@@ -154,7 +154,7 @@ public:
     /* while available buffer, read data */
     while (spin_ && hardware_.connected()) {
       if (len > INPUT_SIZE) {
-        log_error("Input overflow(%d>%d)", len, INPUT_SIZE);
+        tinyros_log_error("Input overflow(%d>%d)", len, INPUT_SIZE);
 
         len = 1;
         mode_ = MODE_FIRST_FF;
@@ -236,19 +236,19 @@ public:
           if (topic_ == TopicInfo::ID_PUBLISHER) {
             negotiateTopics();
           } else if (topic_ == TopicInfo::ID_ROSTOPIC_REQUEST) {
-            std_msgs::String msg;
+            tinyros::std_msgs::String msg;
             msg.deserialize(message_in);
             topic_list = msg.data;
             topic_list_recieved = true;
           } else if (topic_ == TopicInfo::ID_ROSSERVICE_REQUEST) {
-            std_msgs::String msg;
+            tinyros::std_msgs::String msg;
             msg.deserialize(message_in);
             service_list = msg.data;
             service_list_recieved = true;
           } else if (topic_ == TopicInfo::ID_TIME) {
             sync_time(message_in);
           } else if (topic_ == TopicInfo::ID_NEGOTIATED) {
-            tinyros_msgs::TopicInfo ti;
+            tinyros::tinyros_msgs::TopicInfo ti;
             ti.deserialize(message_in);
             for (int i = 0; i < MAX_PUBLISHERS; i++) {
               if (publishers[i] != NULL && publishers[i]->id_ == ti.topic_id) {
@@ -261,8 +261,9 @@ public:
               }
             }
           } else {
-            if ((((int)(topic_-100)) >= 0) && subscribers[(int)(topic_-100)]) {
-              subscribers[(int)(topic_-100)]->callback(message_in);
+            int32_t topic = topic_-100;
+            if ((topic >= 0) && (topic < MAX_SUBSCRIBERS) && subscribers[topic]) {
+              subscribers[topic]->callback(message_in);
             }
           }
         }
@@ -287,7 +288,7 @@ public:
         publishers[i] = &p;
         rt_mutex_release(&mutex_);
         negotiateTopics(publishers[i]);
-        log_debug("Publishers[%d] topic_id: %d, topic_name: %s", i, p.id_, p.topic_.c_str());
+        tinyros_log_debug("Publishers[%d] topic_id: %d, topic_name: %s", i, p.id_, p.topic_.c_str());
         return true;
       }
     }
@@ -305,7 +306,7 @@ public:
         subscribers[i] = &s;
         rt_mutex_release(&mutex_);
         negotiateTopics(subscribers[i]);
-        log_debug("Subscribers[%d] topic_id: %d, topic_name: %s", i, s.id_, s.topic_.c_str());
+        tinyros_log_debug("Subscribers[%d] topic_id: %d, topic_name: %s", i, s.id_, s.topic_.c_str());
         return true;
       }
     }
@@ -329,7 +330,7 @@ public:
             rt_mutex_release(&mutex_);
             negotiateTopics(subscribers[i]);
             negotiateTopics(publishers[j]);
-            log_debug("advertiseService Subscribers[%d] topic_id: %d, topic_name: %s | Publishers[%d] topic_id: %d, topic_name: %s", 
+            tinyros_log_debug("advertiseService Subscribers[%d] topic_id: %d, topic_name: %s | Publishers[%d] topic_id: %d, topic_name: %s", 
                 i, srv.id_, srv.topic_.c_str(), j, srv.pub.id_, srv.pub.topic_.c_str());
             return true;
           }
@@ -366,7 +367,7 @@ public:
   }
 
   void negotiateTopics(Publisher * p) {
-    tinyros_msgs::TopicInfo ti;
+    tinyros::tinyros_msgs::TopicInfo ti;
     ti.topic_id = p->id_;
     ti.topic_name = p->topic_;
     ti.message_type = p->msg_->getType();
@@ -377,7 +378,7 @@ public:
   }
 
   void negotiateTopics(Subscriber_ * s) {
-    tinyros_msgs::TopicInfo ti;
+    tinyros::tinyros_msgs::TopicInfo ti;
     ti.topic_id = s->id_;
     ti.topic_name = s->topic_;
     ti.message_type = s->getMsgType();
@@ -450,13 +451,13 @@ public:
   
   void log(char byte, tinyros::string msg) {
     if (loghd_.connected()) {
-      tinyros_msgs::Log l;
+      tinyros::tinyros_msgs::Log l;
       l.level = byte;
       l.msg = tinyros::string("[");
       l.msg += node_name_;
       l.msg += tinyros::string("] ");
       l.msg += msg;
-      publish(tinyros_msgs::TopicInfo::ID_LOG, &l, true);
+      publish(tinyros::tinyros_msgs::TopicInfo::ID_LOG, &l, true);
     }
   }
 
@@ -470,7 +471,7 @@ private:
 public:
   tinyros::string getTopicList(int timeout = 1000)
   {
-    std_msgs::String msg;
+    tinyros::std_msgs::String msg;
     topic_list_recieved = false;
     publish(TopicInfo::ID_ROSTOPIC_REQUEST, &msg);
     int64_t to = (int64_t)(tinyros::Time().now().toMSec() + timeout);
@@ -487,7 +488,7 @@ public:
 
   tinyros::string getServiceList(int timeout = 1000)
   {
-    std_msgs::String msg;
+    tinyros::std_msgs::String msg;
     service_list_recieved = false;
     publish(TopicInfo::ID_ROSSERVICE_REQUEST, &msg);
     int64_t to = (int64_t)(tinyros::Time().now().toMSec() + timeout);

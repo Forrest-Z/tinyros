@@ -10,20 +10,22 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/Point.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class GridCells : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef float _cell_width_type;
       _cell_width_type cell_width;
       typedef float _cell_height_type;
       _cell_height_type cell_height;
       uint32_t cells_length;
-      typedef geometry_msgs::Point _cells_type;
+      typedef tinyros::geometry_msgs::Point _cells_type;
       _cells_type st_cells;
       _cells_type * cells;
 
@@ -102,11 +104,11 @@ namespace nav_msgs
       cells_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->cells_length);
       if(cells_lengthT > cells_length)
-        this->cells = (geometry_msgs::Point*)realloc(this->cells, cells_lengthT * sizeof(geometry_msgs::Point));
+        this->cells = (tinyros::geometry_msgs::Point*)realloc(this->cells, cells_lengthT * sizeof(tinyros::geometry_msgs::Point));
       cells_length = cells_lengthT;
       for( uint32_t i = 0; i < cells_length; i++) {
         offset += this->st_cells.deserialize(inbuffer + offset);
-        memcpy( &(this->cells[i]), &(this->st_cells), sizeof(geometry_msgs::Point));
+        memcpy( &(this->cells[i]), &(this->st_cells), sizeof(tinyros::geometry_msgs::Point));
       }
       return offset;
     }
@@ -154,5 +156,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

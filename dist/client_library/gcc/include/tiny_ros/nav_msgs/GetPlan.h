@@ -9,6 +9,8 @@
 #include "tiny_ros/geometry_msgs/PoseStamped.h"
 #include "tiny_ros/nav_msgs/Path.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
@@ -21,9 +23,9 @@ static const char GETPLAN[] = "nav_msgs/GetPlan";
       ___id___type __id__;
 
     public:
-      typedef geometry_msgs::PoseStamped _start_type;
+      typedef tinyros::geometry_msgs::PoseStamped _start_type;
       _start_type start;
-      typedef geometry_msgs::PoseStamped _goal_type;
+      typedef tinyros::geometry_msgs::PoseStamped _goal_type;
       _goal_type goal;
       typedef float _tolerance_type;
       _tolerance_type tolerance;
@@ -121,7 +123,7 @@ static const char GETPLAN[] = "nav_msgs/GetPlan";
       ___id___type __id__;
 
     public:
-      typedef nav_msgs::Path _plan_type;
+      typedef tinyros::nav_msgs::Path _plan_type;
       _plan_type plan;
 
     GetPlanResponse():
@@ -184,5 +186,6 @@ static const char GETPLAN[] = "nav_msgs/GetPlan";
     typedef GetPlanResponse Response;
   };
 
+}
 }
 #endif

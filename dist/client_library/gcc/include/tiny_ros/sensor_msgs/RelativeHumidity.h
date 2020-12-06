@@ -9,13 +9,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class RelativeHumidity : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef double _relative_humidity_type;
       _relative_humidity_type relative_humidity;
@@ -129,5 +131,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

@@ -56,7 +56,7 @@ public:
   virtual void spin_task(const std::shared_ptr<SpinObject> obj) {}
   virtual void keepalive() {}
   virtual void sync_time(unsigned char* data) {
-     tinyros_msgs::SyncTime t;
+     tinyros::tinyros_msgs::SyncTime t;
      t.deserialize(data);
      int64_t now = (int64_t)(Time::now().toMSec());
      std::unique_lock<std::mutex> lock(Time::mutex_);

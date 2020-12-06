@@ -9,13 +9,15 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/std_msgs/Header.h"
 
+namespace tinyros
+{
 namespace smach_msgs
 {
 
   class SmachContainerStatus : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef std::string _path_type;
       _path_type path;
@@ -279,5 +281,6 @@ namespace smach_msgs
 
   };
 
+}
 }
 #endif

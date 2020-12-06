@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "tiny_ros/ros/msg.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -246,5 +248,6 @@ static const char GETWORLDPROPERTIES[] = "gazebo_msgs/GetWorldProperties";
     typedef GetWorldPropertiesResponse Response;
   };
 
+}
 }
 #endif

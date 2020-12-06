@@ -10,15 +10,17 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/geometry_msgs/Point.h"
 
+namespace tinyros
+{
 namespace geometry_msgs
 {
 
   class PointStamped : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef geometry_msgs::Point _point_type;
+      typedef tinyros::geometry_msgs::Point _point_type;
       _point_type point;
 
     PointStamped():
@@ -69,5 +71,6 @@ namespace geometry_msgs
 
   };
 
+}
 }
 #endif

@@ -7,6 +7,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/sensor_msgs/JoyFeedback.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
@@ -14,7 +16,7 @@ namespace sensor_msgs
   {
     public:
       uint32_t array_length;
-      typedef sensor_msgs::JoyFeedback _array_type;
+      typedef tinyros::sensor_msgs::JoyFeedback _array_type;
       _array_type st_array;
       _array_type * array;
 
@@ -46,11 +48,11 @@ namespace sensor_msgs
       array_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->array_length);
       if(array_lengthT > array_length)
-        this->array = (sensor_msgs::JoyFeedback*)realloc(this->array, array_lengthT * sizeof(sensor_msgs::JoyFeedback));
+        this->array = (tinyros::sensor_msgs::JoyFeedback*)realloc(this->array, array_lengthT * sizeof(tinyros::sensor_msgs::JoyFeedback));
       array_length = array_lengthT;
       for( uint32_t i = 0; i < array_length; i++) {
         offset += this->st_array.deserialize(inbuffer + offset);
-        memcpy( &(this->array[i]), &(this->st_array), sizeof(sensor_msgs::JoyFeedback));
+        memcpy( &(this->array[i]), &(this->st_array), sizeof(tinyros::sensor_msgs::JoyFeedback));
       }
       return offset;
     }
@@ -70,5 +72,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

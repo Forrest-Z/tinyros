@@ -8,13 +8,15 @@
 #include "tiny_ros/std_msgs/Header.h"
 #include "tiny_ros/sensor_msgs/LaserEcho.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class MultiEchoLaserScan : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
       typedef float _angle_min_type;
       _angle_min_type angle_min;
@@ -31,11 +33,11 @@ namespace sensor_msgs
       typedef float _range_max_type;
       _range_max_type range_max;
       uint32_t ranges_length;
-      typedef sensor_msgs::LaserEcho _ranges_type;
+      typedef tinyros::sensor_msgs::LaserEcho _ranges_type;
       _ranges_type st_ranges;
       _ranges_type * ranges;
       uint32_t intensities_length;
-      typedef sensor_msgs::LaserEcho _intensities_type;
+      typedef tinyros::sensor_msgs::LaserEcho _intensities_type;
       _intensities_type st_intensities;
       _intensities_type * intensities;
 
@@ -233,11 +235,11 @@ namespace sensor_msgs
       ranges_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->ranges_length);
       if(ranges_lengthT > ranges_length)
-        this->ranges = (sensor_msgs::LaserEcho*)realloc(this->ranges, ranges_lengthT * sizeof(sensor_msgs::LaserEcho));
+        this->ranges = (tinyros::sensor_msgs::LaserEcho*)realloc(this->ranges, ranges_lengthT * sizeof(tinyros::sensor_msgs::LaserEcho));
       ranges_length = ranges_lengthT;
       for( uint32_t i = 0; i < ranges_length; i++) {
         offset += this->st_ranges.deserialize(inbuffer + offset);
-        memcpy( &(this->ranges[i]), &(this->st_ranges), sizeof(sensor_msgs::LaserEcho));
+        memcpy( &(this->ranges[i]), &(this->st_ranges), sizeof(tinyros::sensor_msgs::LaserEcho));
       }
       uint32_t intensities_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       intensities_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -245,11 +247,11 @@ namespace sensor_msgs
       intensities_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->intensities_length);
       if(intensities_lengthT > intensities_length)
-        this->intensities = (sensor_msgs::LaserEcho*)realloc(this->intensities, intensities_lengthT * sizeof(sensor_msgs::LaserEcho));
+        this->intensities = (tinyros::sensor_msgs::LaserEcho*)realloc(this->intensities, intensities_lengthT * sizeof(tinyros::sensor_msgs::LaserEcho));
       intensities_length = intensities_lengthT;
       for( uint32_t i = 0; i < intensities_length; i++) {
         offset += this->st_intensities.deserialize(inbuffer + offset);
-        memcpy( &(this->intensities[i]), &(this->st_intensities), sizeof(sensor_msgs::LaserEcho));
+        memcpy( &(this->intensities[i]), &(this->st_intensities), sizeof(tinyros::sensor_msgs::LaserEcho));
       }
       return offset;
     }
@@ -281,5 +283,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif

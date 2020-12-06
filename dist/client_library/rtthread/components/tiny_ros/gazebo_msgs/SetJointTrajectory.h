@@ -7,6 +7,8 @@
 #include "tiny_ros/trajectory_msgs/JointTrajectory.h"
 #include "tiny_ros/geometry_msgs/Pose.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -21,9 +23,9 @@ static const char SETJOINTTRAJECTORY[] = "gazebo_msgs/SetJointTrajectory";
     public:
       typedef tinyros::string _model_name_type;
       _model_name_type model_name;
-      typedef trajectory_msgs::JointTrajectory _joint_trajectory_type;
+      typedef tinyros::trajectory_msgs::JointTrajectory _joint_trajectory_type;
       _joint_trajectory_type joint_trajectory;
-      typedef geometry_msgs::Pose _model_pose_type;
+      typedef tinyros::geometry_msgs::Pose _model_pose_type;
       _model_pose_type model_pose;
       typedef bool _set_model_pose_type;
       _set_model_pose_type set_model_pose;
@@ -223,5 +225,6 @@ static const char SETJOINTTRAJECTORY[] = "gazebo_msgs/SetJointTrajectory";
     typedef SetJointTrajectoryResponse Response;
   };
 
+}
 }
 #endif

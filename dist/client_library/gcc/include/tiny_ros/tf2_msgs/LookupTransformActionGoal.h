@@ -11,17 +11,19 @@
 #include "tiny_ros/actionlib_msgs/GoalID.h"
 #include "tiny_ros/tf2_msgs/LookupTransformGoal.h"
 
+namespace tinyros
+{
 namespace tf2_msgs
 {
 
   class LookupTransformActionGoal : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef actionlib_msgs::GoalID _goal_id_type;
+      typedef tinyros::actionlib_msgs::GoalID _goal_id_type;
       _goal_id_type goal_id;
-      typedef tf2_msgs::LookupTransformGoal _goal_type;
+      typedef tinyros::tf2_msgs::LookupTransformGoal _goal_type;
       _goal_type goal;
 
     LookupTransformActionGoal():
@@ -79,5 +81,6 @@ namespace tf2_msgs
 
   };
 
+}
 }
 #endif

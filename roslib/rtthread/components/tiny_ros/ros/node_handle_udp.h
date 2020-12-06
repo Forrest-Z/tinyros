@@ -32,7 +32,7 @@ private:
   }
 
   void negotiateTopics(Publisher * p) {
-    tinyros_msgs::TopicInfo ti;
+    tinyros::tinyros_msgs::TopicInfo ti;
     ti.topic_id = p->id_;
     ti.topic_name = p->topic_;
     ti.message_type = p->msg_->getType();
@@ -43,7 +43,7 @@ private:
   }
 
   void negotiateTopics(Subscriber_ * s) {
-    tinyros_msgs::TopicInfo ti;
+    tinyros::tinyros_msgs::TopicInfo ti;
     ti.topic_id = s->id_;
     ti.topic_name = s->topic_;
     ti.message_type = s->getMsgType();

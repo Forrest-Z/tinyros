@@ -251,27 +251,29 @@ public class NodeHandle extends NodeHandleBase{
                     } else if (topic == TopicInfo.ID_TIME) {
                         syncTime(message_in);
                     } else {
-                        SubscriberT sub = subscribers[topic - 100];
-                        byte[] message = new byte[total_bytes];
-                        System.arraycopy(message_in, 0, message, 0, total_bytes);
-                        Runnable thread_pool_run = new Runnable() {
-                            SubscriberT  sub_ = sub;
-                            byte[] data = message;
-                            @Override
-                            public void run() {
-                                if (sub_ != null) {
-                                    sub_.callback(data);
-                                }
-                            }
-                        };
-                        if (subscribers[topic-100].topic_ == TINYROS_LOG_TOPIC) {
-                            spin_log_thread_pool_.execute(thread_pool_run);
-                        } else {
-                            if (subscribers[topic-100].srv_flag_) {
-                                spin_srv_thread_pool_.execute(thread_pool_run);
-                            } else {
-                                spin_thread_pool_.execute(thread_pool_run);
-                            }
+                        if (((topic - 100) >= 0) && ((topic - 100) < MAX_SUBSCRIBERS)) {
+	                        SubscriberT sub = subscribers[topic - 100];
+	                        byte[] message = new byte[total_bytes];
+	                        System.arraycopy(message_in, 0, message, 0, total_bytes);
+	                        Runnable thread_pool_run = new Runnable() {
+	                            SubscriberT  sub_ = sub;
+	                            byte[] data = message;
+	                            @Override
+	                            public void run() {
+	                                if (sub_ != null) {
+	                                    sub_.callback(data);
+	                                }
+	                            }
+	                        };
+	                        if (subscribers[topic-100].topic_ == TINYROS_LOG_TOPIC) {
+	                            spin_log_thread_pool_.execute(thread_pool_run);
+	                        } else {
+	                            if (subscribers[topic-100].srv_flag_) {
+	                                spin_srv_thread_pool_.execute(thread_pool_run);
+	                            } else {
+	                                spin_thread_pool_.execute(thread_pool_run);
+	                            }
+	                        }
                         }
                     }
                 }

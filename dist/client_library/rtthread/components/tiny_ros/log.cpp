@@ -13,11 +13,11 @@ void mtrace(int level, const char *chfr, ...) {
   vsnprintf(buffer, sizeof(buffer) - 1, chfr, ap);
   va_end(ap);
 
-  if(level == tinyros_msgs::Log::ROSDEBUG) tinyros::logdebug(buffer);
-  else if(level == tinyros_msgs::Log::ROSINFO) tinyros::loginfo(buffer);
-  else if(level == tinyros_msgs::Log::ROSWARN) tinyros::logwarn(buffer);
-  else if(level == tinyros_msgs::Log::ROSERROR) tinyros::logerror(buffer);
-  else if(level == tinyros_msgs::Log::ROSFATAL) tinyros::logfatal(buffer);
+  if(level == tinyros::tinyros_msgs::Log::ROSDEBUG) tinyros::logdebug(buffer);
+  else if(level == tinyros::tinyros_msgs::Log::ROSINFO) tinyros::loginfo(buffer);
+  else if(level == tinyros::tinyros_msgs::Log::ROSWARN) tinyros::logwarn(buffer);
+  else if(level == tinyros::tinyros_msgs::Log::ROSERROR) tinyros::logerror(buffer);
+  else if(level == tinyros::tinyros_msgs::Log::ROSFATAL) tinyros::logfatal(buffer);
 }
 }
 

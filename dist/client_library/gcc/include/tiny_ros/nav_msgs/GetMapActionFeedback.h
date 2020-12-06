@@ -11,17 +11,19 @@
 #include "tiny_ros/actionlib_msgs/GoalStatus.h"
 #include "tiny_ros/nav_msgs/GetMapFeedback.h"
 
+namespace tinyros
+{
 namespace nav_msgs
 {
 
   class GetMapActionFeedback : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef actionlib_msgs::GoalStatus _status_type;
+      typedef tinyros::actionlib_msgs::GoalStatus _status_type;
       _status_type status;
-      typedef nav_msgs::GetMapFeedback _feedback_type;
+      typedef tinyros::nav_msgs::GetMapFeedback _feedback_type;
       _feedback_type feedback;
 
     GetMapActionFeedback():
@@ -79,5 +81,6 @@ namespace nav_msgs
 
   };
 
+}
 }
 #endif

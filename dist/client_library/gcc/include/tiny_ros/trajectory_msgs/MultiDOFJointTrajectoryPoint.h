@@ -11,6 +11,8 @@
 #include "tiny_ros/geometry_msgs/Twist.h"
 #include "tiny_ros/ros/duration.h"
 
+namespace tinyros
+{
 namespace trajectory_msgs
 {
 
@@ -18,15 +20,15 @@ namespace trajectory_msgs
   {
     public:
       uint32_t transforms_length;
-      typedef geometry_msgs::Transform _transforms_type;
+      typedef tinyros::geometry_msgs::Transform _transforms_type;
       _transforms_type st_transforms;
       _transforms_type * transforms;
       uint32_t velocities_length;
-      typedef geometry_msgs::Twist _velocities_type;
+      typedef tinyros::geometry_msgs::Twist _velocities_type;
       _velocities_type st_velocities;
       _velocities_type * velocities;
       uint32_t accelerations_length;
-      typedef geometry_msgs::Twist _accelerations_type;
+      typedef tinyros::geometry_msgs::Twist _accelerations_type;
       _accelerations_type st_accelerations;
       _accelerations_type * accelerations;
       typedef tinyros::Duration _time_from_start_type;
@@ -89,11 +91,11 @@ namespace trajectory_msgs
       transforms_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->transforms_length);
       if(transforms_lengthT > transforms_length)
-        this->transforms = (geometry_msgs::Transform*)realloc(this->transforms, transforms_lengthT * sizeof(geometry_msgs::Transform));
+        this->transforms = (tinyros::geometry_msgs::Transform*)realloc(this->transforms, transforms_lengthT * sizeof(tinyros::geometry_msgs::Transform));
       transforms_length = transforms_lengthT;
       for( uint32_t i = 0; i < transforms_length; i++) {
         offset += this->st_transforms.deserialize(inbuffer + offset);
-        memcpy( &(this->transforms[i]), &(this->st_transforms), sizeof(geometry_msgs::Transform));
+        memcpy( &(this->transforms[i]), &(this->st_transforms), sizeof(tinyros::geometry_msgs::Transform));
       }
       uint32_t velocities_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       velocities_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -101,11 +103,11 @@ namespace trajectory_msgs
       velocities_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->velocities_length);
       if(velocities_lengthT > velocities_length)
-        this->velocities = (geometry_msgs::Twist*)realloc(this->velocities, velocities_lengthT * sizeof(geometry_msgs::Twist));
+        this->velocities = (tinyros::geometry_msgs::Twist*)realloc(this->velocities, velocities_lengthT * sizeof(tinyros::geometry_msgs::Twist));
       velocities_length = velocities_lengthT;
       for( uint32_t i = 0; i < velocities_length; i++) {
         offset += this->st_velocities.deserialize(inbuffer + offset);
-        memcpy( &(this->velocities[i]), &(this->st_velocities), sizeof(geometry_msgs::Twist));
+        memcpy( &(this->velocities[i]), &(this->st_velocities), sizeof(tinyros::geometry_msgs::Twist));
       }
       uint32_t accelerations_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       accelerations_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -113,11 +115,11 @@ namespace trajectory_msgs
       accelerations_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->accelerations_length);
       if(accelerations_lengthT > accelerations_length)
-        this->accelerations = (geometry_msgs::Twist*)realloc(this->accelerations, accelerations_lengthT * sizeof(geometry_msgs::Twist));
+        this->accelerations = (tinyros::geometry_msgs::Twist*)realloc(this->accelerations, accelerations_lengthT * sizeof(tinyros::geometry_msgs::Twist));
       accelerations_length = accelerations_lengthT;
       for( uint32_t i = 0; i < accelerations_length; i++) {
         offset += this->st_accelerations.deserialize(inbuffer + offset);
-        memcpy( &(this->accelerations[i]), &(this->st_accelerations), sizeof(geometry_msgs::Twist));
+        memcpy( &(this->accelerations[i]), &(this->st_accelerations), sizeof(tinyros::geometry_msgs::Twist));
       }
       this->time_from_start.sec =  ((uint32_t) (*(inbuffer + offset)));
       this->time_from_start.sec |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
@@ -201,5 +203,6 @@ namespace trajectory_msgs
 
   };
 
+}
 }
 #endif

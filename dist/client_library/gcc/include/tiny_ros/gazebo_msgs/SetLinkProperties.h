@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/geometry_msgs/Pose.h"
 
+namespace tinyros
+{
 namespace gazebo_msgs
 {
 
@@ -22,7 +24,7 @@ static const char SETLINKPROPERTIES[] = "gazebo_msgs/SetLinkProperties";
     public:
       typedef std::string _link_name_type;
       _link_name_type link_name;
-      typedef geometry_msgs::Pose _com_type;
+      typedef tinyros::geometry_msgs::Pose _com_type;
       _com_type com;
       typedef bool _gravity_mode_type;
       _gravity_mode_type gravity_mode;
@@ -481,5 +483,6 @@ static const char SETLINKPROPERTIES[] = "gazebo_msgs/SetLinkProperties";
     typedef SetLinkPropertiesResponse Response;
   };
 
+}
 }
 #endif

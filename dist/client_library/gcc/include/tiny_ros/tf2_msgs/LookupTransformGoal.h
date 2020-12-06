@@ -10,6 +10,8 @@
 #include "tiny_ros/ros/time.h"
 #include "tiny_ros/ros/duration.h"
 
+namespace tinyros
+{
 namespace tf2_msgs
 {
 
@@ -243,5 +245,6 @@ namespace tf2_msgs
 
   };
 
+}
 }
 #endif

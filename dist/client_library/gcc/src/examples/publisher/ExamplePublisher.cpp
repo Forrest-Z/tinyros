@@ -14,14 +14,14 @@ int main (int argc, char *argv[]) {
   }
 
   tinyros::init("GccExamplePublisher", ipaddr);
-  tinyros::Publisher hello_pub ("tinyros_hello", new tinyros_hello::TinyrosHello());
+  tinyros::Publisher hello_pub ("tinyros_hello", new tinyros::tinyros_hello::TinyrosHello());
   if (!isudp) {
     tinyros::nh()->advertise(hello_pub);
   } else {
     tinyros::udp()->advertise(hello_pub);
   }
   
-  tinyros_hello::TinyrosHello msg;
+  tinyros::tinyros_hello::TinyrosHello msg;
   while (true) {
     snprintf(buffer, sizeof(buffer), "%d", count++);
     msg.hello = std::string(buffer) + ": GccHello, tiny-ros ^_^";

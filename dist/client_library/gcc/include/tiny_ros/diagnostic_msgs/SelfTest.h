@@ -8,6 +8,8 @@
 #include "tiny_ros/ros/msg.h"
 #include "tiny_ros/diagnostic_msgs/DiagnosticStatus.h"
 
+namespace tinyros
+{
 namespace diagnostic_msgs
 {
 
@@ -80,7 +82,7 @@ static const char SELFTEST[] = "diagnostic_msgs/SelfTest";
       typedef int8_t _passed_type;
       _passed_type passed;
       uint32_t status_length;
-      typedef diagnostic_msgs::DiagnosticStatus _status_type;
+      typedef tinyros::diagnostic_msgs::DiagnosticStatus _status_type;
       _status_type st_status;
       _status_type * status;
 
@@ -154,11 +156,11 @@ static const char SELFTEST[] = "diagnostic_msgs/SelfTest";
       status_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->status_length);
       if(status_lengthT > status_length)
-        this->status = (diagnostic_msgs::DiagnosticStatus*)realloc(this->status, status_lengthT * sizeof(diagnostic_msgs::DiagnosticStatus));
+        this->status = (tinyros::diagnostic_msgs::DiagnosticStatus*)realloc(this->status, status_lengthT * sizeof(tinyros::diagnostic_msgs::DiagnosticStatus));
       status_length = status_lengthT;
       for( uint32_t i = 0; i < status_length; i++) {
         offset += this->st_status.deserialize(inbuffer + offset);
-        memcpy( &(this->status[i]), &(this->st_status), sizeof(diagnostic_msgs::DiagnosticStatus));
+        memcpy( &(this->status[i]), &(this->st_status), sizeof(tinyros::diagnostic_msgs::DiagnosticStatus));
       }
       return offset;
     }
@@ -218,5 +220,6 @@ static const char SELFTEST[] = "diagnostic_msgs/SelfTest";
     typedef SelfTestResponse Response;
   };
 
+}
 }
 #endif

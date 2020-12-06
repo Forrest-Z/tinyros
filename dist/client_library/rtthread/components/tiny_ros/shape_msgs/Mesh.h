@@ -8,6 +8,8 @@
 #include "tiny_ros/shape_msgs/MeshTriangle.h"
 #include "tiny_ros/geometry_msgs/Point.h"
 
+namespace tinyros
+{
 namespace shape_msgs
 {
 
@@ -15,11 +17,11 @@ namespace shape_msgs
   {
     public:
       uint32_t triangles_length;
-      typedef shape_msgs::MeshTriangle _triangles_type;
+      typedef tinyros::shape_msgs::MeshTriangle _triangles_type;
       _triangles_type st_triangles;
       _triangles_type * triangles;
       uint32_t vertices_length;
-      typedef geometry_msgs::Point _vertices_type;
+      typedef tinyros::geometry_msgs::Point _vertices_type;
       _vertices_type st_vertices;
       _vertices_type * vertices;
 
@@ -60,11 +62,11 @@ namespace shape_msgs
       triangles_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->triangles_length);
       if(triangles_lengthT > triangles_length)
-        this->triangles = (shape_msgs::MeshTriangle*)realloc(this->triangles, triangles_lengthT * sizeof(shape_msgs::MeshTriangle));
+        this->triangles = (tinyros::shape_msgs::MeshTriangle*)realloc(this->triangles, triangles_lengthT * sizeof(tinyros::shape_msgs::MeshTriangle));
       triangles_length = triangles_lengthT;
       for( uint32_t i = 0; i < triangles_length; i++) {
         offset += this->st_triangles.deserialize(inbuffer + offset);
-        memcpy( &(this->triangles[i]), &(this->st_triangles), sizeof(shape_msgs::MeshTriangle));
+        memcpy( &(this->triangles[i]), &(this->st_triangles), sizeof(tinyros::shape_msgs::MeshTriangle));
       }
       uint32_t vertices_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       vertices_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
@@ -72,11 +74,11 @@ namespace shape_msgs
       vertices_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->vertices_length);
       if(vertices_lengthT > vertices_length)
-        this->vertices = (geometry_msgs::Point*)realloc(this->vertices, vertices_lengthT * sizeof(geometry_msgs::Point));
+        this->vertices = (tinyros::geometry_msgs::Point*)realloc(this->vertices, vertices_lengthT * sizeof(tinyros::geometry_msgs::Point));
       vertices_length = vertices_lengthT;
       for( uint32_t i = 0; i < vertices_length; i++) {
         offset += this->st_vertices.deserialize(inbuffer + offset);
-        memcpy( &(this->vertices[i]), &(this->st_vertices), sizeof(geometry_msgs::Point));
+        memcpy( &(this->vertices[i]), &(this->st_vertices), sizeof(tinyros::geometry_msgs::Point));
       }
       return offset;
     }
@@ -100,5 +102,6 @@ namespace shape_msgs
 
   };
 
+}
 }
 #endif

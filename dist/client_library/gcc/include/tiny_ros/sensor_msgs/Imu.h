@@ -11,21 +11,23 @@
 #include "tiny_ros/geometry_msgs/Quaternion.h"
 #include "tiny_ros/geometry_msgs/Vector3.h"
 
+namespace tinyros
+{
 namespace sensor_msgs
 {
 
   class Imu : public tinyros::Msg
   {
     public:
-      typedef std_msgs::Header _header_type;
+      typedef tinyros::std_msgs::Header _header_type;
       _header_type header;
-      typedef geometry_msgs::Quaternion _orientation_type;
+      typedef tinyros::geometry_msgs::Quaternion _orientation_type;
       _orientation_type orientation;
       double orientation_covariance[9];
-      typedef geometry_msgs::Vector3 _angular_velocity_type;
+      typedef tinyros::geometry_msgs::Vector3 _angular_velocity_type;
       _angular_velocity_type angular_velocity;
       double angular_velocity_covariance[9];
-      typedef geometry_msgs::Vector3 _linear_acceleration_type;
+      typedef tinyros::geometry_msgs::Vector3 _linear_acceleration_type;
       _linear_acceleration_type linear_acceleration;
       double linear_acceleration_covariance[9];
 
@@ -235,5 +237,6 @@ namespace sensor_msgs
 
   };
 
+}
 }
 #endif
