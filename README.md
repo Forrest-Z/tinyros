@@ -14,7 +14,7 @@
 
 3、使用C ++ 11编译器
 
-4、默认开启支持Websocket（依赖：libuv 1.x, OpenSSL 1.0.x, zlib 1.x）
+4、默认开启支持Websocket（依赖：sudo apt-get install libuv1-dev libssl-dev zlib1g-dev）
 
 **（注：可以进入 "{SOURCE_DIR}/core/CMakeLists.txt" 选择开启/关闭Websocket支持）**
 
