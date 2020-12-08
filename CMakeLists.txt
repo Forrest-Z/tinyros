@@ -6,14 +6,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -O3")
 
 add_definitions(-DSPDLOG_COMPILED_LIB)
 
-aux_source_directory(${PROJECT_SOURCE_DIR}/spdlog/src SPDLOG_SRC_LIST)
+aux_source_directory(${PROJECT_SOURCE_DIR}/third_party/spdlog/src SPDLOG_SRC_LIST)
 
-aux_source_directory(${PROJECT_SOURCE_DIR}/uWebSockets UWS_SRC_LIST)
+aux_source_directory(${PROJECT_SOURCE_DIR}/third_party/uWebSockets UWS_SRC_LIST)
 
 include_directories(
   ${OUTPUT_PATHS}/client_library/gcc/include
-  ${PROJECT_SOURCE_DIR}/spdlog/include
-  ${PROJECT_SOURCE_DIR}/uWebSockets
+  ${PROJECT_SOURCE_DIR}/third_party/spdlog/include
+  ${PROJECT_SOURCE_DIR}/third_party/uWebSockets
 )
 
 add_subdirectory(core)
